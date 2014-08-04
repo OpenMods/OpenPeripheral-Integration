@@ -6,6 +6,7 @@ import java.util.Map;
 import openmods.Mods;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.IItemStackMetadataBuilder;
 import openperipheral.integration.OPIntegrationModule;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -31,6 +32,9 @@ public class ModuleThaumcraft extends OPIntegrationModule {
 		adapterRegistry.register(new AdapterArcaneEar());
 		adapterRegistry.register(new AdapterDeconstructor());
 		adapterRegistry.register(new AdapterEssentiaTransport());
+
+		final IItemStackMetadataBuilder itemMeta = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		itemMeta.register(new EssentiaContainerMetaProvider());
 	}
 
 	public static void appendAspectEntry(List<Map<String, Object>> result, Aspect aspect, int quantity) {

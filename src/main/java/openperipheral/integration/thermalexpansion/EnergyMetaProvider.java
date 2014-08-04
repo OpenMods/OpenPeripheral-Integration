@@ -17,7 +17,7 @@ public class EnergyMetaProvider implements IItemStackMetadataProvider<IEnergyCon
 
 	@Override
 	public String getKey() {
-		return "energy-te";
+		return "energy_te";
 	}
 
 	@Override

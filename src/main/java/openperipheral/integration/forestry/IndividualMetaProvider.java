@@ -5,7 +5,7 @@ import openperipheral.api.IItemStackMetadataProvider;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IIndividual;
 
-class IndividualMetaProvider implements IItemStackMetadataProvider<Object> {
+public class IndividualMetaProvider implements IItemStackMetadataProvider<Object> {
 	@Override
 	public Class<?> getTargetClass() {
 		return Object.class;

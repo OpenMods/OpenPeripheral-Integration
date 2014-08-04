@@ -18,8 +18,8 @@ public class ModuleRailcraft extends OPIntegrationModule {
 		adapterRegistry.register(new AdapterTileBoilerFirebox());
 
 		final IEntityMetadataBuilder entityMeta = ApiAccess.getApi(IEntityMetadataBuilder.class);
-		entityMeta.register(new EnergyCartMetaProvider());
 		entityMeta.register(new ExplosiveCartMetaProvider());
+		entityMeta.register(new EnergyCartMetaProvider());
 		entityMeta.register(new LinkableCartMetaProvider());
 		entityMeta.register(new LiquidCartMetaProvider());
 		entityMeta.register(new PaintedCartMetaProvider());

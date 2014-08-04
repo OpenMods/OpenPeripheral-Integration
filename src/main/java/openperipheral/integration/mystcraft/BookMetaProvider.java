@@ -20,7 +20,7 @@ public class BookMetaProvider implements IItemStackMetadataProvider<Item> {
 
 	@Override
 	public String getKey() {
-		return "myst-book";
+		return "myst_book";
 	}
 
 	@Override

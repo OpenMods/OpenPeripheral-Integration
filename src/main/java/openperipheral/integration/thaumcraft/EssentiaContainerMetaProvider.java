@@ -14,7 +14,7 @@ public class EssentiaContainerMetaProvider implements IItemStackMetadataProvider
 
 	@Override
 	public String getKey() {
-		return "essentia-container";
+		return "essentia_container";
 	}
 
 	@Override
