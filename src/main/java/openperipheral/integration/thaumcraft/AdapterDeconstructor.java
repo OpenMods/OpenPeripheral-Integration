@@ -6,11 +6,11 @@ package openperipheral.integration.thaumcraft;
 import java.lang.reflect.Field;
 
 import net.minecraft.inventory.IInventory;
+import openmods.utils.FieldAccessHelpers;
 import openmods.utils.ReflectionHelper;
 import openperipheral.api.IPeripheralAdapter;
 import openperipheral.api.LuaCallable;
 import openperipheral.api.LuaType;
-import openperipheral.util.FieldAccessHelpers;
 import thaumcraft.api.aspects.Aspect;
 
 /**

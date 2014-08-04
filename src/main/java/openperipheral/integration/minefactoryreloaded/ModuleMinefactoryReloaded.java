@@ -1,63 +1,32 @@
 package openperipheral.integration.minefactoryreloaded;
 
-import java.util.Map;
-import java.util.Set;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Vec3;
 import openmods.Mods;
-import openperipheral.adapter.AdapterManager;
-import openperipheral.api.IIntegrationModule;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.IItemStackMetadataBuilder;
+import openperipheral.integration.OPIntegrationModule;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
-
-public class ModuleMinefactoryReloaded implements IIntegrationModule {
+public class ModuleMinefactoryReloaded extends OPIntegrationModule {
 
 	@Override
 	public String getModId() {
 		return Mods.MFR;
 	}
 
-	private static final Set<String> safariNets = ImmutableSet.of(
-			"item.mfr.safarinet.reusable",
-			"item.mfr.safarinet.singleuse",
-			"item.mfr.safarinet.jailer"
-			);
-
 	@Override
-	public void init() {
-		AdapterManager.addPeripheralAdapter(new AdapterAutoAnvil());
-		AdapterManager.addPeripheralAdapter(new AdapterAutoDisenchanter());
-		AdapterManager.addPeripheralAdapter(new AdapterAutoEnchanter());
-		AdapterManager.addPeripheralAdapter(new AdapterAutoJukebox());
-		AdapterManager.addPeripheralAdapter(new AdapterAutoSpawner());
-		AdapterManager.addPeripheralAdapter(new AdapterChronotyper());
-		AdapterManager.addPeripheralAdapter(new AdapterChunkLoader());
-		AdapterManager.addPeripheralAdapter(new AdapterEjector());
-		AdapterManager.addPeripheralAdapter(new AdapterHarvester());
+	public void load() {
+		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		adapterRegistry.register(new AdapterAutoAnvil());
+		adapterRegistry.register(new AdapterAutoDisenchanter());
+		adapterRegistry.register(new AdapterAutoEnchanter());
+		adapterRegistry.register(new AdapterAutoJukebox());
+		adapterRegistry.register(new AdapterAutoSpawner());
+		adapterRegistry.register(new AdapterChronotyper());
+		adapterRegistry.register(new AdapterChunkLoader());
+		adapterRegistry.register(new AdapterEjector());
+		adapterRegistry.register(new AdapterHarvester());
+
+		final IItemStackMetadataBuilder itemMetaBuilder = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		itemMetaBuilder.register(new SafariNetMetaProvider());
 	}
-
-	@Override
-	public void appendItemInfo(Map<String, Object> map, ItemStack stack) {
-		Preconditions.checkNotNull(stack); // should not happen
-
-		if (isSafariNet(stack)) {
-			NBTTagCompound tag = stack.getTagCompound();
-			if (tag != null && tag.hasKey("id")) {
-				map.put("captured", tag.getString("id"));
-			}
-		}
-	}
-
-	private static boolean isSafariNet(ItemStack stack) {
-		Item item = stack.getItem();
-		return item != null && safariNets.contains(item.getUnlocalizedName());
-	}
-
-	@Override
-	public void appendEntityInfo(Map<String, Object> map, Entity entity, Vec3 relativePos) {}
 }

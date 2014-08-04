@@ -1,20 +1,12 @@
 package openperipheral.integration.ic2;
 
-import ic2.api.item.ElectricItem;
-import ic2.api.item.IElectricItem;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
 import openmods.Mods;
-import openperipheral.adapter.AdapterManager;
-import openperipheral.api.IIntegrationModule;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.IItemStackMetadataBuilder;
+import openperipheral.integration.OPIntegrationModule;
 
-public class ModuleIC2 implements IIntegrationModule {
+public class ModuleIC2 extends OPIntegrationModule {
 
 	@Override
 	public String getModId() {
@@ -22,35 +14,17 @@ public class ModuleIC2 implements IIntegrationModule {
 	}
 
 	@Override
-	public void init() {
-		AdapterManager.addPeripheralAdapter(new AdapterReactor());
-		AdapterManager.addPeripheralAdapter(new AdapterReactorChamber());
-		AdapterManager.addPeripheralAdapter(new AdapterMassFab());
-		AdapterManager.addPeripheralAdapter(new AdapterEnergyConductor());
-		AdapterManager.addPeripheralAdapter(new AdapterEnergySink());
-		AdapterManager.addPeripheralAdapter(new AdapterEnergySource());
-		AdapterManager.addPeripheralAdapter(new AdapterEnergyStorage());
+	public void load() {
+		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		adapterRegistry.register(new AdapterReactor());
+		adapterRegistry.register(new AdapterReactorChamber());
+		adapterRegistry.register(new AdapterMassFab());
+		adapterRegistry.register(new AdapterEnergyConductor());
+		adapterRegistry.register(new AdapterEnergySink());
+		adapterRegistry.register(new AdapterEnergySource());
+		adapterRegistry.register(new AdapterEnergyStorage());
+
+		final IItemStackMetadataBuilder itemMetaProvider = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		itemMetaProvider.register(new ElectricItemMetaProvider());
 	}
-
-	@Override
-	public void appendItemInfo(Map<String, Object> map, ItemStack stack) {
-		if (stack != null) {
-			Item item = stack.getItem();
-			if (item instanceof IElectricItem) {
-				IElectricItem electricItem = (IElectricItem)item;
-				HashMap<String, Object> electricInfo = new HashMap<String, Object>();
-
-				electricInfo.put("tier", electricItem.getTier(stack));
-				electricInfo.put("maxCharge", electricItem.getMaxCharge(stack));
-				electricInfo.put("transferLimit", electricItem.getTransferLimit(stack));
-				electricInfo.put("canProvideEnergy", electricItem.canProvideEnergy(stack));
-				electricInfo.put("charge", ElectricItem.manager.getCharge(stack));
-
-				map.put("electric", electricInfo);
-			}
-		}
-	}
-
-	@Override
-	public void appendEntityInfo(Map<String, Object> map, Entity entity, Vec3 relativePos) {}
 }

@@ -1,15 +1,19 @@
 package openperipheral.integration.thaumcraft;
 
+import java.util.List;
 import java.util.Map;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
 import openmods.Mods;
-import openperipheral.adapter.AdapterManager;
-import openperipheral.api.IIntegrationModule;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.IAdapterRegistry;
+import openperipheral.integration.OPIntegrationModule;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 
-public class ModuleThaumcraft implements IIntegrationModule {
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+public class ModuleThaumcraft extends OPIntegrationModule {
 
 	@Override
 	public String getModId() {
@@ -17,20 +21,33 @@ public class ModuleThaumcraft implements IIntegrationModule {
 	}
 
 	@Override
-	public void init() {
-		AdapterManager.addPeripheralAdapter(new AdapterAspectContainer());
-		AdapterManager.addPeripheralAdapter(new AdapterNode());
-		AdapterManager.addPeripheralAdapter(new AdapterJar());
-		AdapterManager.addPeripheralAdapter(new AdapterBrainJar());
-		AdapterManager.addPeripheralAdapter(new AdapterArcaneBore());
-		AdapterManager.addPeripheralAdapter(new AdapterArcaneEar());
-		AdapterManager.addPeripheralAdapter(new AdapterDeconstructor());
-		AdapterManager.addPeripheralAdapter(new AdapterEssentiaTransport());
+	public void load() {
+		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		adapterRegistry.register(new AdapterAspectContainer());
+		adapterRegistry.register(new AdapterNode());
+		adapterRegistry.register(new AdapterJar());
+		adapterRegistry.register(new AdapterBrainJar());
+		adapterRegistry.register(new AdapterArcaneBore());
+		adapterRegistry.register(new AdapterArcaneEar());
+		adapterRegistry.register(new AdapterDeconstructor());
+		adapterRegistry.register(new AdapterEssentiaTransport());
 	}
 
-	@Override
-	public void appendEntityInfo(Map<String, Object> map, Entity entity, Vec3 relativePos) {}
+	public static void appendAspectEntry(List<Map<String, Object>> result, Aspect aspect, int quantity) {
+		Map<String, Object> aspectDetails = Maps.newHashMap();
+		aspectDetails.put("name", aspect.getName());
+		aspectDetails.put("quantity", quantity);
+		result.add(aspectDetails);
+	}
 
-	@Override
-	public void appendItemInfo(Map<String, Object> map, ItemStack itemstack) {}
+	public static List<Map<String, Object>> aspectsToMap(AspectList aspectList) {
+		List<Map<String, Object>> aspects = Lists.newArrayList();
+		if (aspectList == null) return aspects;
+
+		for (Aspect aspect : aspectList.getAspects()) {
+			if (aspect == null) continue;
+			appendAspectEntry(aspects, aspect, aspectList.getAmount(aspect));
+		}
+		return aspects;
+	}
 }

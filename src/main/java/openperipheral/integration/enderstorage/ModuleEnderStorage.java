@@ -1,15 +1,11 @@
 package openperipheral.integration.enderstorage;
 
-import java.util.Map;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
 import openmods.Mods;
-import openperipheral.adapter.AdapterManager;
-import openperipheral.api.IIntegrationModule;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.IAdapterRegistry;
+import openperipheral.integration.OPIntegrationModule;
 
-public class ModuleEnderStorage implements IIntegrationModule {
+public class ModuleEnderStorage extends OPIntegrationModule {
 
 	@Override
 	public String getModId() {
@@ -17,13 +13,9 @@ public class ModuleEnderStorage implements IIntegrationModule {
 	}
 
 	@Override
-	public void init() {
-		AdapterManager.addPeripheralAdapter(new AdapterFrequencyOwner());
+	public void load() {
+		final IAdapterRegistry api = ApiAccess.getApi(IAdapterRegistry.class);
+
+		api.register(new AdapterFrequencyOwner());
 	}
-
-	@Override
-	public void appendEntityInfo(Map<String, Object> map, Entity entity, Vec3 relativePos) {}
-
-	@Override
-	public void appendItemInfo(Map<String, Object> map, ItemStack itemstack) {}
 }

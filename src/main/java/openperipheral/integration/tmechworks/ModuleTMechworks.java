@@ -1,30 +1,20 @@
 package openperipheral.integration.tmechworks;
 
-import java.util.Map;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
 import openmods.Mods;
-import openperipheral.adapter.AdapterManager;
-import openperipheral.api.IIntegrationModule;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.IAdapterRegistry;
+import openperipheral.integration.OPIntegrationModule;
 
-public class ModuleTMechworks implements IIntegrationModule {
+public class ModuleTMechworks extends OPIntegrationModule {
 
 	@Override
-	public void init() {
-		AdapterManager.addPeripheralAdapter(new AdapterDrawbridgeLogicBase());
+	public void load() {
+		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		adapterRegistry.register(new AdapterDrawbridgeLogicBase());
 	}
 
 	@Override
 	public String getModId() {
 		return Mods.TINKERSMECHWORKS;
 	}
-
-	@Override
-	public void appendEntityInfo(Map<String, Object> map, Entity entity, Vec3 relativePos) {}
-
-	@Override
-	public void appendItemInfo(Map<String, Object> map, ItemStack itemstack) {}
-
 }

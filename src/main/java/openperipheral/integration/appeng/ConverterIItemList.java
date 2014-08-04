@@ -1,21 +1,23 @@
-package openperipheral.converter;
+package openperipheral.integration.appeng;
 
-import openperipheral.TypeConversionRegistry;
+import java.util.List;
+
+import net.minecraft.item.ItemStack;
 import openperipheral.api.ITypeConverter;
+import openperipheral.api.ITypeConvertersRegistry;
 import appeng.api.IItemList;
 
 public class ConverterIItemList implements ITypeConverter {
 
 	@Override
-	public Object fromLua(Object obj, Class<?> expected) {
+	public Object fromLua(ITypeConvertersRegistry registry, Object obj, Class<?> expected) {
 		return null;
 	}
 
 	@Override
-	public Object toLua(Object obj) {
-		if (obj instanceof IItemList) { return TypeConversionRegistry.toLua(((IItemList)obj).getItems()); }
-
-		return null;
+	public Object toLua(ITypeConvertersRegistry registry, Object obj) {
+		List<ItemStack> items = ((IItemList)obj).getItems();
+		return (obj instanceof IItemList)? registry.toLua(items) : null;
 	}
 
 }

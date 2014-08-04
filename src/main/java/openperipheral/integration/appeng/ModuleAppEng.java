@@ -1,17 +1,12 @@
 package openperipheral.integration.appeng;
 
-import java.util.Map;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
 import openmods.Mods;
-import openperipheral.TypeConversionRegistry;
-import openperipheral.adapter.AdapterManager;
-import openperipheral.api.IIntegrationModule;
-import openperipheral.converter.ConverterIItemList;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.ITypeConvertersRegistry;
+import openperipheral.integration.OPIntegrationModule;
 
-public class ModuleAppEng implements IIntegrationModule {
+public class ModuleAppEng extends OPIntegrationModule {
 
 	@Override
 	public String getModId() {
@@ -19,17 +14,13 @@ public class ModuleAppEng implements IIntegrationModule {
 	}
 
 	@Override
-	public void init() {
-		AdapterManager.addPeripheralAdapter(new AdapterCellProvider());
-		AdapterManager.addPeripheralAdapter(new AdapterGridTileEntity());
-		AdapterManager.addPeripheralAdapter(new AdapterTileController());
-		TypeConversionRegistry.registerTypeConverter(new ConverterIItemList());
+	public void load() {
+		IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		adapterRegistry.register(new AdapterCellProvider());
+		adapterRegistry.register(new AdapterGridTileEntity());
+		adapterRegistry.register(new AdapterTileController());
+
+		ITypeConvertersRegistry typeRegistry = ApiAccess.getApi(ITypeConvertersRegistry.class);
+		typeRegistry.register(new ConverterIItemList());
 	}
-
-	@Override
-	public void appendEntityInfo(Map<String, Object> map, Entity entity, Vec3 relativePos) {}
-
-	@Override
-	public void appendItemInfo(Map<String, Object> map, ItemStack itemstack) {}
-
 }

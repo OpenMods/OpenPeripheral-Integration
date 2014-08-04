@@ -3,11 +3,11 @@ package openperipheral.integration.thaumcraft;
 import java.util.List;
 import java.util.Map;
 
+import openmods.utils.FieldAccessHelpers;
 import openmods.utils.ReflectionHelper;
 import openperipheral.api.IPeripheralAdapter;
 import openperipheral.api.LuaCallable;
 import openperipheral.api.LuaType;
-import openperipheral.util.FieldAccessHelpers;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IAspectContainer;
 
@@ -33,10 +33,10 @@ public class AdapterJar implements IPeripheralAdapter {
 	// special casing jar, for TT compatibility
 	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get the Aspects stored in the block")
 	public List<Map<String, Object>> getAspects(IAspectContainer container) {
-		List<Map<String, Object>> result = AdapterAspectContainer.aspectsToMap(container);
+		List<Map<String, Object>> result = ModuleThaumcraft.aspectsToMap(container.getAspects());
 		if (result.isEmpty()) {
 			Aspect filter = getFilterAspect(container);
-			if (filter != null) AdapterAspectContainer.appendAspectEntry(result, filter, 0);
+			if (filter != null) ModuleThaumcraft.appendAspectEntry(result, filter, 0);
 		}
 
 		return result;

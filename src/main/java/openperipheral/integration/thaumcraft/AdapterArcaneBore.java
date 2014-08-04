@@ -7,9 +7,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import openmods.utils.FieldAccessHelpers;
 import openmods.utils.ReflectionHelper;
 import openperipheral.api.*;
-import openperipheral.util.FieldAccessHelpers;
 
 /**
  * @author Katrina
