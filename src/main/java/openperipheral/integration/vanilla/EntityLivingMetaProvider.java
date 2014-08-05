@@ -6,8 +6,8 @@ import java.util.Map;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 import openperipheral.api.IEntityMetadataProvider;
 
@@ -31,14 +31,14 @@ public class EntityLivingMetaProvider implements IEntityMetadataProvider<EntityL
 
 		{
 			Map<String, ItemStack> armor = Maps.newHashMap();
-			armor.put("boots", target.getCurrentItemOrArmor(1));
-			armor.put("leggings", target.getCurrentItemOrArmor(2));
-			armor.put("chestplate", target.getCurrentItemOrArmor(3));
-			armor.put("helmet", target.getCurrentItemOrArmor(4));
+			armor.put("boots", target.getEquipmentInSlot(1));
+			armor.put("leggings", target.getEquipmentInSlot(2));
+			armor.put("chestplate", target.getEquipmentInSlot(3));
+			armor.put("helmet", target.getEquipmentInSlot(4));
 			map.put("armor", armor);
 		}
 
-		map.put("heldItem", target.getHeldItem());
+		map.put("heldItem", target.getEquipmentInSlot(0));
 
 		{
 			Map<Object, String> potionEffects = Maps.newHashMap();
@@ -75,11 +75,11 @@ public class EntityLivingMetaProvider implements IEntityMetadataProvider<EntityL
 			Vec3 lookVec = target.getLook(1.0f);
 			Vec3 targetVec = posVec.addVector(lookVec.xCoord * 10f, lookVec.yCoord * 10f, lookVec.zCoord * 10f);
 
-			MovingObjectPosition mop = target.worldObj.clip(posVec, targetVec);
+			MovingObjectPosition mop = target.worldObj.rayTraceBlocks(posVec, targetVec);
 
 			if (mop != null) {
 				Map<String, Object> hit = Maps.newHashMap();
-				if (mop.typeOfHit == EnumMovingObjectType.TILE) {
+				if (mop.typeOfHit == MovingObjectType.BLOCK) {
 					hit.put("type", "block");
 					Map<String, Object> lookingAt = Maps.newHashMap();
 					if (relativePos != null) {
@@ -92,9 +92,9 @@ public class EntityLivingMetaProvider implements IEntityMetadataProvider<EntityL
 						lookingAt.put("z", mop.blockZ);
 					}
 					hit.put("position", lookingAt);
-				} else if (mop.typeOfHit == EnumMovingObjectType.ENTITY) {
+				} else if (mop.typeOfHit == MovingObjectType.ENTITY) {
 					hit.put("type", "entity");
-					hit.put("id", mop.entityHit.entityId);
+					hit.put("id", mop.entityHit.getEntityId());
 				}
 
 				map.put("lookingAt", hit);

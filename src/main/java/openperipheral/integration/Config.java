@@ -1,6 +1,6 @@
 package openperipheral.integration;
 
-import openmods.config.ConfigProperty;
+import openmods.config.properties.ConfigProperty;
 
 public class Config {
 

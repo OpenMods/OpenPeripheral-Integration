@@ -24,7 +24,7 @@ public class BossMetaProvider implements IEntityMetadataProvider<IBossDisplayDat
 	public Object getMeta(IBossDisplayData target, Vec3 relativePos) {
 		Map<String, Object> map = Maps.newHashMap();
 
-		map.put("name", target.getEntityName());
+		map.put("name", target.func_145748_c_().getUnformattedText());
 
 		return map;
 	}

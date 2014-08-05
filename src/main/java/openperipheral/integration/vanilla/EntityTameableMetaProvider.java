@@ -28,7 +28,7 @@ public class EntityTameableMetaProvider implements IEntityMetadataProvider<Entit
 		map.put("isTamed", isTamed);
 		if (isTamed) {
 			map.put("isSitting", target.isSitting());
-			map.put("owner", target.getOwnerName());
+			map.put("ownerUUID", target.func_152113_b());
 		}
 
 		return map;

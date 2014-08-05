@@ -66,7 +66,7 @@ public class ModuleVanilla implements IIntegrationModule {
 	public static Object listEnchantments(NBTTagList ench) {
 		List<Map<String, Object>> response = Lists.newArrayList();
 		for (int i = 0; i < ench.tagCount(); ++i) {
-			NBTTagCompound enchTag = (NBTTagCompound)ench.tagAt(i);
+			NBTTagCompound enchTag = ench.getCompoundTagAt(i);
 			short id = enchTag.getShort("id");
 			short lvl = enchTag.getShort("lvl");
 

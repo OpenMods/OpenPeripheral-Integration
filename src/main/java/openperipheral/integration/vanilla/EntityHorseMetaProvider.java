@@ -34,12 +34,12 @@ public class EntityHorseMetaProvider implements IEntityMetadataProvider<EntityHo
 		map.put("horseVariant", target.getHorseVariant());
 		map.put("horseTemper", target.getTemper());
 		map.put("horseTame", target.isTame());
-		map.put("ownerName", target.getOwnerName());
+		map.put("ownerUUID", target.func_152119_ch());
 
 		final boolean chested = target.isChested();
 		map.put("chestedHorse", chested);
 		if (chested) {
-			IInventory invent = (IInventory)ReflectionHelper.getProperty("", target, "field_110296_bG");
+			IInventory invent = (IInventory)ReflectionHelper.getProperty("", target, "horseChest", "field_110296_bG");
 			map.put("chest", InventoryUtils.getAllItems(invent));
 		}
 

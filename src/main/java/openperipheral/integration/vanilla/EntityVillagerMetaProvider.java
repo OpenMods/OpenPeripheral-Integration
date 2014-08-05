@@ -30,7 +30,7 @@ public class EntityVillagerMetaProvider implements IEntityMetadataProvider<Entit
 
 		boolean isTrading = target.isTrading();
 		map.put("isTrading", isTrading);
-		if (isTrading) map.put("customer", target.getCustomer().username);
+		if (isTrading) map.put("customer", target.getCustomer().getGameProfile());
 
 		return map;
 	}
