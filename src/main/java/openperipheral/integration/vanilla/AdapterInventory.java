@@ -14,7 +14,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
-@OnTick
+@Asynchronous
 public class AdapterInventory implements IPeripheralAdapter {
 
 	private static final int ANY_SLOT = -1;
@@ -26,13 +26,13 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return IInventory.class;
 	}
 
-	@LuaMethod(returnType = LuaType.STRING, description = "Get the name of this inventory")
+	@LuaCallable(returnTypes = LuaType.STRING, description = "Get the name of this inventory")
 	public String getInventoryName(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		return inventory != null? inventory.getInventoryName() : null;
 	}
 
-	@LuaMethod(returnType = LuaType.NUMBER, description = "Get the size of this inventory")
+	@LuaCallable(returnTypes = LuaType.NUMBER, description = "Get the size of this inventory")
 	public int getInventorySize(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		return inventory != null? inventory.getSizeInventory() : 0;
@@ -96,7 +96,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return InventoryUtils.moveItemInto(thisInventory, fromSlot, otherInventory, intoSlot, maxAmount, direction, true);
 	}
 
-	@LuaMethod(returnType = LuaType.VOID, description = "Condense and tidy the stacks in an inventory")
+	@LuaCallable(description = "Condense and tidy the stacks in an inventory")
 	public void condenseItems(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		List<ItemStack> stacks = Lists.newArrayList();
@@ -127,18 +127,17 @@ public class AdapterInventory implements IPeripheralAdapter {
 		else InventoryUtils.swapStacks(inventory, fromSlot - 1, intoSlot - 1);
 	}
 
-	@LuaMethod(returnType = LuaType.TABLE, description = "Get details of an item in a particular slot",
-			args = {
-					@Arg(type = LuaType.NUMBER, name = "slotNumber", description = "The slot number, from 1 to the max amount of slots")
-			})
-	public ItemStack getStackInSlot(IInventory target, int slot) {
+	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get details of an item in a particular slot")
+	public ItemStack getStackInSlot(IInventory target,
+			@Arg(type = LuaType.NUMBER, name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
+	{
 		IInventory invent = InventoryUtils.getInventory(target);
 		slot -= 1;
 		Preconditions.checkElementIndex(slot, invent.getSizeInventory(), "slot id");
 		return invent.getStackInSlot(slot);
 	}
 
-	@LuaMethod(returnType = LuaType.TABLE, description = "Get a table with all the items of the chest")
+	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get a table with all the items of the chest")
 	public ItemStack[] getAllStacks(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		ItemStack[] allStacks = new ItemStack[inventory.getSizeInventory()];
@@ -148,11 +147,10 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return allStacks;
 	}
 
-	@LuaMethod(returnType = LuaType.VOID, description = "Destroy a stack",
-			args = {
-					@Arg(type = LuaType.NUMBER, name = "slotNumber", description = "The slot number, from 1 to the max amount of slots")
-			})
-	public void destroyStack(IInventory target, int slot) {
+	@LuaCallable(description = "Destroy a stack")
+	public void destroyStack(IInventory target,
+			@Arg(type = LuaType.NUMBER, name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
+	{
 		IInventory invent = InventoryUtils.getInventory(target);
 		slot -= 1;
 		Preconditions.checkElementIndex(slot, invent.getSizeInventory(), "slot id");
@@ -161,7 +159,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 
 	@Freeform
 	@LuaCallable(returnTypes = { LuaType.TABLE })
-	public ItemStack test(@Arg(type = LuaType.TABLE) ItemStack itemStack) {
+	public ItemStack expandStack(@Arg(type = LuaType.TABLE) ItemStack itemStack) {
 		return itemStack;
 	}
 }

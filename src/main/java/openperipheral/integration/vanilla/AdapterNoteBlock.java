@@ -12,26 +12,25 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 		return TileEntityNote.class;
 	}
 
-	@LuaMethod(returnType = LuaType.VOID, description = "Increment the pitch of the noteblock")
+	@LuaCallable(description = "Increment the pitch of the noteblock")
 	public void incrementPitch(TileEntityNote noteblock) {
 		noteblock.changePitch();
 	}
 
-	@LuaMethod(returnType = LuaType.VOID, description = "Play the current note on the noteblock")
+	@LuaCallable(description = "Play the current note on the noteblock")
 	public void triggerNote(TileEntityNote noteblock) {
 		noteblock.triggerNote(noteblock.getWorldObj(), noteblock.xCoord, noteblock.yCoord, noteblock.zCoord);
 	}
 
-	@LuaMethod(returnType = LuaType.VOID, description = "Set the note on the noteblock",
-			args = {
-					@Arg(type = LuaType.NUMBER, name = "note", description = "The note you want. From 0 to 25")
-			})
-	public void setPitch(TileEntityNote noteblock, int note) {
+	@LuaCallable(description = "Set the note on the noteblock")
+	public void setPitch(TileEntityNote noteblock,
+			@Arg(type = LuaType.NUMBER, name = "note", description = "The note you want. From 0 to 25") int note)
+	{
 		noteblock.note = (byte)(note % 25);
 		noteblock.markDirty();
 	}
 
-	@LuaMethod(returnType = LuaType.NUMBER, description = "Get the note currently set on this noteblock")
+	@LuaCallable(returnTypes = LuaType.NUMBER, description = "Get the note currently set on this noteblock")
 	public byte getNote(TileEntityNote noteblock) {
 		return noteblock.note;
 	}

@@ -3,7 +3,7 @@ package openperipheral.integration.vanilla;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityBeacon;
 import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaMethod;
+import openperipheral.api.LuaCallable;
 import openperipheral.api.LuaType;
 
 public class AdapterBeacon implements IPeripheralAdapter {
@@ -14,19 +14,19 @@ public class AdapterBeacon implements IPeripheralAdapter {
 		return TileEntityBeacon.class;
 	}
 
-	@LuaMethod(returnType = LuaType.STRING, description = "Get the primary effect of the beacon")
+	@LuaCallable(returnTypes = LuaType.STRING, description = "Get the primary effect of the beacon")
 	public String getPrimaryEffect(TileEntityBeacon beacon) {
 		Integer effectId = beacon.getPrimaryEffect();
 		return getEffectName(effectId);
 	}
 
-	@LuaMethod(returnType = LuaType.STRING, description = "Get the secondary effect of the beacon")
+	@LuaCallable(returnTypes = LuaType.STRING, description = "Get the secondary effect of the beacon")
 	public String getSecondaryEffect(TileEntityBeacon beacon) {
 		Integer effectId = beacon.getSecondaryEffect();
 		return getEffectName(effectId);
 	}
 
-	@LuaMethod(returnType = LuaType.NUMBER, description = "Get the height of the beacon's pyramid")
+	@LuaCallable(returnTypes = LuaType.NUMBER, description = "Get the height of the beacon's pyramid")
 	public int getLevels(TileEntityBeacon beacon) {
 		return beacon.getLevels();
 	}
