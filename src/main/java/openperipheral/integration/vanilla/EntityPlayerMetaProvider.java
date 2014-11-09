@@ -28,7 +28,7 @@ public class EntityPlayerMetaProvider implements IEntityMetadataProvider<EntityP
 		map.put("inventory", InventoryUtils.getAllItems(target.inventory));
 		map.put("isAirBorne", target.isAirBorne);
 		map.put("isBlocking", target.isBlocking());
-		map.put("id", target.getGameProfile());
+		map.put("profile", target.getGameProfile());
 		map.put("foodLevel", target.getFoodStats().getFoodLevel());
 		map.put("isCreativeMode", target.capabilities.isCreativeMode);
 

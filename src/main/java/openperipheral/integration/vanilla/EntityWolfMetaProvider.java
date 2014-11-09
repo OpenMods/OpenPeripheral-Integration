@@ -27,7 +27,7 @@ public class EntityWolfMetaProvider implements IEntityMetadataProvider<EntityWol
 
 		map.put("isShaking", target.getWolfShaking());
 		map.put("isAngry", target.isAngry());
-		map.put("collarColor", ColorUtils.vanillaToColor(target.getCollarColor()).bitmask);
+		map.put("collarColor", ColorUtils.vanillaBlockToColor(target.getCollarColor()).bitmask);
 
 		return map;
 	}

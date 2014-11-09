@@ -158,4 +158,10 @@ public class AdapterInventory implements IPeripheralAdapter {
 		Preconditions.checkElementIndex(slot, invent.getSizeInventory(), "slot id");
 		invent.setInventorySlotContents(slot, null);
 	}
+
+	@Freeform
+	@LuaCallable(returnTypes = { LuaType.TABLE })
+	public ItemStack test(@Arg(type = LuaType.TABLE) ItemStack itemStack) {
+		return itemStack;
+	}
 }
