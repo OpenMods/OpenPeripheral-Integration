@@ -13,12 +13,12 @@ public class AdapterRedstoneControl implements IPeripheralAdapter {
 
 	@LuaCallable()
 	public void setRedstoneControl(IRedstoneControl target,
-			@Arg(name = "control", type = LuaType.STRING) ControlMode control) {
+			@Arg(name = "control") ControlMode control) {
 		SecurityUtils.checkAccess(target);
 		target.setControl(control);
 	}
 
-	@LuaCallable(returnTypes = LuaType.STRING)
+	@LuaCallable(returnTypes = LuaReturnType.STRING)
 	public ControlMode getRedstoneControl(IRedstoneControl target) {
 		return target.getControl();
 	}

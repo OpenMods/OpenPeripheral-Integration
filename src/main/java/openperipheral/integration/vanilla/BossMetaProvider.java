@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class BossMetaProvider implements IEntityMetadataProvider<IBossDisplayData> {
-
-	@Override
-	public Class<? extends IBossDisplayData> getTargetClass() {
-		return IBossDisplayData.class;
-	}
+@SuppressWarnings("serial")
+public class BossMetaProvider extends EntityMetaProviderSimple<IBossDisplayData> {
 
 	@Override
 	public String getKey() {

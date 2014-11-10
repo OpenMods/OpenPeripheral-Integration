@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityCreeperMetaProvider implements IEntityMetadataProvider<EntityCreeper> {
-
-	@Override
-	public Class<? extends EntityCreeper> getTargetClass() {
-		return EntityCreeper.class;
-	}
+@SuppressWarnings("serial")
+public class EntityCreeperMetaProvider extends EntityMetaProviderSimple<EntityCreeper> {
 
 	@Override
 	public String getKey() {

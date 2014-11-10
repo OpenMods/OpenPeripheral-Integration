@@ -11,19 +11,19 @@ public class AdapterEnderItemAttuned implements IPeripheralAdapter {
 		return IEnderItemHandler.class;
 	}
 
-	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaType.STRING)
+	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaReturnType.STRING)
 	public String getChannelName(IEnderItemHandler tileEntity) {
 		return tileEntity.getChannelString();
 	}
 
-	@LuaCallable(description = "Get the active frequency of the machine.", returnTypes = LuaType.NUMBER)
+	@LuaCallable(description = "Get the active frequency of the machine.", returnTypes = LuaReturnType.NUMBER)
 	public int getFrequency(IEnderItemHandler tileEntity) {
 		return tileEntity.getFrequency();
 	}
 
-	@LuaCallable(description = "set the active frequency of the machine.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "set the active frequency of the machine.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean setFrequency(IEnderItemHandler tileEntity,
-			@Arg(name = "frequency", type = LuaType.NUMBER, description = "the frequency you want to set to.") int frequency) {
+			@Arg(name = "frequency", description = "the frequency you want to set to.") int frequency) {
 		SecurityUtils.checkAccess(tileEntity);
 		return tileEntity.setFrequency(frequency);
 	}
@@ -34,12 +34,12 @@ public class AdapterEnderItemAttuned implements IPeripheralAdapter {
 		return tileEntity.clearFrequency();
 	}
 
-	@LuaCallable(description = "Can the machine output items via the ender net.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "Can the machine output items via the ender net.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean canSendItems(IEnderItemHandler tileEntity) {
 		return tileEntity.canSendItems();
 	}
 
-	@LuaCallable(description = "Can the machine input items via the ender net.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "Can the machine input items via the ender net.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean canReceiveItems(IEnderItemHandler tileEntity) {
 		return tileEntity.canReceiveItems();
 	}

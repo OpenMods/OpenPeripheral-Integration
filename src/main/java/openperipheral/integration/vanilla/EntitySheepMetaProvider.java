@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntitySheepMetaProvider implements IEntityMetadataProvider<EntitySheep> {
-
-	@Override
-	public Class<? extends EntitySheep> getTargetClass() {
-		return EntitySheep.class;
-	}
+@SuppressWarnings("serial")
+public class EntitySheepMetaProvider extends EntityMetaProviderSimple<EntitySheep> {
 
 	@Override
 	public String getKey() {

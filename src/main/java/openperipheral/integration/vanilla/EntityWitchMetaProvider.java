@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityWitchMetaProvider implements IEntityMetadataProvider<EntityWitch> {
-
-	@Override
-	public Class<? extends EntityWitch> getTargetClass() {
-		return EntityWitch.class;
-	}
+@SuppressWarnings("serial")
+public class EntityWitchMetaProvider extends EntityMetaProviderSimple<EntityWitch> {
 
 	@Override
 	public String getKey() {

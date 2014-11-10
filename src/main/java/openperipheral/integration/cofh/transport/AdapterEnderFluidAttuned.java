@@ -11,19 +11,19 @@ public class AdapterEnderFluidAttuned implements IPeripheralAdapter {
 		return IEnderFluidHandler.class;
 	}
 
-	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaType.STRING)
+	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaReturnType.STRING)
 	public String getChannelName(IEnderFluidHandler tileEntity) {
 		return tileEntity.getChannelString();
 	}
 
-	@LuaCallable(description = "Get the active frequency of the machine.", returnTypes = LuaType.NUMBER)
+	@LuaCallable(description = "Get the active frequency of the machine.", returnTypes = LuaReturnType.NUMBER)
 	public int getFrequency(IEnderFluidHandler tileEntity) {
 		return tileEntity.getFrequency();
 	}
 
-	@LuaCallable(description = "set the active frequency of the machine.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "set the active frequency of the machine.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean setFrequency(IEnderFluidHandler tileEntity,
-			@Arg(name = "frequency", type = LuaType.NUMBER, description = "the frequency you want to set to.") int frequency) {
+			@Arg(name = "frequency", description = "the frequency you want to set to.") int frequency) {
 		SecurityUtils.checkAccess(tileEntity);
 		return tileEntity.setFrequency(frequency);
 	}
@@ -34,12 +34,12 @@ public class AdapterEnderFluidAttuned implements IPeripheralAdapter {
 		return tileEntity.clearFrequency();
 	}
 
-	@LuaCallable(description = "Can the machine output fluids via the ender net.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "Can the machine output fluids via the ender net.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean canSendFluid(IEnderFluidHandler tileEntity) {
 		return tileEntity.canSendFluid();
 	}
 
-	@LuaCallable(description = "Can the machine input fluids via the ender net.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "Can the machine input fluids via the ender net.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean canReceiveFluid(IEnderFluidHandler tileEntity) {
 		return tileEntity.canReceiveFluid();
 	}

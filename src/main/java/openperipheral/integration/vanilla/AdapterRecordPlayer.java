@@ -4,7 +4,7 @@ import net.minecraft.block.BlockJukebox.TileEntityJukebox;
 import net.minecraft.item.ItemStack;
 import openperipheral.api.IPeripheralAdapter;
 import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaType;
+import openperipheral.api.LuaReturnType;
 
 public class AdapterRecordPlayer implements IPeripheralAdapter {
 
@@ -13,7 +13,7 @@ public class AdapterRecordPlayer implements IPeripheralAdapter {
 		return TileEntityJukebox.class;
 	}
 
-	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get the record currently being played")
+	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the record currently being played")
 	public ItemStack getRecord(TileEntityJukebox recordPlayer) {
 		return recordPlayer.func_145856_a();
 	}

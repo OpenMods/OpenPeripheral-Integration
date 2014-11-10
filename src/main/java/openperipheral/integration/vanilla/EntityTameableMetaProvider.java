@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityTameableMetaProvider implements IEntityMetadataProvider<EntityTameable> {
-
-	@Override
-	public Class<? extends EntityTameable> getTargetClass() {
-		return EntityTameable.class;
-	}
+@SuppressWarnings("serial")
+public class EntityTameableMetaProvider extends EntityMetaProviderSimple<EntityTameable> {
 
 	@Override
 	public String getKey() {

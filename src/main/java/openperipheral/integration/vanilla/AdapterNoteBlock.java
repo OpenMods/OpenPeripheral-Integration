@@ -24,25 +24,25 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 
 	@LuaCallable(description = "Set the note on the noteblock")
 	public void setPitch(TileEntityNote noteblock,
-			@Arg(type = LuaType.NUMBER, name = "note", description = "The note you want. From 0 to 25") int note)
+			@Arg(name = "note", description = "The note you want. From 0 to 25") int note)
 	{
 		noteblock.note = (byte)(note % 25);
 		noteblock.markDirty();
 	}
 
-	@LuaCallable(returnTypes = LuaType.NUMBER, description = "Get the note currently set on this noteblock")
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get the note currently set on this noteblock")
 	public byte getNote(TileEntityNote noteblock) {
 		return noteblock.note;
 	}
 
 	@LuaCallable(description = "Plays a minecraft sound")
 	public void playSound(TileEntityNote noteblock,
-			@Arg(type = LuaType.STRING, name = "sound", description = "The identifier for the sound") String name,
-			@Arg(type = LuaType.NUMBER, name = "pitch", description = "The pitch from 0 to 1") float pitch,
-			@Arg(type = LuaType.NUMBER, name = "volume", description = "The volume from 0 to 1") float volume,
-			@Optionals @Arg(type = LuaType.NUMBER, name = "x", description = "X coordinate od sound (relative to block)") Double dx,
-			@Arg(type = LuaType.NUMBER, name = "y", description = "Y coordinate of sound (relative to block)") Double dy,
-			@Arg(type = LuaType.NUMBER, name = "z", description = "Z coordinate of sound (relative to block)") Double dz) {
+			@Arg(name = "sound", description = "The identifier for the sound") String name,
+			@Arg(name = "pitch", description = "The pitch from 0 to 1") float pitch,
+			@Arg(name = "volume", description = "The volume from 0 to 1") float volume,
+			@Optionals @Arg(name = "x", description = "X coordinate od sound (relative to block)") Double dx,
+			@Arg(name = "y", description = "Y coordinate of sound (relative to block)") Double dy,
+			@Arg(name = "z", description = "Z coordinate of sound (relative to block)") Double dz) {
 		noteblock.getWorldObj().playSoundEffect(
 				noteblock.xCoord + 0.5 + Objects.firstNonNull(dx, 0.0),
 				noteblock.yCoord + 0.5 + Objects.firstNonNull(dy, 0.0),

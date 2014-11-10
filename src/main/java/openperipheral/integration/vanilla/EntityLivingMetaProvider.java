@@ -9,16 +9,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityLivingMetaProvider implements IEntityMetadataProvider<EntityLiving> {
-
-	@Override
-	public Class<? extends EntityLiving> getTargetClass() {
-		return EntityLiving.class;
-	}
+@SuppressWarnings("serial")
+public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLiving> {
 
 	@Override
 	public String getKey() {

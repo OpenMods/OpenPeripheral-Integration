@@ -14,24 +14,24 @@ public class AdapterInventoryHandler implements IPeripheralAdapter {
 		return IInventoryHandler.class;
 	}
 
-	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get the contents of the IInventoryHandler's inventory")
+	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the contents of the IInventoryHandler's inventory")
 	List<ItemStack> getInventoryContents(IInventoryHandler target,
-			@Arg(name = "from", type = LuaType.STRING) ForgeDirection from) {
+			@Arg(name = "from") ForgeDirection from) {
 		return target.getInventoryContents(from);
 	}
 
 	int getSizeInventory(IInventoryHandler target,
-			@Arg(name = "from", type = LuaType.STRING) ForgeDirection from) {
+			@Arg(name = "from") ForgeDirection from) {
 		return target.getSizeInventory(from);
 	}
 
 	boolean isEmpty(IInventoryHandler target,
-			@Arg(name = "from", type = LuaType.STRING) ForgeDirection from) {
+			@Arg(name = "from") ForgeDirection from) {
 		return target.isEmpty(from);
 	}
 
 	boolean isFull(IInventoryHandler target,
-			@Arg(name = "from", type = LuaType.STRING) ForgeDirection from) {
+			@Arg(name = "from") ForgeDirection from) {
 		return target.isFull(from);
 	}
 }

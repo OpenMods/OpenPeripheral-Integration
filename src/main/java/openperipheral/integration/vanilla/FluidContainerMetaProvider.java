@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class FluidContainerMetaProvider implements IItemStackMetadataProvider<IFluidContainerItem> {
-
-	@Override
-	public Class<? extends IFluidContainerItem> getTargetClass() {
-		return IFluidContainerItem.class;
-	}
+@SuppressWarnings("serial")
+public class FluidContainerMetaProvider extends ItemStackMetaProviderSimple<IFluidContainerItem> {
 
 	@Override
 	public String getKey() {

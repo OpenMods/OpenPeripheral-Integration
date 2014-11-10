@@ -11,19 +11,19 @@ public class AdapterEnderEnergyAttuned implements IPeripheralAdapter {
 		return IEnderEnergyHandler.class;
 	}
 
-	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaType.STRING)
+	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaReturnType.STRING)
 	public String getChannelName(IEnderEnergyHandler tileEntity) {
 		return tileEntity.getChannelString();
 	}
 
-	@LuaCallable(description = "Get the active frequency of the machine.", returnTypes = LuaType.NUMBER)
+	@LuaCallable(description = "Get the active frequency of the machine.", returnTypes = LuaReturnType.NUMBER)
 	public int getFrequency(IEnderEnergyHandler tileEntity) {
 		return tileEntity.getFrequency();
 	}
 
-	@LuaCallable(description = "set the active frequency of the machine.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "set the active frequency of the machine.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean setFrequency(IEnderEnergyHandler tileEntity,
-			@Arg(name = "frequency", type = LuaType.NUMBER, description = "the frequency you want to set to.") int frequency) {
+			@Arg(name = "frequency", description = "the frequency you want to set to.") int frequency) {
 		SecurityUtils.checkAccess(tileEntity);
 		return tileEntity.setFrequency(frequency);
 	}
@@ -34,12 +34,12 @@ public class AdapterEnderEnergyAttuned implements IPeripheralAdapter {
 		return tileEntity.clearFrequency();
 	}
 
-	@LuaCallable(description = "Can the machine output energy via the ender net.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "Can the machine output energy via the ender net.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean canSendEnergy(IEnderEnergyHandler tileEntity) {
 		return tileEntity.canSendEnergy();
 	}
 
-	@LuaCallable(description = "Can the machine input energy via the ender net.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "Can the machine input energy via the ender net.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean canReceiveEnergy(IEnderEnergyHandler tileEntity) {
 		return tileEntity.canReceiveEnergy();
 	}

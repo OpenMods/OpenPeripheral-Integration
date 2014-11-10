@@ -1,15 +1,11 @@
 package openperipheral.integration.cofh.item;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 import cofh.api.item.IEmpowerableItem;
 
-public class EmpoweredItemMetaProvider implements IItemStackMetadataProvider<IEmpowerableItem> {
-
-	@Override
-	public Class<? extends IEmpowerableItem> getTargetClass() {
-		return IEmpowerableItem.class;
-	}
+@SuppressWarnings("serial")
+public class EmpoweredItemMetaProvider extends ItemStackMetaProviderSimple<IEmpowerableItem> {
 
 	@Override
 	public String getKey() {

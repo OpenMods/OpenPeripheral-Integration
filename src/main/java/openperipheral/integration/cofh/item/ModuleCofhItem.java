@@ -1,7 +1,7 @@
 package openperipheral.integration.cofh.item;
 
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IItemStackMetadataBuilder;
+import openperipheral.api.IItemStackMetaBuilder;
 import openperipheral.integration.OPIntegrationModule;
 
 public class ModuleCofhItem extends OPIntegrationModule {
@@ -13,7 +13,7 @@ public class ModuleCofhItem extends OPIntegrationModule {
 
 	@Override
 	public void load() {
-		final IItemStackMetadataBuilder itemMeta = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		final IItemStackMetaBuilder itemMeta = ApiAccess.getApi(IItemStackMetaBuilder.class);
 		itemMeta.register(new AugumenedItemMetaProvider());
 		itemMeta.register(new EmpoweredItemMetaProvider());
 		itemMeta.register(new InventoryContainerMetaProvider());

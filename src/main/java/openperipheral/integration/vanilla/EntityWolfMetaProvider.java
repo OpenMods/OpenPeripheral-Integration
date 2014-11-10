@@ -5,16 +5,12 @@ import java.util.Map;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.Vec3;
 import openmods.utils.ColorUtils;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityWolfMetaProvider implements IEntityMetadataProvider<EntityWolf> {
-
-	@Override
-	public Class<? extends EntityWolf> getTargetClass() {
-		return EntityWolf.class;
-	}
+@SuppressWarnings("serial")
+public class EntityWolfMetaProvider extends EntityMetaProviderSimple<EntityWolf> {
 
 	@Override
 	public String getKey() {

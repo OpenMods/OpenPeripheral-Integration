@@ -26,13 +26,13 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return IInventory.class;
 	}
 
-	@LuaCallable(returnTypes = LuaType.STRING, description = "Get the name of this inventory")
+	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "Get the name of this inventory")
 	public String getInventoryName(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		return inventory != null? inventory.getInventoryName() : null;
 	}
 
-	@LuaCallable(returnTypes = LuaType.NUMBER, description = "Get the size of this inventory")
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get the size of this inventory")
 	public int getInventorySize(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		return inventory != null? inventory.getSizeInventory() : 0;
@@ -44,12 +44,12 @@ public class AdapterInventory implements IPeripheralAdapter {
 	}
 
 	@Alias("pullItemIntoSlot")
-	@LuaCallable(returnTypes = LuaType.NUMBER, description = "Pull an item from a slot in another inventory into a slot in this one. Returns the amount of items moved")
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Pull an item from a slot in another inventory into a slot in this one. Returns the amount of items moved")
 	public int pullItem(IInventory target,
-			@Arg(type = LuaType.STRING, name = "direction", description = "The direction of the other inventory. (north, south, east, west, up or down)") ForgeDirection direction,
-			@Arg(type = LuaType.NUMBER, name = "slot", description = "The slot in the OTHER inventory that you're pulling from") int fromSlot,
-			@Optionals @Arg(type = LuaType.NUMBER, name = "maxAmount", description = "The maximum amount of items you want to pull") Integer maxAmount,
-			@Arg(type = LuaType.NUMBER, name = "intoSlot", description = "The slot in the current inventory that you want to pull into") Integer intoSlot) {
+			@Arg(name = "direction", description = "The direction of the other inventory. (north, south, east, west, up or down)") ForgeDirection direction,
+			@Arg(name = "slot", description = "The slot in the OTHER inventory that you're pulling from") int fromSlot,
+			@Optionals @Arg(name = "maxAmount", description = "The maximum amount of items you want to pull") Integer maxAmount,
+			@Arg(name = "intoSlot", description = "The slot in the current inventory that you want to pull into") Integer intoSlot) {
 
 		Preconditions.checkArgument(direction != null && direction != ForgeDirection.UNKNOWN, "Invalid direction");
 		TileEntity te = (TileEntity)target;
@@ -71,12 +71,12 @@ public class AdapterInventory implements IPeripheralAdapter {
 	}
 
 	@Alias("pushItemIntoSlot")
-	@LuaCallable(returnTypes = LuaType.NUMBER, description = "Push an item from the current inventory into slot on the other one. Returns the amount of items moved")
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Push an item from the current inventory into slot on the other one. Returns the amount of items moved")
 	public int pushItem(IInventory target,
-			@Arg(type = LuaType.STRING, name = "direction", description = "The direction of the other inventory. (north, south, east, west, up or down)") ForgeDirection direction,
-			@Arg(type = LuaType.NUMBER, name = "slot", description = "The slot in the current inventory that you're pushing from") int fromSlot,
-			@Optionals @Arg(type = LuaType.NUMBER, name = "maxAmount", description = "The maximum amount of items you want to push") Integer maxAmount,
-			@Arg(type = LuaType.NUMBER, name = "intoSlot", description = "The slot in the other inventory that you want to push into") Integer intoSlot) {
+			@Arg(name = "direction", description = "The direction of the other inventory. (north, south, east, west, up or down)") ForgeDirection direction,
+			@Arg(name = "slot", description = "The slot in the current inventory that you're pushing from") int fromSlot,
+			@Optionals @Arg(name = "maxAmount", description = "The maximum amount of items you want to push") Integer maxAmount,
+			@Arg(name = "intoSlot", description = "The slot in the other inventory that you want to push into") Integer intoSlot) {
 		Preconditions.checkArgument(direction != null && direction != ForgeDirection.UNKNOWN, "Invalid direction");
 		TileEntity te = (TileEntity)target;
 
@@ -113,10 +113,10 @@ public class AdapterInventory implements IPeripheralAdapter {
 
 	@LuaCallable(description = "Swap two slots in the inventory")
 	public void swapStacks(IInventory target,
-			@Arg(type = LuaType.NUMBER, name = "from", description = "The first slot") int fromSlot,
-			@Arg(type = LuaType.NUMBER, name = "to", description = "The other slot") int intoSlot,
-			@Optionals @Arg(type = LuaType.STRING, name = "fromDirection") ForgeDirection fromDirection,
-			@Arg(type = LuaType.STRING, name = "fromDirection") ForgeDirection toDirection) {
+			@Arg(name = "from", description = "The first slot") int fromSlot,
+			@Arg(name = "to", description = "The other slot") int intoSlot,
+			@Optionals @Arg(name = "fromDirection") ForgeDirection fromDirection,
+			@Arg(name = "fromDirection") ForgeDirection toDirection) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		Preconditions.checkNotNull(inventory, "Invalid target!");
 		if (inventory instanceof ISidedInventory) {
@@ -127,9 +127,9 @@ public class AdapterInventory implements IPeripheralAdapter {
 		else InventoryUtils.swapStacks(inventory, fromSlot - 1, intoSlot - 1);
 	}
 
-	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get details of an item in a particular slot")
+	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get details of an item in a particular slot")
 	public ItemStack getStackInSlot(IInventory target,
-			@Arg(type = LuaType.NUMBER, name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
+			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
 	{
 		IInventory invent = InventoryUtils.getInventory(target);
 		slot -= 1;
@@ -137,7 +137,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return invent.getStackInSlot(slot);
 	}
 
-	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get a table with all the items of the chest")
+	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get a table with all the items of the chest")
 	public ItemStack[] getAllStacks(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		ItemStack[] allStacks = new ItemStack[inventory.getSizeInventory()];
@@ -149,7 +149,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 
 	@LuaCallable(description = "Destroy a stack")
 	public void destroyStack(IInventory target,
-			@Arg(type = LuaType.NUMBER, name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
+			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
 	{
 		IInventory invent = InventoryUtils.getInventory(target);
 		slot -= 1;
@@ -158,8 +158,8 @@ public class AdapterInventory implements IPeripheralAdapter {
 	}
 
 	@Freeform
-	@LuaCallable(returnTypes = { LuaType.TABLE })
-	public ItemStack expandStack(@Arg(type = LuaType.TABLE) ItemStack itemStack) {
+	@LuaCallable(returnTypes = LuaReturnType.TABLE)
+	public ItemStack expandStack(@Arg(name = "stack") ItemStack itemStack) {
 		return itemStack;
 	}
 }

@@ -19,8 +19,8 @@ public class AdapterSign implements IPeripheralAdapter {
 
 	@LuaCallable(description = "Sets the text on the sign")
 	public void setLine(TileEntitySign sign,
-			@Arg(name = "line", type = LuaType.NUMBER, description = "The line number to set the text on the sign") int line,
-			@Arg(name = "text", type = LuaType.STRING, description = "The text to display on the sign") String text) {
+			@Arg(name = "line", description = "The line number to set the text on the sign") int line,
+			@Arg(name = "text", description = "The text to display on the sign") String text) {
 		line -= 1;
 		checkRange(line, sign.signText.length);
 		sign.signText[line] = text.length() < 15? text : text.substring(0, 15);
@@ -28,9 +28,9 @@ public class AdapterSign implements IPeripheralAdapter {
 	}
 
 	@Asynchronous
-	@LuaCallable(returnTypes = LuaType.STRING, description = "Gets the text from the supplied line of the sign")
+	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "Gets the text from the supplied line of the sign")
 	public String getLine(TileEntitySign sign,
-			@Arg(name = "line", type = LuaType.NUMBER, description = "The line number to get from the sign") int line)
+			@Arg(name = "line", description = "The line number to get from the sign") int line)
 	{
 		line -= 1;
 		checkRange(line, sign.signText.length);
@@ -39,7 +39,7 @@ public class AdapterSign implements IPeripheralAdapter {
 
 	@LuaCallable(description = "Sets the text on the sign")
 	public void setText(TileEntitySign sign,
-			@Arg(name = "text", type = LuaType.STRING, description = "The text to display on the sign") String text)
+			@Arg(name = "text", description = "The text to display on the sign") String text)
 	{
 		String[] lines = text.split("\n");
 
@@ -53,7 +53,7 @@ public class AdapterSign implements IPeripheralAdapter {
 	}
 
 	@Asynchronous
-	@LuaCallable(returnTypes = LuaType.STRING, description = "Gets the text on the sign")
+	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "Gets the text on the sign")
 	public String getText(TileEntitySign sign) {
 		return StringUtils.join(sign.signText, '\n');
 	}

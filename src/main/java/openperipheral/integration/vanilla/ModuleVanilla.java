@@ -44,12 +44,12 @@ public class ModuleVanilla implements IIntegrationModule {
 		adapterRegistry.register(new AdapterSign());
 		adapterRegistry.register(new AdapterDaylightSensor());
 
-		final IItemStackMetadataBuilder itemMeta = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		final IItemStackMetaBuilder itemMeta = ApiAccess.getApi(IItemStackMetaBuilder.class);
 		itemMeta.register(new EnchantedBookMetaProvider());
 		itemMeta.register(new EnchantmentMetaProvider());
 		itemMeta.register(new FluidContainerMetaProvider());
 
-		final IEntityMetadataBuilder entityMeta = ApiAccess.getApi(IEntityMetadataBuilder.class);
+		final IEntityMetaBuilder entityMeta = ApiAccess.getApi(IEntityMetaBuilder.class);
 		entityMeta.register(new EntityBatMetaProvider());
 		entityMeta.register(new EntityCreeperMetaProvider());
 		entityMeta.register(new EntityHorseMetaProvider());

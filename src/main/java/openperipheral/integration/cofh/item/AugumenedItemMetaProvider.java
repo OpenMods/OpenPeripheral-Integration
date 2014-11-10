@@ -3,17 +3,13 @@ package openperipheral.integration.cofh.item;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 import cofh.api.item.IAugmentItem;
 
 import com.google.common.collect.Maps;
 
-public class AugumenedItemMetaProvider implements IItemStackMetadataProvider<IAugmentItem> {
-
-	@Override
-	public Class<? extends IAugmentItem> getTargetClass() {
-		return IAugmentItem.class;
-	}
+@SuppressWarnings("serial")
+public class AugumenedItemMetaProvider extends ItemStackMetaProviderSimple<IAugmentItem> {
 
 	@Override
 	public String getKey() {

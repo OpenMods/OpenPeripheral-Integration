@@ -3,14 +3,10 @@ package openperipheral.integration.vanilla;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.Vec3;
 import openmods.utils.InventoryUtils;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
-public class InventoryMetaProvider implements IEntityMetadataProvider<IInventory> {
-
-	@Override
-	public Class<? extends IInventory> getTargetClass() {
-		return IInventory.class;
-	}
+@SuppressWarnings("serial")
+public class InventoryMetaProvider extends EntityMetaProviderSimple<IInventory> {
 
 	@Override
 	public String getKey() {

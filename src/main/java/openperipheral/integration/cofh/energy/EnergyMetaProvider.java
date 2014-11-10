@@ -3,17 +3,13 @@ package openperipheral.integration.cofh.energy;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 import cofh.api.energy.IEnergyContainerItem;
 
 import com.google.common.collect.Maps;
 
-public class EnergyMetaProvider implements IItemStackMetadataProvider<IEnergyContainerItem> {
-
-	@Override
-	public Class<? extends IEnergyContainerItem> getTargetClass() {
-		return IEnergyContainerItem.class;
-	}
+@SuppressWarnings("serial")
+public class EnergyMetaProvider extends ItemStackMetaProviderSimple<IEnergyContainerItem> {
 
 	@Override
 	public String getKey() {

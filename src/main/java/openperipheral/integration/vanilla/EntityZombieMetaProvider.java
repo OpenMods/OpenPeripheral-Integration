@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityZombieMetaProvider implements IEntityMetadataProvider<EntityZombie> {
-
-	@Override
-	public Class<? extends EntityZombie> getTargetClass() {
-		return EntityZombie.class;
-	}
+@SuppressWarnings("serial")
+public class EntityZombieMetaProvider extends EntityMetaProviderSimple<EntityZombie> {
 
 	@Override
 	public String getKey() {

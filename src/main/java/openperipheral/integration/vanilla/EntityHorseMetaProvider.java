@@ -7,16 +7,12 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.Vec3;
 import openmods.utils.InventoryUtils;
 import openmods.utils.ReflectionHelper;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityHorseMetaProvider implements IEntityMetadataProvider<EntityHorse> {
-
-	@Override
-	public Class<? extends EntityHorse> getTargetClass() {
-		return EntityHorse.class;
-	}
+@SuppressWarnings("serial")
+public class EntityHorseMetaProvider extends EntityMetaProviderSimple<EntityHorse> {
 
 	@Override
 	public String getKey() {

@@ -5,16 +5,12 @@ import java.util.Map;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import openmods.utils.InventoryUtils;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityPlayerMetaProvider implements IEntityMetadataProvider<EntityPlayer> {
-
-	@Override
-	public Class<? extends EntityPlayer> getTargetClass() {
-		return EntityPlayer.class;
-	}
+@SuppressWarnings("serial")
+public class EntityPlayerMetaProvider extends EntityMetaProviderSimple<EntityPlayer> {
 
 	@Override
 	public String getKey() {

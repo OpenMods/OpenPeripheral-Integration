@@ -11,18 +11,18 @@ public class AdapterSecureTile implements IPeripheralAdapter {
 		return ISecurable.class;
 	}
 
-	@LuaCallable(description = "Gets the owner of the machine.", returnTypes = LuaType.STRING)
+	@LuaCallable(description = "Gets the owner of the machine.", returnTypes = LuaReturnType.STRING)
 	public String getOwnerName(ISecurable tile) {
 		return tile.getOwnerName();
 	}
 
-	@LuaCallable(description = "Is this username allowed to access the machine.", returnTypes = LuaType.BOOLEAN)
+	@LuaCallable(description = "Is this username allowed to access the machine.", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean canPlayerAccess(ISecurable tile,
-			@Arg(name = "username", description = "The username to check for", type = LuaType.STRING) String name) {
+			@Arg(name = "username", description = "The username to check for") String name) {
 		return tile.canPlayerAccess(name);
 	}
 
-	@LuaCallable(description = "Gets the AccessMode of this machine.", returnTypes = LuaType.STRING)
+	@LuaCallable(description = "Gets the AccessMode of this machine.", returnTypes = LuaReturnType.STRING)
 	public AccessMode getAccess(ISecurable tile) {
 		return tile.getAccess();
 	}

@@ -3,14 +3,10 @@ package openperipheral.integration.vanilla;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
-public class EnchantedBookMetaProvider implements IItemStackMetadataProvider<ItemEnchantedBook> {
-
-	@Override
-	public Class<? extends ItemEnchantedBook> getTargetClass() {
-		return ItemEnchantedBook.class;
-	}
+@SuppressWarnings("serial")
+public class EnchantedBookMetaProvider extends ItemStackMetaProviderSimple<ItemEnchantedBook> {
 
 	@Override
 	public String getKey() {

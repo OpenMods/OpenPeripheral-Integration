@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityBatMetaProvider implements IEntityMetadataProvider<EntityBat> {
-
-	@Override
-	public Class<? extends EntityBat> getTargetClass() {
-		return EntityBat.class;
-	}
+@SuppressWarnings("serial")
+public class EntityBatMetaProvider extends EntityMetaProviderSimple<EntityBat> {
 
 	@Override
 	public String getKey() {

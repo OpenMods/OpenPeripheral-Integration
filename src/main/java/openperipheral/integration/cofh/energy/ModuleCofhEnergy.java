@@ -2,9 +2,8 @@ package openperipheral.integration.cofh.energy;
 
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
-import openperipheral.api.IItemStackMetadataBuilder;
+import openperipheral.api.IItemStackMetaBuilder;
 import openperipheral.integration.OPIntegrationModule;
-import openperipheral.integration.cofh.tileentity.AdapterEnergyInfo;
 
 public class ModuleCofhEnergy extends OPIntegrationModule {
 
@@ -19,7 +18,7 @@ public class ModuleCofhEnergy extends OPIntegrationModule {
 		adapterRegistry.register(new AdapterEnergyReceiver());
 		adapterRegistry.register(new AdapterEnergyProvider());
 
-		final IItemStackMetadataBuilder itemMeta = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		final IItemStackMetaBuilder itemMeta = ApiAccess.getApi(IItemStackMetaBuilder.class);
 		itemMeta.register(new EnergyMetaProvider());
 	}
 }

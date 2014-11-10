@@ -4,16 +4,12 @@ import java.util.Map;
 
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityVillagerMetaProvider implements IEntityMetadataProvider<EntityVillager> {
-
-	@Override
-	public Class<? extends EntityVillager> getTargetClass() {
-		return EntityVillager.class;
-	}
+@SuppressWarnings("serial")
+public class EntityVillagerMetaProvider extends EntityMetaProviderSimple<EntityVillager> {
 
 	@Override
 	public String getKey() {
