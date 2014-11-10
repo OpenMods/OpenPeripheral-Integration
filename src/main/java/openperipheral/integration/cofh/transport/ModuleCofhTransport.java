@@ -1,30 +1,28 @@
-package openperipheral.integration.thermalexpansion;
+package openperipheral.integration.cofh.transport;
 
-import openmods.Mods;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
 import openperipheral.api.IItemStackMetadataBuilder;
 import openperipheral.integration.OPIntegrationModule;
+import openperipheral.integration.cofh.energy.AdapterEnergyReceiver;
+import openperipheral.integration.cofh.energy.EnergyMetaProvider;
+import openperipheral.integration.cofh.tileentity.AdapterEnergyInfo;
 
-public class ModuleThermalExpansion extends OPIntegrationModule {
+public class ModuleCofhTransport extends OPIntegrationModule {
 
 	@Override
 	public String getModId() {
-		return Mods.THERMALEXPANSION;
+		return "CoFHAPI|transport";
 	}
 
 	@Override
 	public void load() {
 		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
-		adapterRegistry.register(new AdapterEnergyHandler());
-		adapterRegistry.register(new AdapterEnderAttuned());
+		adapterRegistry.register(new AdapterEnergyReceiver());
+		adapterRegistry.register(new AdapterEnderItemAttuned());
 		adapterRegistry.register(new AdapterEnergyInfo());
-		adapterRegistry.register(new AdapterTileLamp());
-		adapterRegistry.register(new AdapterSecureTile());
 
 		final IItemStackMetadataBuilder itemMeta = ApiAccess.getApi(IItemStackMetadataBuilder.class);
 		itemMeta.register(new EnergyMetaProvider());
-		itemMeta.register(new ContainerMetaProvider());
-		itemMeta.register(new SecureItemMetaProvider());
 	}
 }

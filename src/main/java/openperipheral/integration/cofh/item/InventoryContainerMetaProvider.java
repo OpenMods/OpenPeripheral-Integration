@@ -1,4 +1,4 @@
-package openperipheral.integration.thermalexpansion;
+package openperipheral.integration.cofh.item;
 
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import cofh.api.item.IInventoryContainerItem;
 
 import com.google.common.collect.Maps;
 
-public class ContainerMetaProvider implements IItemStackMetadataProvider<IInventoryContainerItem> {
+public class InventoryContainerMetaProvider implements IItemStackMetadataProvider<IInventoryContainerItem> {
 
 	@Override
 	public Class<? extends IInventoryContainerItem> getTargetClass() {
@@ -23,8 +23,7 @@ public class ContainerMetaProvider implements IItemStackMetadataProvider<IInvent
 	@Override
 	public Object getMeta(IInventoryContainerItem target, ItemStack stack) {
 		Map<String, Object> map = Maps.newHashMap();
-		map.put("sizeInventory", target.getSizeInventory(stack));
-		map.put("inventoryContents", target.getInventoryContents(stack));
+		map.put("size", target.getSizeInventory(stack));
 		return map;
 	}
 

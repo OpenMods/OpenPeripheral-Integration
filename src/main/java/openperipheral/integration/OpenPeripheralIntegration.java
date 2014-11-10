@@ -3,6 +3,11 @@ package openperipheral.integration;
 import net.minecraftforge.common.config.Configuration;
 import openmods.config.properties.ConfigProcessing;
 import openmods.integration.Integration;
+import openperipheral.integration.cofh.energy.ModuleCofhEnergy;
+import openperipheral.integration.cofh.inventory.ModuleCofhInventory;
+import openperipheral.integration.cofh.item.ModuleCofhItem;
+import openperipheral.integration.cofh.tileentity.ModuleCofhTileEntity;
+import openperipheral.integration.cofh.transport.ModuleCofhTransport;
 import openperipheral.integration.vanilla.ModuleVanilla;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -17,21 +22,26 @@ public class OpenPeripheralIntegration {
 		ConfigProcessing.processAnnotations(evt.getSuggestedConfigurationFile(), "OpenPeripheralIntegration", config, Config.class);
 		if (config.hasChanged()) config.save();
 
-//		Integration.addModule(new ModuleAppEng());
-//		Integration.addModule(new ModuleBuildCraft());
-//		Integration.addModule(new ModuleComputerCraft());
-//		Integration.addModule(new ModuleEnderStorage());
-//		Integration.addModule(new ModuleForestry());
-//		Integration.addModule(new ModuleIC2());
-//		Integration.addModule(new ModuleMinefactoryReloaded());
-//		Integration.addModule(new ModuleMystcraft());
-//		Integration.addModule(new ModuleProjectRed());
-//		Integration.addModule(new ModuleRailcraft());
-//		Integration.addModule(new ModuleSgCraft());
-//		Integration.addModule(new ModuleThaumcraft());
-//		Integration.addModule(new ModuleThermalExpansion());
-//		Integration.addModule(new ModuleTMechworks());
+		// Integration.addModule(new ModuleAppEng());
+		// Integration.addModule(new ModuleBuildCraft());
+		// Integration.addModule(new ModuleComputerCraft());
+		// Integration.addModule(new ModuleEnderStorage());
+		// Integration.addModule(new ModuleForestry());
+		// Integration.addModule(new ModuleIC2());
+		// Integration.addModule(new ModuleMinefactoryReloaded());
+		// Integration.addModule(new ModuleMystcraft());
+		// Integration.addModule(new ModuleProjectRed());
+		// Integration.addModule(new ModuleRailcraft());
+		// Integration.addModule(new ModuleSgCraft());
+		// Integration.addModule(new ModuleThaumcraft());
+		// Integration.addModule(new ModuleTMechworks());
 		Integration.addModule(new ModuleVanilla());
+
+		Integration.addModule(new ModuleCofhEnergy());
+		Integration.addModule(new ModuleCofhInventory());
+		Integration.addModule(new ModuleCofhItem());
+		Integration.addModule(new ModuleCofhTileEntity());
+		Integration.addModule(new ModuleCofhTransport());
 
 	}
 

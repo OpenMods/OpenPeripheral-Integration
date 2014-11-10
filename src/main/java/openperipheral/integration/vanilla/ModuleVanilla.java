@@ -47,6 +47,7 @@ public class ModuleVanilla implements IIntegrationModule {
 		final IItemStackMetadataBuilder itemMeta = ApiAccess.getApi(IItemStackMetadataBuilder.class);
 		itemMeta.register(new EnchantedBookMetaProvider());
 		itemMeta.register(new EnchantmentMetaProvider());
+		itemMeta.register(new FluidContainerMetaProvider());
 
 		final IEntityMetadataBuilder entityMeta = ApiAccess.getApi(IEntityMetadataBuilder.class);
 		entityMeta.register(new EntityBatMetaProvider());

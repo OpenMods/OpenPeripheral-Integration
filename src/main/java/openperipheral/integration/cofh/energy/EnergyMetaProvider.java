@@ -1,4 +1,4 @@
-package openperipheral.integration.thermalexpansion;
+package openperipheral.integration.cofh.energy;
 
 import java.util.Map;
 
