@@ -2,12 +2,12 @@ package openperipheral.integration.cofh.item;
 
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IItemStackMetaBuilder;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.integration.ApiIntegrationModule;
 
-public class ModuleCofhItem extends OPIntegrationModule {
+public class ModuleCofhItem extends ApiIntegrationModule {
 
 	@Override
-	public String getModId() {
+	public String getApiId() {
 		return "CoFHAPI|item";
 	}
 

@@ -3,12 +3,12 @@ package openperipheral.integration.cofh.energy;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
 import openperipheral.api.IItemStackMetaBuilder;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.integration.ApiIntegrationModule;
 
-public class ModuleCofhEnergy extends OPIntegrationModule {
+public class ModuleCofhEnergy extends ApiIntegrationModule {
 
 	@Override
-	public String getModId() {
+	public String getApiId() {
 		return "CoFHAPI|energy";
 	}
 

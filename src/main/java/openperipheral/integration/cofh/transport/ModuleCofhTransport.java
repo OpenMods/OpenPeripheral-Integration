@@ -3,15 +3,15 @@ package openperipheral.integration.cofh.transport;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
 import openperipheral.api.IItemStackMetaBuilder;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.integration.ApiIntegrationModule;
 import openperipheral.integration.cofh.energy.AdapterEnergyReceiver;
 import openperipheral.integration.cofh.energy.EnergyMetaProvider;
 import openperipheral.integration.cofh.tileentity.AdapterEnergyInfo;
 
-public class ModuleCofhTransport extends OPIntegrationModule {
+public class ModuleCofhTransport extends ApiIntegrationModule {
 
 	@Override
-	public String getModId() {
+	public String getApiId() {
 		return "CoFHAPI|transport";
 	}
 

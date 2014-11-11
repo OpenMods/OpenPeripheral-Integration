@@ -2,12 +2,12 @@ package openperipheral.integration.cofh.inventory;
 
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.integration.ApiIntegrationModule;
 
-public class ModuleCofhInventory extends OPIntegrationModule {
+public class ModuleCofhInventory extends ApiIntegrationModule {
 
 	@Override
-	public String getModId() {
+	public String getApiId() {
 		return "CoFHAPI|inventory";
 	}
 

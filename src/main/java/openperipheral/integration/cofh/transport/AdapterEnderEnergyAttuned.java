@@ -28,7 +28,7 @@ public class AdapterEnderEnergyAttuned implements IPeripheralAdapter {
 		return tileEntity.setFrequency(frequency);
 	}
 
-	@LuaCallable(description = "Clean the active frequency of the machine.")
+	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Clean the active frequency of the machine.")
 	public boolean clearFrequency(IEnderEnergyHandler tileEntity) {
 		SecurityUtils.checkAccess(tileEntity);
 		return tileEntity.clearFrequency();

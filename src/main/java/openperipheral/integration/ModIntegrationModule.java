@@ -6,13 +6,13 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import cpw.mods.fml.common.Loader;
 
-public abstract class OPIntegrationModule implements IIntegrationModule {
+public abstract class ModIntegrationModule implements IIntegrationModule {
 
 	public abstract String getModId();
 
 	@Override
 	public String name() {
-		return getModId() + " CC integration module";
+		return getModId() + " (mod) CC integration module";
 	}
 
 	@Override

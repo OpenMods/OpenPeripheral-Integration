@@ -2,12 +2,12 @@ package openperipheral.integration.cofh.tileentity;
 
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.integration.ApiIntegrationModule;
 
-public class ModuleCofhTileEntity extends OPIntegrationModule {
+public class ModuleCofhTileEntity extends ApiIntegrationModule {
 
 	@Override
-	public String getModId() {
+	public String getApiId() {
 		return "CoFHAPI|tileentity";
 	}
 

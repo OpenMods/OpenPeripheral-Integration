@@ -1,9 +1,9 @@
 package openperipheral.integration.appeng;
 
 import openmods.Mods;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.integration.ModIntegrationModule;
 
-public class ModuleAppEng extends OPIntegrationModule {
+public class ModuleAppEng extends ModIntegrationModule {
 
 	@Override
 	public String getModId() {

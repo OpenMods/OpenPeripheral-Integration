@@ -159,7 +159,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 
 	@Freeform
 	@LuaCallable(returnTypes = LuaReturnType.TABLE)
-	public ItemStack expandStack(@Arg(name = "stack") ItemStack itemStack) {
+	public ItemStack expandStack(@Arg(name = "stack", type = LuaArgType.TABLE) ItemStack itemStack) {
 		return itemStack;
 	}
 }
