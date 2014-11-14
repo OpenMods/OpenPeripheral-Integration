@@ -4,13 +4,13 @@ import java.util.Map;
 
 import net.minecraft.item.ItemStack;
 import openmods.utils.ReflectionHelper;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.IItemStackMetaProvider;
 
 import com.google.common.collect.Maps;
 
 import dan200.computercraft.api.media.IMedia;
 
-public class MediaMetaProvider implements IItemStackMetadataProvider<Object> {
+public class MediaMetaProvider implements IItemStackMetaProvider<Object> {
 
 	@Override
 	public Class<?> getTargetClass() {

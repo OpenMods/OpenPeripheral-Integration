@@ -51,7 +51,8 @@ public class AdapterInventory implements IPeripheralAdapter {
 			@Optionals @Arg(name = "maxAmount", description = "The maximum amount of items you want to pull") Integer maxAmount,
 			@Arg(name = "intoSlot", description = "The slot in the current inventory that you want to pull into") Integer intoSlot) {
 
-		Preconditions.checkArgument(direction != null && direction != ForgeDirection.UNKNOWN, "Invalid direction");
+		Preconditions.checkNotNull(direction, "Invalid direction");
+		Preconditions.checkArgument(direction != ForgeDirection.UNKNOWN, "Invalid direction");
 		TileEntity te = (TileEntity)target;
 
 		final IInventory otherInventory = InventoryUtils.getInventory(te.getWorldObj(), te.xCoord, te.yCoord, te.zCoord, direction);

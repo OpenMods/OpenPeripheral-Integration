@@ -4,10 +4,10 @@ import static openmods.utils.ReflectionHelper.safeLoad;
 import openmods.Mods;
 import openmods.utils.SafeClassLoad;
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IItemStackMetadataBuilder;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.integration.ModIntegrationModule;
 
-public class ModuleComputerCraft extends OPIntegrationModule {
+public class ModuleComputerCraft extends ModIntegrationModule {
 	public static final SafeClassLoad API_CLASS = safeLoad("dan200.computercraft.ComputerCraft");
 	public static final SafeClassLoad PRINTOUT_CLASS = safeLoad("dan200.computercraft.shared.media.items.ItemPrintout");
 	public static final SafeClassLoad COMPUTER_ITEM_CLASS = safeLoad("dan200.computercraft.shared.computer.items.IComputerItem");
@@ -24,7 +24,7 @@ public class ModuleComputerCraft extends OPIntegrationModule {
 		COMPUTER_ITEM_CLASS.load();
 		TURTLE_ITEM_CLASS.load();
 
-		IItemStackMetadataBuilder api = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		IItemStackMetaBuilder api = ApiAccess.getApi(IItemStackMetaBuilder.class);
 
 		api.register(new ComputerMetaProvider());
 		api.register(new MediaMetaProvider());

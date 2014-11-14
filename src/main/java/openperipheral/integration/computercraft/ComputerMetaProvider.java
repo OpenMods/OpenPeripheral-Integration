@@ -5,14 +5,14 @@ import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openmods.utils.ReflectionHelper;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.IItemStackMetaProvider;
 
 import com.google.common.collect.Maps;
 
 import dan200.computercraft.api.turtle.ITurtleUpgrade;
 import dan200.computercraft.api.turtle.TurtleSide;
 
-public class ComputerMetaProvider implements IItemStackMetadataProvider<Object> {
+public class ComputerMetaProvider implements IItemStackMetaProvider<Object> {
 
 	@Override
 	public Class<? extends Object> getTargetClass() {
@@ -53,7 +53,7 @@ public class ComputerMetaProvider implements IItemStackMetadataProvider<Object> 
 		if (upgrade != null) {
 			Map<Object, Object> upgradeMap = Maps.newHashMap();
 
-			upgradeMap.put("adjective", upgrade.getAdjective());
+			upgradeMap.put("adjective", upgrade.getUnlocalisedAdjective());
 			upgradeMap.put("type", upgrade.getType().toString());
 
 			map.put(side, upgradeMap);

@@ -8,6 +8,7 @@ import openperipheral.integration.cofh.inventory.ModuleCofhInventory;
 import openperipheral.integration.cofh.item.ModuleCofhItem;
 import openperipheral.integration.cofh.tileentity.ModuleCofhTileEntity;
 import openperipheral.integration.cofh.transport.ModuleCofhTransport;
+import openperipheral.integration.computercraft.ModuleComputerCraft;
 import openperipheral.integration.vanilla.ModuleVanilla;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -24,7 +25,6 @@ public class OpenPeripheralIntegration {
 
 		// Integration.addModule(new ModuleAppEng());
 		// Integration.addModule(new ModuleBuildCraft());
-		// Integration.addModule(new ModuleComputerCraft());
 		// Integration.addModule(new ModuleEnderStorage());
 		// Integration.addModule(new ModuleForestry());
 		// Integration.addModule(new ModuleIC2());
@@ -43,6 +43,7 @@ public class OpenPeripheralIntegration {
 		Integration.addModule(new ModuleCofhTileEntity());
 		Integration.addModule(new ModuleCofhTransport());
 
+		Integration.addModule(new ModuleComputerCraft());
 	}
 
 }

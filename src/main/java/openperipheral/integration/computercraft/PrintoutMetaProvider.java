@@ -4,11 +4,11 @@ import java.util.Map;
 
 import net.minecraft.item.ItemStack;
 import openmods.utils.ReflectionHelper;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.IItemStackMetaProvider;
 
 import com.google.common.collect.Maps;
 
-public class PrintoutMetaProvider implements IItemStackMetadataProvider<Object> {
+public class PrintoutMetaProvider implements IItemStackMetaProvider<Object> {
 
 	@Override
 	public Class<?> getTargetClass() {
