@@ -1,9 +1,9 @@
 package openperipheral.integration.enderstorage;
 
 import net.minecraft.tileentity.TileEntity;
-import openmods.utils.ColorUtils;
+import openmods.Log;
+import openmods.utils.*;
 import openmods.utils.ColorUtils.ColorMeta;
-import openmods.utils.ReflectionHelper;
 import openperipheral.api.*;
 
 import com.google.common.base.Preconditions;
@@ -11,17 +11,20 @@ import com.google.common.base.Preconditions;
 public class AdapterFrequencyOwner implements IPeripheralAdapter {
 	private static final Class<?> CLAZZ = ReflectionHelper.getClass("codechicken.enderstorage.common.TileFrequencyOwner");
 
+	private final FieldAccess<Integer> freq = FieldAccess.create(CLAZZ, "freq");
+
 	@Override
 	public Class<?> getTargetClass() {
 		return CLAZZ;
 	}
 
+	@Asynchronous
 	@Alias("getColours")
-	@LuaCallable(returnTypes = { LuaType.NUMBER, LuaType.NUMBER, LuaType.NUMBER },
+	@LuaCallable(returnTypes = { LuaReturnType.NUMBER, LuaReturnType.NUMBER, LuaReturnType.NUMBER },
 			description = "Get the colours active on this chest or tank")
 	public IMultiReturn getColors(TileEntity frequencyOwner) {
 		// get the current frequency
-		int frequency = getFreq(frequencyOwner);
+		int frequency = freq.get(frequencyOwner);
 		// return a map of the frequency in ComputerCraft colour format
 		return MultiReturn.wrap(
 				1 << (frequency >> 8 & 0xF),
@@ -29,10 +32,11 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 				1 << (frequency >> 0 & 0xF));
 	}
 
-	@LuaCallable(returnTypes = { LuaType.STRING, LuaType.STRING, LuaType.STRING },
+	@Asynchronous
+	@LuaCallable(returnTypes = { LuaReturnType.STRING, LuaReturnType.STRING, LuaReturnType.STRING },
 			description = "Get the colours active on this chest or tank")
 	public IMultiReturn getColorNames(TileEntity frequencyOwner) {
-		int frequency = getFreq(frequencyOwner);
+		int frequency = freq.get(frequencyOwner);
 		return MultiReturn.wrap(
 				colorToName(frequency >> 8 & 0xF),
 				colorToName(frequency >> 4 & 0xF),
@@ -40,12 +44,11 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 	}
 
 	@Alias("setColours")
-	@LuaMethod(returnType = LuaType.VOID, onTick = false, description = "Set the frequency of this chest or tank", args = {
-			@Arg(name = "color_left", type = LuaType.NUMBER, description = "The first color"),
-			@Arg(name = "color_middle", type = LuaType.NUMBER, description = "The second color"),
-			@Arg(name = "color_right", type = LuaType.NUMBER, description = "The third color")
-	})
-	public void setColors(TileEntity frequencyOwner, int colorLeft, int colorMiddle, int colorRight) {
+	@LuaCallable(description = "Set the frequency of this chest or tank")
+	public void setColors(TileEntity frequencyOwner,
+			@Arg(name = "color_left", description = "The first color") int colorLeft,
+			@Arg(name = "color_middle", description = "The second color") int colorMiddle,
+			@Arg(name = "color_right", description = "The third color") int colorRight) {
 		// transform the ComputerCraft colours (2^n) into the range 0-15 And
 		// validate they're within this range
 		int high = parseComputerCraftColor(colorLeft);
@@ -53,14 +56,15 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 		int low = parseComputerCraftColor(colorRight);
 
 		int frequency = ((high & 0xF) << 8) + ((med & 0xF) << 4) + (low & 0xF);
+		Log.info("%06X", frequency);
 		setFreq(frequencyOwner, frequency);
 	}
 
 	@LuaCallable(description = "Set the frequency of this chest or tank")
 	public void setColorNames(TileEntity frequencyOwner,
-			@Arg(name = "color_left", type = LuaType.STRING) String colorLeft,
-			@Arg(name = "color_middle", type = LuaType.STRING) String colorMiddle,
-			@Arg(name = "color_right", type = LuaType.STRING) String colorRight) {
+			@Arg(name = "color_left") String colorLeft,
+			@Arg(name = "color_middle") String colorMiddle,
+			@Arg(name = "color_right") String colorRight) {
 
 		int high = parseColorName(colorLeft);
 		int med = parseColorName(colorMiddle);
@@ -68,24 +72,20 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 		// convert the three colours into a single colour
 		int frequency = ((high & 0xF) << 8) + ((med & 0xF) << 4) + (low & 0xF);
 		// set the TE's frequency to the new colours
+		Log.info("%06X", frequency);
 		setFreq(frequencyOwner, frequency);
 	}
 
-	@LuaMethod(
-			returnType = LuaType.TABLE, onTick = false, description = "Get the frequency of this chest or tank")
+	@Asynchronous
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get the frequency of this chest or tank")
 	public int getFrequency(TileEntity frequencyOwner) {
-		return getFreq(frequencyOwner);
+		return freq.get(frequencyOwner);
 	}
 
-	@LuaMethod(returnType = LuaType.VOID, onTick = false, description = "Set the frequency of this chest or tank",
-			args = {
-					@Arg(name = "frequency", type = LuaType.NUMBER, description = "A single color that represents all three colours on this chest or tank") })
-	public void setFrequency(TileEntity frequencyOwner, int frequency) {
+	@LuaCallable(description = "Set the frequency of this chest or tank")
+	public void setFrequency(TileEntity frequencyOwner,
+			@Arg(name = "frequency", description = "A single number that represents all three colours on this chest or tank") int frequency) {
 		setFreq(frequencyOwner, frequency);
-	}
-
-	private static int getFreq(TileEntity frequencyOwner) {
-		return (Integer)ReflectionHelper.getProperty(CLAZZ, frequencyOwner, "freq");
 	}
 
 	private static void setFreq(TileEntity frequencyOwner, int frequency) {
@@ -95,18 +95,19 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 
 	private static int parseComputerCraftColor(int bitmask) {
 		ColorMeta meta = ColorUtils.bitmaskToColor(bitmask);
+		Log.info("%s", meta.name);
 		Preconditions.checkNotNull(meta, "Invalid color %sb", Integer.toBinaryString(bitmask));
-		return meta.vanillaId;
+		return meta.vanillaBlockId;
 	}
 
 	private static int parseColorName(String name) {
 		ColorMeta meta = ColorUtils.nameToColor(name);
 		Preconditions.checkNotNull(meta, "Invalid color name %s", name);
-		return (~meta.vanillaId) & 0xF;
+		return meta.vanillaBlockId;
 	}
 
 	private static String colorToName(int color) {
-		ColorMeta meta = ColorUtils.vanillaToColor((~color) & 0xF);
+		ColorMeta meta = ColorUtils.vanillaBlockToColor(color);
 		Preconditions.checkNotNull(meta, "Invalid color id %s", color);
 		return meta.name;
 	}
