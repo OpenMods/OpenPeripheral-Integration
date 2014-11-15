@@ -1,16 +1,12 @@
 package openperipheral.integration.thaumcraft;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 
-public class EssentiaContainerMetaProvider implements IItemStackMetadataProvider<IEssentiaContainerItem> {
-
-	@Override
-	public Class<? extends IEssentiaContainerItem> getTargetClass() {
-		return IEssentiaContainerItem.class;
-	}
+@SuppressWarnings("serial")
+public class EssentiaContainerMetaProvider extends ItemStackMetaProviderSimple<IEssentiaContainerItem> {
 
 	@Override
 	public String getKey() {
@@ -18,9 +14,8 @@ public class EssentiaContainerMetaProvider implements IItemStackMetadataProvider
 	}
 
 	@Override
-	public Object getMeta(IEssentiaContainerItem target, ItemStack stack) {
-		AspectList aspects = target.getAspects(stack);
-		return ModuleThaumcraft.aspectsToMap(aspects);
+	public AspectList getMeta(IEssentiaContainerItem target, ItemStack stack) {
+		return target.getAspects(stack);
 	}
 
 }

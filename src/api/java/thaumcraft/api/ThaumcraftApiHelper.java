@@ -2,12 +2,15 @@ package thaumcraft.api;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Iterator;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -41,9 +44,9 @@ public class ThaumcraftApiHelper {
     {
 		if (s1.isItemStackDamageable() && s2.isItemStackDamageable())
 		{
-			return s1.itemID == s2.itemID;
+			return s1.getItem() == s2.getItem();
 		} else
-			return s1.itemID == s2.itemID && s1.getItemDamage() == s2.getItemDamage();
+			return s1.getItem() == s2.getItem() && s1.getItemDamage() == s2.getItemDamage();
     }
 
 	static Method isResearchComplete;
@@ -80,12 +83,12 @@ public class ThaumcraftApiHelper {
 		AspectList ot = null;
 	    try {
 	        if(getObjectTags == null) {
-	            Class fake = Class.forName("thaumcraft.common.lib.ThaumcraftCraftingManager");
+	            Class fake = Class.forName("thaumcraft.common.lib.crafting.ThaumcraftCraftingManager");
 	            getObjectTags = fake.getMethod("getObjectTags", ItemStack.class);
 	        }
 	        ot = (AspectList) getObjectTags.invoke(null, is);
 	    } catch(Exception ex) { 
-	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.lib.ThaumcraftCraftingManager method getObjectTags");
+	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.lib.crafting.ThaumcraftCraftingManager method getObjectTags");
 	    }
 		return ot;
 	}
@@ -94,56 +97,55 @@ public class ThaumcraftApiHelper {
 		
 	    try {
 	        if(getBonusTags == null) {
-	            Class fake = Class.forName("thaumcraft.common.lib.ThaumcraftCraftingManager");
+	            Class fake = Class.forName("thaumcraft.common.lib.crafting.ThaumcraftCraftingManager");
 	            getBonusTags = fake.getMethod("getBonusTags", ItemStack.class, AspectList.class);
 	        }
 	        ot = (AspectList) getBonusTags.invoke(null, is, ot);
 	    } catch(Exception ex) { 
-	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.lib.ThaumcraftCraftingManager method getBonusTags");
+	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.lib.crafting.ThaumcraftCraftingManager method getBonusTags");
 	    }
 		return ot;
 	}
 
-	public static AspectList generateTags(int id, int meta) {
+	public static AspectList generateTags(Item item, int meta) {
 	    try {
 	        if(generateTags == null) {
-	            Class fake = Class.forName("thaumcraft.common.lib.ThaumcraftCraftingManager");
-	            generateTags = fake.getMethod("generateTags", int.class, int.class);
+	            Class fake = Class.forName("thaumcraft.common.lib.crafting.ThaumcraftCraftingManager");
+	            generateTags = fake.getMethod("generateTags", Item.class, int.class);
 	        }
-	        return (AspectList) generateTags.invoke(null, id, meta);
+	        return (AspectList) generateTags.invoke(null, item, meta);
 	    } catch(Exception ex) { 
-	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.lib.ThaumcraftCraftingManager method generateTags");
+	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.lib.crafting.ThaumcraftCraftingManager method generateTags");
 	    }
 		return null;
 	}
 	
-	public static boolean containsMatch(boolean strict, ItemStack[] inputs, ItemStack... targets)
+	public static boolean areItemStackTagsEqualForCrafting(ItemStack slotItem,ItemStack recipeItem)
     {
-        for (ItemStack input : inputs)
+    	if (recipeItem == null || slotItem == null) return false;
+    	if (recipeItem.stackTagCompound!=null && slotItem.stackTagCompound==null ) return false;
+    	if (recipeItem.stackTagCompound==null ) return true;
+    	
+    	Iterator iterator = recipeItem.stackTagCompound.func_150296_c().iterator();
+        while (iterator.hasNext())
         {
-            for (ItemStack target : targets)
-            {
-                if (itemMatches(target, input, strict))
-                {
-                    return true;
-                }
+            String s = (String)iterator.next();
+            if (slotItem.stackTagCompound.hasKey(s)) {
+            	if (!slotItem.stackTagCompound.getTag(s).toString().equals(
+            			recipeItem.stackTagCompound.getTag(s).toString())) {
+            		return false;
+            	}
+            } else {
+        		return false;
             }
+            
         }
-        return false;
-    }
-
-    public static boolean itemMatches(ItemStack target, ItemStack input, boolean strict)
-    {
-        if (input == null && target != null || input != null && target == null)
-        {
-            return false;
-        }
-        return (target.itemID == input.itemID && ((target.getItemDamage() == OreDictionary.WILDCARD_VALUE && !strict) || target.getItemDamage() == input.getItemDamage()));
+        return true;
     }
     
     
     public static TileEntity getConnectableTile(World world, int x, int y, int z, ForgeDirection face) {
-		TileEntity te = world.getBlockTileEntity(x+face.offsetX, y+face.offsetY, z+face.offsetZ);
+		TileEntity te = world.getTileEntity(x+face.offsetX, y+face.offsetY, z+face.offsetZ);
 		if (te instanceof IEssentiaTransport && ((IEssentiaTransport)te).isConnectable(face.getOpposite())) 
 			return te;
 		else
@@ -151,7 +153,7 @@ public class ThaumcraftApiHelper {
 	}
     
     public static TileEntity getConnectableTile(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
-		TileEntity te = world.getBlockTileEntity(x+face.offsetX, y+face.offsetY, z+face.offsetZ);
+		TileEntity te = world.getTileEntity(x+face.offsetX, y+face.offsetY, z+face.offsetZ);
 		if (te instanceof IEssentiaTransport && ((IEssentiaTransport)te).isConnectable(face.getOpposite())) 
 			return te;
 		else
@@ -182,4 +184,128 @@ public class ThaumcraftApiHelper {
     	} 
     	return allCompoundAspects.get(amount);
     }
+    
+    static Method consumeVisFromWand;
+	/**
+	 * Use to subtract vis from a wand for most operations
+	 * Wands store vis differently so "real" vis costs need to be multiplied by 100 before calling this method
+	 * @param wand the wand itemstack
+	 * @param player the player using the wand
+	 * @param cost the cost of the operation. 
+	 * @param doit actually subtract the vis from the wand if true - if false just simulate the result
+	 * @param crafting is this a crafting operation or not - if 
+	 * false then things like frugal and potency will apply to the costs
+	 * @return was the vis successfully subtracted
+	 */
+	public static boolean consumeVisFromWand(ItemStack wand, EntityPlayer player, 
+			AspectList cost, boolean doit, boolean crafting) {
+		boolean ot = false;
+	    try {
+	        if(consumeVisFromWand == null) {
+	            Class fake = Class.forName("thaumcraft.common.items.wands.ItemWandCasting");
+	            consumeVisFromWand = fake.getMethod("consumeAllVis", 
+	            		ItemStack.class, EntityPlayer.class, AspectList.class, boolean.class, boolean.class);
+	        }
+	        ot = (Boolean) consumeVisFromWand.invoke(
+	        		consumeVisFromWand.getDeclaringClass().cast(wand.getItem()), wand, player, cost, doit, crafting);
+	    } catch(Exception ex) { 
+	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.items.wands.ItemWandCasting method consumeAllVis");
+	    }
+		return ot;
+	}
+	
+	static Method consumeVisFromWandCrafting;
+	/**
+	 * Subtract vis for use by a crafting mechanic. Costs are calculated slightly 
+	 * differently and things like the frugal enchant is ignored
+	 * Must NOT be multiplied by 100 - send the actual vis cost
+	 * @param wand the wand itemstack
+	 * @param player the player using the wand
+	 * @param cost the cost of the operation. 
+	 * @param doit actually subtract the vis from the wand if true - if false just simulate the result
+	 * @return was the vis successfully subtracted
+	 */
+	public static boolean consumeVisFromWandCrafting(ItemStack wand, EntityPlayer player, 
+			AspectList cost, boolean doit) {
+		boolean ot = false;
+	    try {
+	        if(consumeVisFromWandCrafting == null) {
+	            Class fake = Class.forName("thaumcraft.common.items.wands.ItemWandCasting");
+	            consumeVisFromWandCrafting = fake.getMethod("consumeAllVisCrafting", 
+	            		ItemStack.class, EntityPlayer.class, AspectList.class, boolean.class);
+	        }
+	        ot = (Boolean) consumeVisFromWandCrafting.invoke(
+	        		consumeVisFromWandCrafting.getDeclaringClass().cast(wand.getItem()), wand, player, cost, doit);
+	    } catch(Exception ex) { 
+	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.items.wands.ItemWandCasting method consumeAllVisCrafting");
+	    }
+		return ot;
+	}
+	
+	static Method consumeVisFromInventory;
+	/**
+	 * Subtract vis from a wand the player is carrying. Works like consumeVisFromWand in that actual vis
+	 * costs should be multiplied by 100. The costs are handled like crafting however and things like 
+	 * frugal don't effect them
+	 * @param player the player using the wand
+	 * @param cost the cost of the operation. 
+	 * @return was the vis successfully subtracted
+	 */
+	public static boolean consumeVisFromInventory(EntityPlayer player, AspectList cost) {
+		boolean ot = false;
+	    try {
+	        if(consumeVisFromInventory == null) {
+	            Class fake = Class.forName("thaumcraft.common.items.wands.WandManager");
+	            consumeVisFromInventory = fake.getMethod("consumeVisFromInventory", 
+	            		EntityPlayer.class, AspectList.class);
+	        }
+	        ot = (Boolean) consumeVisFromInventory.invoke(null, player, cost);
+	    } catch(Exception ex) { 
+	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.items.wands.WandManager method consumeVisFromInventory");
+	    }
+		return ot;
+	}
+	
+	
+	static Method addWarpToPlayer;
+	/**
+	 * This adds permanents or temporary warp to a player. It will automatically be synced clientside
+	 * @param player the player using the wand
+	 * @param amount how much warp to add. Negative amounts are only valid for temporary warp
+	 * @param temporary add temporary warp instead of permanent
+	 */
+	public static void addWarpToPlayer(EntityPlayer player, int amount, boolean temporary) {
+		boolean ot = false;
+	    try {
+	        if(addWarpToPlayer == null) {
+	            Class fake = Class.forName("thaumcraft.common.Thaumcraft");
+	            addWarpToPlayer = fake.getMethod("addWarpToPlayer", 
+	            		EntityPlayer.class, int.class, boolean.class);
+	        }
+	        addWarpToPlayer.invoke(null, player, amount, temporary);
+	    } catch(Exception ex) { 
+	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.Thaumcraft method addWarpToPlayer");
+	    }
+	}
+	
+	static Method addStickyWarpToPlayer;
+	/**
+	 * This "sticky" warp to a player. Sticky warp is permanent warp that can be removed.
+	 * It will automatically be synced clientside
+	 * @param player the player using the wand
+	 * @param amount how much warp to add. Can have negative amounts.
+	 */
+	public static void addStickyWarpToPlayer(EntityPlayer player, int amount) {
+		boolean ot = false;
+	    try {
+	        if(addStickyWarpToPlayer == null) {
+	            Class fake = Class.forName("thaumcraft.common.Thaumcraft");
+	            addStickyWarpToPlayer = fake.getMethod("addStickyWarpToPlayer", 
+	            		EntityPlayer.class, int.class);
+	        }
+	        addStickyWarpToPlayer.invoke(null, player, amount);
+	    } catch(Exception ex) { 
+	    	FMLLog.warning("[Thaumcraft API] Could not invoke thaumcraft.common.Thaumcraft method addStickyWarpToPlayer");
+	    }
+	}
 }

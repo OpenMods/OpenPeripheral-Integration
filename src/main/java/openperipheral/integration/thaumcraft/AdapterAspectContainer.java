@@ -1,6 +1,5 @@
 package openperipheral.integration.thaumcraft;
 
-import java.util.List;
 import java.util.Map;
 
 import openperipheral.api.*;
@@ -12,18 +11,25 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
+@Asynchronous
 public class AdapterAspectContainer implements IPeripheralAdapter {
+
 	@Override
 	public Class<?> getTargetClass() {
 		return IAspectContainer.class;
 	}
 
-	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get the Aspects stored in the block")
-	public List<Map<String, Object>> getAspects(IAspectContainer container) {
-		return ModuleThaumcraft.aspectsToMap(container.getAspects());
+	@Override
+	public String getSourceId() {
+		return "thaumcraft_aspect_container";
 	}
 
-	@LuaCallable(returnTypes = LuaType.TABLE, description = "Get the map of aspects stored in the block (summed, if there are multiple entries)")
+	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the Aspects stored in the block")
+	public AspectList getAspects(IAspectContainer container) {
+		return container.getAspects();
+	}
+
+	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the map of aspects stored in the block (summed, if there are multiple entries)")
 	public Map<String, Integer> getAspectsSum(IAspectContainer container) {
 		AspectList aspectList = container.getAspects();
 		if (aspectList == null) return null;
@@ -37,9 +43,9 @@ public class AdapterAspectContainer implements IPeripheralAdapter {
 		return result;
 	}
 
-	@LuaCallable(returnTypes = LuaType.NUMBER, description = "Get amount of specific aspect stored in this block")
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get amount of specific aspect stored in this block")
 	public int getAspectCount(IAspectContainer container,
-			@Arg(name = "aspect", type = LuaType.STRING, description = "Aspect to be checked") String aspectName) {
+			@Arg(name = "aspect", description = "Aspect to be checked") String aspectName) {
 
 		Aspect aspect = Aspect.getAspect(aspectName.toLowerCase());
 		Preconditions.checkNotNull(aspect, "Invalid aspect name");
