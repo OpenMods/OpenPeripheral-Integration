@@ -34,7 +34,6 @@ public class OpenPeripheralIntegration {
 		//
 		// Integration.addModule(new ModuleMinefactoryReloaded());
 		// Integration.addModule(new ModuleMystcraft());
-		// Integration.addModule(new ModuleProjectRed());
 		// Integration.addModule(new ModuleSgCraft());
 		// Integration.addModule(new ModuleThaumcraft());
 		// Integration.addModule(new ModuleTMechworks());
