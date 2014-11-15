@@ -14,43 +14,42 @@ public class AdapterAutoJukebox implements IPeripheralAdapter {
 		return AUTOJUKEBOX_CLASS;
 	}
 
-	@LuaMethod(description = "Can a disc be copied?", returnType = LuaType.BOOLEAN)
+	@Override
+	public String getSourceId() {
+		return "mfr_jukebox";
+	}
+
+	@LuaCallable(description = "Can a disc be copied?", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean getCanCopy(Object tileEntityAutoJukebox) {
 		return ReflectionHelper.call(tileEntityAutoJukebox, "getCanCopy");
 	}
 
-	@LuaMethod(description = "Set wheather a disc can be copied", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "copyable", type = LuaType.BOOLEAN, description = "boolean: Can be copied?")
-			})
-	public void setCanCopy(Object tileEntityAutoJukebox, boolean copyable) {
+	@LuaCallable(description = "Set wheather a disc can be copied")
+	public void setCanCopy(Object tileEntityAutoJukebox, @Arg(name = "copyable") boolean copyable) {
 		ReflectionHelper.call(tileEntityAutoJukebox, "setCanCopy", ReflectionHelper.primitive(copyable));
 	}
 
-	@LuaMethod(description = "Can a disc be played?", returnType = LuaType.BOOLEAN)
+	@LuaCallable(description = "Can a disc be played?", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean getCanPlay(Object tileEntityAutoJukebox) {
 		return ReflectionHelper.call(tileEntityAutoJukebox, "getCanPlay");
 	}
 
-	@LuaMethod(description = "Set wheather a disc can be played", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "playable", type = LuaType.BOOLEAN, description = "boolean: Can be played?")
-			})
-	public void setCanPlay(Object tileEntityAutoJukebox, boolean playable) {
+	@LuaCallable(description = "Set wheather a disc can be played")
+	public void setCanPlay(Object tileEntityAutoJukebox, @Arg(name = "playable") boolean playable) {
 		ReflectionHelper.call(tileEntityAutoJukebox, "setCanPlay", ReflectionHelper.primitive(playable));
 	}
 
-	@LuaMethod(description = "Copy record", returnType = LuaType.VOID)
+	@LuaCallable(description = "Copy record")
 	public void copy(Object tileEntityAutoJukebox) {
 		ReflectionHelper.call(tileEntityAutoJukebox, "copyRecord");
 	}
 
-	@LuaMethod(description = "Play record", returnType = LuaType.VOID)
+	@LuaCallable(description = "Play record")
 	public void play(Object tileEntityAutoJukebox) {
 		ReflectionHelper.call(tileEntityAutoJukebox, "playRecord");
 	}
 
-	@LuaMethod(description = "Stop record", returnType = LuaType.VOID)
+	@LuaCallable(description = "Stop record")
 	public void stop(Object tileEntityAutoJukebox) {
 		ReflectionHelper.call(tileEntityAutoJukebox, "stopRecord");
 	}

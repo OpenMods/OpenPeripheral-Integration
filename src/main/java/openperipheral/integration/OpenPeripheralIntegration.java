@@ -14,6 +14,7 @@ import openperipheral.integration.enderstorage.ModuleEnderStorage;
 import openperipheral.integration.forestry.ModuleForestry;
 import openperipheral.integration.ic2.ModuleIC2;
 import openperipheral.integration.ic2.ModuleIC2Api;
+import openperipheral.integration.minefactoryreloaded.ModuleMinefactoryReloaded;
 import openperipheral.integration.mystcraft.ModuleMystcraft;
 import openperipheral.integration.railcraft.ModuleRailcraft;
 import openperipheral.integration.railcraft.ModuleRailcraftCarts;
@@ -33,10 +34,6 @@ public class OpenPeripheralIntegration {
 		Configuration config = new Configuration(evt.getSuggestedConfigurationFile());
 		ConfigProcessing.processAnnotations(evt.getSuggestedConfigurationFile(), "OpenPeripheralIntegration", config, Config.class);
 		if (config.hasChanged()) config.save();
-
-		// Integration.addModule(new ModuleAppEng());
-		//
-		// Integration.addModule(new ModuleMinefactoryReloaded());
 
 		Integration.addModule(new ModuleVanilla());
 
@@ -66,6 +63,7 @@ public class OpenPeripheralIntegration {
 		Integration.addModule(new ModuleMystcraft());
 		Integration.addModule(new ModuleThaumcraft());
 		Integration.addModule(new ModuleTMechworks());
+		Integration.addModule(new ModuleMinefactoryReloaded());
 	}
 
 }

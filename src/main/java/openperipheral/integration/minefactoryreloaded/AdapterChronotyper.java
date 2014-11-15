@@ -10,20 +10,22 @@ public class AdapterChronotyper implements IPeripheralAdapter {
 			);
 
 	@Override
+	public String getSourceId() {
+		return "mfr_chronotyper";
+	}
+
+	@Override
 	public Class<?> getTargetClass() {
 		return CHRONOTYPER_CLASS;
 	}
 
-	@LuaMethod(description = "Should adults be moved?", returnType = LuaType.BOOLEAN)
+	@LuaCallable(description = "Should adults be moved?", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean getMoveAdults(Object tileEntityChronotyper) {
 		return ReflectionHelper.call(tileEntityChronotyper, "getMoveOld");
 	}
 
-	@LuaMethod(description = "Set wheather adults should be moved", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "adults", type = LuaType.BOOLEAN, description = "boolean: Move adults?")
-			})
-	public void setMoveAdults(Object tileEntityChronotyper, boolean adults) {
+	@LuaCallable(description = "Set wheather adults should be moved")
+	public void setMoveAdults(Object tileEntityChronotyper, @Arg(name = "adults") boolean adults) {
 		ReflectionHelper.call(tileEntityChronotyper, "setMoveOld", ReflectionHelper.primitive(adults));
 	}
 

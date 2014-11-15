@@ -10,20 +10,22 @@ public class AdapterAutoAnvil implements IPeripheralAdapter {
 			);
 
 	@Override
+	public String getSourceId() {
+		return "mfr_anvil";
+	}
+
+	@Override
 	public Class<?> getTargetClass() {
 		return AUTOANVIL_CLASS;
 	}
 
-	@LuaMethod(description = "Get value of repair only toggle", returnType = LuaType.BOOLEAN)
+	@LuaCallable(description = "Get value of repair only toggle", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean getRepairOnly(Object tileEntityAutoAnvil) {
 		return ReflectionHelper.call(tileEntityAutoAnvil, "getRepairOnly");
 	}
 
-	@LuaMethod(description = "Set the value of repair only toggle", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "repair", type = LuaType.BOOLEAN, description = "boolean: Repair only?")
-			})
-	public void setRepairOnly(Object tileEntityAutoAnvil, boolean repair) {
+	@LuaCallable(description = "Set the value of repair only toggle")
+	public void setRepairOnly(Object tileEntityAutoAnvil, @Arg(name = "repair") boolean repair) {
 		// NOTE: This doesn't seem to always work as expected. Consulting Skyboy
 		// about it.
 		ReflectionHelper.call(tileEntityAutoAnvil, "setRepairOnly", ReflectionHelper.primitive(repair));

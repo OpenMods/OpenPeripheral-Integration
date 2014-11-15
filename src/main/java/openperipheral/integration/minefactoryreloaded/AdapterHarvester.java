@@ -16,29 +16,28 @@ public class AdapterHarvester implements IPeripheralAdapter {
 		return HARVESTER_CLASS;
 	}
 
-	@LuaMethod(description = "Get value of shear leaves", returnType = LuaType.BOOLEAN)
+	@Override
+	public String getSourceId() {
+		return "mfr_";
+	}
+
+	@LuaCallable(description = "Get value of shear leaves", returnTypes = LuaReturnType.BOOLEAN)
 	public Boolean getShearLeaves(Object tileEntityHarvester) {
 		return getSettings(tileEntityHarvester).get("silkTouch");
 	}
 
-	@LuaMethod(description = "Get value of harvest small mushrooms", returnType = LuaType.BOOLEAN)
+	@LuaCallable(description = "Get value of harvest small mushrooms", returnTypes = LuaReturnType.BOOLEAN)
 	public Boolean getHarvestShrooms(Object tileEntityHarvester) {
 		return getSettings(tileEntityHarvester).get("harvestSmallMushrooms");
 	}
 
-	@LuaMethod(description = "Set value of shear leaves", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "shearLeaves", type = LuaType.BOOLEAN, description = "boolean: Shear leaves?")
-			})
-	public void setShearLeaves(Object tileEntityHarvester, boolean shearLeaves) {
+	@LuaCallable(description = "Set value of shear leaves")
+	public void setShearLeaves(Object tileEntityHarvester, @Arg(name = "shearLeaves") boolean shearLeaves) {
 		getSettings(tileEntityHarvester).put("silkTouch", shearLeaves);
 	}
 
-	@LuaMethod(description = "Set value of harvest small mushrooms", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "harvestShrooms", type = LuaType.BOOLEAN, description = "boolean: Harvest shrooms?")
-			})
-	public void setHarvestShrooms(Object tileEntityHarvester, boolean harvestShrooms) {
+	@LuaCallable(description = "Set value of harvest small mushrooms")
+	public void setHarvestShrooms(Object tileEntityHarvester, @Arg(name = "harvestShrooms") boolean harvestShrooms) {
 		getSettings(tileEntityHarvester).put("harvestSmallMushrooms", harvestShrooms);
 	}
 

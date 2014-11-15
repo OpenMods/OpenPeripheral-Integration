@@ -10,20 +10,21 @@ public class AdapterChunkLoader implements IPeripheralAdapter {
 			);
 
 	@Override
+	public String getSourceId() {
+		return "mfr_chunk_loader";
+	}
+	@Override
 	public Class<?> getTargetClass() {
 		return CHUNKLOADER_CLASS;
 	}
 
-	@LuaMethod(description = "Get chunk loader radius", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get chunk loader radius", returnTypes = LuaReturnType.NUMBER)
 	public short getRadius(Object tileEntityChunkLoader) {
 		return ReflectionHelper.call(tileEntityChunkLoader, "getRadius");
 	}
 
-	@LuaMethod(description = "Set chunk loader radius", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "radius", type = LuaType.NUMBER, description = "number: radius, range 0 - 49")
-			})
-	public void setRadius(Object tileEntityChunkLoader, short radius) {
+	@LuaCallable(description = "Set chunk loader radius")
+	public void setRadius(Object tileEntityChunkLoader, @Arg(name = "radius") short radius) {
 		ReflectionHelper.call(tileEntityChunkLoader, "setRadius", ReflectionHelper.primitive(radius));
 	}
 

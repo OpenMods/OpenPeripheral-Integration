@@ -9,20 +9,22 @@ public class AdapterAutoSpawner implements IPeripheralAdapter {
 			);
 
 	@Override
+	public String getSourceId() {
+		return "mfr_spawner";
+	}
+
+	@Override
 	public Class<?> getTargetClass() {
 		return AUTOSPAWNER_CLASS;
 	}
 
-	@LuaMethod(description = "Get value of spawn exact copy toggle", returnType = LuaType.BOOLEAN)
+	@LuaCallable(description = "Get value of spawn exact copy toggle", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean getSpawnExact(Object tileEntityAutoSpawner) {
 		return ReflectionHelper.call(tileEntityAutoSpawner, "getSpawnExact");
 	}
 
-	@LuaMethod(description = "Set the value of spawn exact copy", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "spawnExact", type = LuaType.BOOLEAN, description = "boolean: Spawn Exact Copy?")
-			})
-	public void setSpawnExact(Object tileEntityAutoSpawner, boolean spawnExact) {
+	@LuaCallable(description = "Set the value of spawn exact copy")
+	public void setSpawnExact(Object tileEntityAutoSpawner, @Arg(name = "spawnExact") boolean spawnExact) {
 		ReflectionHelper.call(tileEntityAutoSpawner, "setSpawnExact", ReflectionHelper.primitive(spawnExact));
 	}
 

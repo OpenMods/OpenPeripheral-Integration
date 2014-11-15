@@ -10,20 +10,22 @@ public class AdapterAutoDisenchanter implements IPeripheralAdapter {
 			);
 
 	@Override
+	public String getSourceId() {
+		return "mfr_disenchanter";
+	}
+
+	@Override
 	public Class<?> getTargetClass() {
 		return AUTODISENCHANTER_CLASS;
 	}
 
-	@LuaMethod(description = "Get value of repeat disenchant toggle", returnType = LuaType.BOOLEAN)
+	@LuaCallable(description = "Get value of repeat disenchant toggle", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean getRepeat(Object tileEntityAutoDisenchanter) {
 		return ReflectionHelper.call(tileEntityAutoDisenchanter, "getRepeatDisenchant");
 	}
 
-	@LuaMethod(description = "Set the value of repeat disenchant toggle", returnType = LuaType.VOID,
-			args = {
-					@Arg(name = "repeat", type = LuaType.BOOLEAN, description = "boolean: Repeat disenchant?")
-			})
-	public void setRepeat(Object tileEntityAutoDisenchanter, boolean repeat) {
+	@LuaCallable(description = "Set the value of repeat disenchant toggle")
+	public void setRepeat(Object tileEntityAutoDisenchanter, @Arg(name = "repeat") boolean repeat) {
 		ReflectionHelper.call(tileEntityAutoDisenchanter, "setRepeatDisenchant", ReflectionHelper.primitive(repeat));
 	}
 

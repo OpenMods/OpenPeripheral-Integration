@@ -3,10 +3,10 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.Mods;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
-import openperipheral.api.IItemStackMetadataBuilder;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.integration.ModIntegrationModule;
 
-public class ModuleMinefactoryReloaded extends OPIntegrationModule {
+public class ModuleMinefactoryReloaded extends ModIntegrationModule {
 
 	@Override
 	public String getModId() {
@@ -26,7 +26,7 @@ public class ModuleMinefactoryReloaded extends OPIntegrationModule {
 		adapterRegistry.register(new AdapterEjector());
 		adapterRegistry.register(new AdapterHarvester());
 
-		final IItemStackMetadataBuilder itemMetaBuilder = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		final IItemStackMetaBuilder itemMetaBuilder = ApiAccess.getApi(IItemStackMetaBuilder.class);
 		itemMetaBuilder.register(new SafariNetMetaProvider());
 	}
 }
