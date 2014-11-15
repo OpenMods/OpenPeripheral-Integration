@@ -2,20 +2,17 @@ package openperipheral.integration.computercraft;
 
 import java.util.Map;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openmods.utils.ReflectionHelper;
-import openperipheral.api.IItemStackMetaProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
 import dan200.computercraft.api.media.IMedia;
 
-public class MediaMetaProvider implements IItemStackMetaProvider<Object> {
-
-	@Override
-	public Class<?> getTargetClass() {
-		return Object.class;
-	}
+@SuppressWarnings("serial")
+public class MediaMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override
 	public String getKey() {
@@ -23,7 +20,7 @@ public class MediaMetaProvider implements IItemStackMetaProvider<Object> {
 	}
 
 	@Override
-	public Object getMeta(Object target, ItemStack stack) {
+	public Object getMeta(Item target, ItemStack stack) {
 		if (target instanceof IMedia) return addDiskInfo(stack, (IMedia)target);
 
 		IMedia media = ReflectionHelper.callStatic(ModuleComputerCraft.API_CLASS.get(), "getMedia", stack);
