@@ -3,14 +3,10 @@ package openperipheral.integration.mystcraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
-public class PageMetaProvider implements IItemStackMetadataProvider<Item> {
-
-	@Override
-	public Class<? extends Item> getTargetClass() {
-		return Item.class;
-	}
+@SuppressWarnings("serial")
+public class PageMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override
 	public String getKey() {

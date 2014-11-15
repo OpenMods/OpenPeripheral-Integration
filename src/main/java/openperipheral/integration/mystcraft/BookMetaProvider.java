@@ -5,18 +5,13 @@ import java.util.Map;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class BookMetaProvider implements IItemStackMetadataProvider<Item> {
-
-	@Override
-	public Class<? extends Item> getTargetClass() {
-		return Item.class;
-	}
+@SuppressWarnings("serial")
+public class BookMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override
 	public String getKey() {
@@ -54,9 +49,9 @@ public class BookMetaProvider implements IItemStackMetadataProvider<Item> {
 
 		if (tag.hasKey("Flags")) {
 			@SuppressWarnings("unchecked")
-			Collection<NBTBase> tags = tag.getCompoundTag("Flags").getTags();
-			for (NBTBase s : tags) {
-				flags.put(s.getName(), Boolean.TRUE);
+			Collection<String> tags = tag.getCompoundTag("Flags").func_150296_c();
+			for (String s : tags) {
+				flags.put(s, Boolean.TRUE);
 			}
 		}
 

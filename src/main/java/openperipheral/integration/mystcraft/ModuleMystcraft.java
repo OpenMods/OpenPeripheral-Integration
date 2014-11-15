@@ -3,10 +3,10 @@ package openperipheral.integration.mystcraft;
 import openmods.Mods;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
-import openperipheral.api.IItemStackMetadataBuilder;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.integration.ModIntegrationModule;
 
-public class ModuleMystcraft extends OPIntegrationModule {
+public class ModuleMystcraft extends ModIntegrationModule {
 
 	@Override
 	public String getModId() {
@@ -18,7 +18,7 @@ public class ModuleMystcraft extends OPIntegrationModule {
 		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
 		adapterRegistry.register(new AdapterWritingDesk());
 
-		final IItemStackMetadataBuilder builder = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		final IItemStackMetaBuilder builder = ApiAccess.getApi(IItemStackMetaBuilder.class);
 		builder.register(new BookMetaProvider());
 		builder.register(new PageMetaProvider());
 	}

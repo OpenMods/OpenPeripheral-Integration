@@ -63,12 +63,12 @@ public class NotebookIInventoryWrapper implements IInventory {
 	}
 
 	@Override
-	public String getInvName() {
+	public String getInventoryName() {
 		return callOnNotebook("getName");
 	}
 
 	@Override
-	public boolean isInvNameLocalized() {
+	public boolean hasCustomInventoryName() {
 		return false;
 	}
 
@@ -79,7 +79,7 @@ public class NotebookIInventoryWrapper implements IInventory {
 	}
 
 	@Override
-	public void onInventoryChanged() {}
+	public void markDirty() {}
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
@@ -87,14 +87,13 @@ public class NotebookIInventoryWrapper implements IInventory {
 	}
 
 	@Override
-	public void openChest() {}
+	public void openInventory() {}
 
 	@Override
-	public void closeChest() {}
+	public void closeInventory() {}
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
 		return ReflectionHelper.callStatic(INVENTORY_CLASS, "isItemValid", itemstack);
 	}
-
 }
