@@ -2,8 +2,8 @@ package openperipheral.integration.railcraft;
 
 import openmods.utils.ReflectionHelper;
 import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaMethod;
-import openperipheral.api.LuaType;
+import openperipheral.api.LuaCallable;
+import openperipheral.api.LuaReturnType;
 
 public class AdapterTileBoilerFirebox implements IPeripheralAdapter {
 	private static final Class<?> CLAZZ = ReflectionHelper.getClass("mods.railcraft.common.blocks.machine.beta.TileBoilerFirebox");
@@ -13,12 +13,17 @@ public class AdapterTileBoilerFirebox implements IPeripheralAdapter {
 		return CLAZZ;
 	}
 
-	@LuaMethod(description = "Get whether the boiler is active or not", returnType = LuaType.BOOLEAN)
+	@Override
+	public String getSourceId() {
+		return "railcraft_firebox";
+	}
+
+	@LuaCallable(description = "Get whether the boiler is active or not", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean isBurning(Object target) {
 		return ReflectionHelper.call(target, "isBurning");
 	}
 
-	@LuaMethod(description = "Get the temperature of the boiler", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get the temperature of the boiler", returnTypes = LuaReturnType.NUMBER)
 	public float getTemperature(Object target) {
 		return ReflectionHelper.call(target, "getTemperature");
 	}

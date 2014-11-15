@@ -4,16 +4,12 @@ import java.util.Map;
 
 import mods.railcraft.api.carts.IPaintedCart;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class PaintedCartMetaProvider implements IEntityMetadataProvider<IPaintedCart> {
-
-	@Override
-	public Class<? extends IPaintedCart> getTargetClass() {
-		return IPaintedCart.class;
-	}
+@SuppressWarnings("serial")
+public class PaintedCartMetaProvider extends EntityMetaProviderSimple<IPaintedCart> {
 
 	@Override
 	public String getKey() {

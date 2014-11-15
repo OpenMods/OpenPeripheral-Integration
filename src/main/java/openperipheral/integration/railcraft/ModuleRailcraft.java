@@ -1,10 +1,12 @@
 package openperipheral.integration.railcraft;
 
 import openmods.Mods;
-import openperipheral.api.*;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.integration.ModIntegrationModule;
 
-public class ModuleRailcraft extends OPIntegrationModule {
+public class ModuleRailcraft extends ModIntegrationModule {
 
 	@Override
 	public String getModId() {
@@ -17,16 +19,7 @@ public class ModuleRailcraft extends OPIntegrationModule {
 		adapterRegistry.register(new AdapterTileSteamTurbine());
 		adapterRegistry.register(new AdapterTileBoilerFirebox());
 
-		final IEntityMetadataBuilder entityMeta = ApiAccess.getApi(IEntityMetadataBuilder.class);
-		entityMeta.register(new ExplosiveCartMetaProvider());
-		entityMeta.register(new EnergyCartMetaProvider());
-		entityMeta.register(new LinkableCartMetaProvider());
-		entityMeta.register(new LiquidCartMetaProvider());
-		entityMeta.register(new PaintedCartMetaProvider());
-		entityMeta.register(new RefuealableCartMetaProvider());
-		entityMeta.register(new RoutableCartMetaProvider());
-
-		final IItemStackMetadataBuilder itemMeta = ApiAccess.getApi(IItemStackMetadataBuilder.class);
+		final IItemStackMetaBuilder itemMeta = ApiAccess.getApi(IItemStackMetaBuilder.class);
 		itemMeta.register(new TicketMetaProvider());
 	}
 }

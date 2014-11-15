@@ -4,16 +4,12 @@ import java.util.Map;
 
 import mods.railcraft.api.carts.IEnergyTransfer;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EnergyCartMetaProvider implements IEntityMetadataProvider<IEnergyTransfer> {
-
-	@Override
-	public Class<? extends IEnergyTransfer> getTargetClass() {
-		return IEnergyTransfer.class;
-	}
+@SuppressWarnings("serial")
+public class EnergyCartMetaProvider extends EntityMetaProviderSimple<IEnergyTransfer> {
 
 	@Override
 	public String getKey() {

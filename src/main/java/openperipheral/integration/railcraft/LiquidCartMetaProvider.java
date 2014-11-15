@@ -4,16 +4,12 @@ import java.util.Map;
 
 import mods.railcraft.api.carts.ILiquidTransfer;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class LiquidCartMetaProvider implements IEntityMetadataProvider<ILiquidTransfer> {
-
-	@Override
-	public Class<? extends ILiquidTransfer> getTargetClass() {
-		return ILiquidTransfer.class;
-	}
+@SuppressWarnings("serial")
+public class LiquidCartMetaProvider extends EntityMetaProviderSimple<ILiquidTransfer> {
 
 	@Override
 	public String getKey() {

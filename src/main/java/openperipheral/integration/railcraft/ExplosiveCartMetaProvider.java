@@ -4,16 +4,12 @@ import java.util.Map;
 
 import mods.railcraft.api.carts.IExplosiveCart;
 import net.minecraft.util.Vec3;
-import openperipheral.api.IEntityMetadataProvider;
+import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class ExplosiveCartMetaProvider implements IEntityMetadataProvider<IExplosiveCart> {
-
-	@Override
-	public Class<? extends IExplosiveCart> getTargetClass() {
-		return IExplosiveCart.class;
-	}
+@SuppressWarnings("serial")
+public class ExplosiveCartMetaProvider extends EntityMetaProviderSimple<IExplosiveCart> {
 
 	@Override
 	public String getKey() {

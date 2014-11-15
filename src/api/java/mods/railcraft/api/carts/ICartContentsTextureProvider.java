@@ -6,7 +6,7 @@
  */
 package mods.railcraft.api.carts;
 
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 /**
  * Used by the renderer to renders blocks in carts.
@@ -15,5 +15,5 @@ import net.minecraft.util.Icon;
  */
 public interface ICartContentsTextureProvider{
 
-    public Icon getBlockTextureOnSide(int side);
+    public IIcon getBlockTextureOnSide(int side);
 }

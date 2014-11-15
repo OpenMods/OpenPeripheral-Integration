@@ -5,25 +5,21 @@ import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class TicketMetaProvider implements IItemStackMetadataProvider<Item> {
+@SuppressWarnings("serial")
+public class TicketMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	private final ItemStack ticketStack;
 
 	public TicketMetaProvider() {
 		ticketStack = GameRegistry.findItemStack("Railcraft", "routing.ticket", 1);
 		Preconditions.checkNotNull(ticketStack, "Can't find ticket item");
-	}
-
-	@Override
-	public Class<? extends Item> getTargetClass() {
-		return Item.class;
 	}
 
 	@Override
