@@ -11,9 +11,13 @@ public class AdapterDrawbridgeLogicBase implements IPeripheralAdapter {
 		return IDrawbridgeLogicBase.class;
 	}
 
-	@LuaMethod(description = "Checks if the drawbridge is extended or not", returnType = LuaType.BOOLEAN)
+	@Override
+	public String getSourceId() {
+		return "tmechworks_drawbridge";
+	}
+
+	@LuaCallable(description = "Checks if the drawbridge is extended or not", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean hasExtended(IDrawbridgeLogicBase drawbridge) {
 		return drawbridge.hasExtended();
 	}
-
 }
