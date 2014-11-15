@@ -12,6 +12,11 @@ public class AdapterEnergyInfo implements IPeripheralAdapter {
 		return IEnergyInfo.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "rf_info";
+	}
+
 	@LuaCallable(description = "Gets the EnergyPerTick of the machine.", returnTypes = LuaReturnType.NUMBER)
 	public int getEnergyPerTick(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoEnergyPerTick();

@@ -14,6 +14,11 @@ public class AdapterReactorChamber implements IPeripheralAdapter {
 		return IReactorChamber.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "ic2_chamber";
+	}
+
 	private static IReactor getReactor(IReactorChamber chamber) {
 		IReactor reactor = chamber.getReactor();
 		Preconditions.checkNotNull(reactor, "No reactor");

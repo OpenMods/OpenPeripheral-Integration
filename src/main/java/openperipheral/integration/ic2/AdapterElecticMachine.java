@@ -16,6 +16,11 @@ public class AdapterElecticMachine implements IPeripheralAdapter {
 		return CLAZZ;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "ic2_machine";
+	}
+
 	@LuaCallable(description = "Get the current progress as a percentage", returnTypes = LuaReturnType.NUMBER)
 	public double getProgress(Object massfab) {
 		double energy = energyAccess.get(massfab);

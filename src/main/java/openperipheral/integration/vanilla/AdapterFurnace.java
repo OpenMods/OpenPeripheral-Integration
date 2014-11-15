@@ -12,6 +12,11 @@ public class AdapterFurnace implements IPeripheralAdapter {
 		return TileEntityFurnace.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "vanilla_furnace";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Number of ticks the current item will cook for")
 	public int getBurnTime(TileEntityFurnace furnace) {
 		return furnace.furnaceBurnTime;

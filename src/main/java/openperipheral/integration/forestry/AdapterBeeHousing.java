@@ -21,6 +21,11 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		return IBeeHousing.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "forestry_bees";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Can the bees breed?")
 	public boolean canBreed(IBeeHousing beeHousing) {
 		return beeHousing.canBreed();

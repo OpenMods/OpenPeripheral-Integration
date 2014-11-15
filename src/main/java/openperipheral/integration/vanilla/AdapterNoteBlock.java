@@ -12,6 +12,11 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 		return TileEntityNote.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "vanilla_note";
+	}
+
 	@LuaCallable(description = "Increment the pitch of the noteblock")
 	public void incrementPitch(TileEntityNote noteblock) {
 		noteblock.changePitch();

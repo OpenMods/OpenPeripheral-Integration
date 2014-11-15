@@ -11,6 +11,11 @@ public class AdapterHeatSource implements IPeripheralAdapter {
 		return IHeatSource.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "ic2_heat_source";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
 	public int getMaxKineticEnergy(IHeatSource target, @Arg(name = "side") ForgeDirection side) {
 		return target.maxrequestHeatTick(side);

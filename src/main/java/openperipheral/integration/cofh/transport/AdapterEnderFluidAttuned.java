@@ -16,6 +16,11 @@ public class AdapterEnderFluidAttuned implements IPeripheralAdapter {
 		return tileEntity.getChannelString();
 	}
 
+	@Override
+	public String getSourceId() {
+		return "cofh_ender_fluid";
+	}
+
 	@LuaCallable(description = "Get the active frequency of the machine.", returnTypes = LuaReturnType.NUMBER)
 	public int getFrequency(IEnderFluidHandler tileEntity) {
 		return tileEntity.getFrequency();

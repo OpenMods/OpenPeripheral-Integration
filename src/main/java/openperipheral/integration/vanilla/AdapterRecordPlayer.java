@@ -13,6 +13,11 @@ public class AdapterRecordPlayer implements IPeripheralAdapter {
 		return TileEntityJukebox.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "vanilla_player";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the record currently being played")
 	public ItemStack getRecord(TileEntityJukebox recordPlayer) {
 		return recordPlayer.func_145856_a();

@@ -11,6 +11,11 @@ public class AdapterRedstoneControl implements IPeripheralAdapter {
 		return IRedstoneControl.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "cofh_redstone";
+	}
+
 	@LuaCallable()
 	public void setRedstoneControl(IRedstoneControl target,
 			@Arg(name = "control") ControlMode control) {

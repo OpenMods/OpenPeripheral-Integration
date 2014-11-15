@@ -12,6 +12,11 @@ public class AdapterBrewingStand implements IPeripheralAdapter {
 		return TileEntityBrewingStand.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "vanilla_brewing";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
 	public int getBrewTime(TileEntityBrewingStand brewingStand) {
 		return brewingStand.getBrewTime();

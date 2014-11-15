@@ -11,6 +11,11 @@ public class AdapterReactor implements IPeripheralAdapter {
 		return IReactor.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "ic2_reactor";
+	}
+
 	@LuaCallable(description = "Get the heat of the reactor", returnTypes = LuaReturnType.NUMBER)
 	public int getHeat(IReactor reactor) {
 		return reactor.getHeat();

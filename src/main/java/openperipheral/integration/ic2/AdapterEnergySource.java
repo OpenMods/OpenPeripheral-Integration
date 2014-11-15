@@ -11,6 +11,11 @@ public class AdapterEnergySource implements IPeripheralAdapter {
 		return IEnergySource.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "eu_source";
+	}
+
 	@LuaCallable(description = "Get the EU output", returnTypes = LuaReturnType.NUMBER)
 	public double getOfferedEnergy(IEnergySource source) {
 		return source.getOfferedEnergy();

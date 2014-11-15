@@ -11,6 +11,11 @@ public class AdapterEnergyReceiver implements IPeripheralAdapter {
 		return IEnergyReceiver.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "rf_receiver";
+	}
+
 	@LuaCallable(description = "Get the energy stored in the machine.", returnTypes = LuaReturnType.NUMBER)
 	public int getEnergyStored(IEnergyReceiver tileEntity,
 			@Arg(name = "slot", description = "The direction you are interested in. (north, south, east, west, up or down)") ForgeDirection side) {

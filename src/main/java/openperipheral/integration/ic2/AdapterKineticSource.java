@@ -11,6 +11,11 @@ public class AdapterKineticSource implements IPeripheralAdapter {
 		return IKineticSource.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "ic2_kinetic_source";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
 	public int getMaxKineticEnergy(IKineticSource target, @Arg(name = "side") ForgeDirection side) {
 		return target.maxrequestkineticenergyTick(side);

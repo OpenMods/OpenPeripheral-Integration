@@ -12,6 +12,11 @@ public class AdapterCrop implements IPeripheralAdapter {
 		return ICropTile.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "ic2_crop";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
 	public short getID(ICropTile target) {
 		return target.getID();

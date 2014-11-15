@@ -10,6 +10,11 @@ public class AdapterReconfigurableFacing implements IPeripheralAdapter {
 		return IReconfigurableFacing.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "cofh_facing";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Returns the current facing of the block")
 	public int getFacing(IReconfigurableFacing target) {
 		return target.getFacing();

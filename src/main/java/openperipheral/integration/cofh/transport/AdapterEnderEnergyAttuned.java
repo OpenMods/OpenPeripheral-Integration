@@ -11,6 +11,11 @@ public class AdapterEnderEnergyAttuned implements IPeripheralAdapter {
 		return IEnderEnergyHandler.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "cofh_ender_energy";
+	}
+
 	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaReturnType.STRING)
 	public String getChannelName(IEnderEnergyHandler tileEntity) {
 		return tileEntity.getChannelString();

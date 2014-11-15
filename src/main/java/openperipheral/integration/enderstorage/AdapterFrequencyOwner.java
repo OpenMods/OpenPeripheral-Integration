@@ -18,6 +18,11 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 		return CLAZZ;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "ender_frequency";
+	}
+
 	@Asynchronous
 	@Alias("getColours")
 	@LuaCallable(returnTypes = { LuaReturnType.NUMBER, LuaReturnType.NUMBER, LuaReturnType.NUMBER },

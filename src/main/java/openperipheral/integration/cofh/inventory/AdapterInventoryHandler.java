@@ -14,6 +14,11 @@ public class AdapterInventoryHandler implements IPeripheralAdapter {
 		return IInventoryHandler.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "cofh_inventory";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the contents of the IInventoryHandler's inventory")
 	List<ItemStack> getInventoryContents(IInventoryHandler target,
 			@Arg(name = "from") ForgeDirection from) {

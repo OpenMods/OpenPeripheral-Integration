@@ -12,6 +12,11 @@ public class AdapterComparator implements IPeripheralAdapter {
 		return TileEntityComparator.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "vanilla_comparator";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get the strength of the output signal")
 	public int getOutputSignal(TileEntityComparator comparator) {
 		return comparator.getOutputSignal();

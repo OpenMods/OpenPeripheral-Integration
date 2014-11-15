@@ -10,6 +10,11 @@ public class AdapterReconfigurableSides implements IPeripheralAdapter {
 		return IReconfigurableSides.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "cofh_sides";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Decrement the config for a given side. Returns true if config was changed")
 	public boolean decrSide(IReconfigurableSides target,
 			@Arg(name = "side") int side) {

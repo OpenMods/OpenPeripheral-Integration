@@ -16,6 +16,11 @@ public class AdapterDaylightSensor implements IPeripheralAdapter {
 		return TileEntityDaylightDetector.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "vanilla_daylight_sensor";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Get true if age has normal sky")
 	public boolean hasSky(TileEntityDaylightDetector target) {
 		World world = target.getWorldObj();

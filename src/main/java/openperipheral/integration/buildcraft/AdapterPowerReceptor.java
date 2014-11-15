@@ -16,6 +16,11 @@ public class AdapterPowerReceptor implements IPeripheralAdapter {
 		return IPowerReceptor.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "mj_receptor";
+	}
+
 	private static PowerReceiver getPowerReceiver(IPowerReceptor powerReceptor, ForgeDirection direction) {
 		PowerReceiver powerReceiver = powerReceptor.getPowerReceiver(direction);
 		Preconditions.checkNotNull(powerReceiver, "Invalid target");

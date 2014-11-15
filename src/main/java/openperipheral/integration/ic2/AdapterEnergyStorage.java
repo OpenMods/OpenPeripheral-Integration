@@ -11,6 +11,11 @@ public class AdapterEnergyStorage implements IPeripheralAdapter {
 		return IEnergyStorage.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "eu_storage";
+	}
+
 	@LuaCallable(description = "Get the EU capacity of this block", returnTypes = LuaReturnType.NUMBER)
 	public int getEUCapacity(IEnergyStorage storage) {
 		return storage.getCapacity();

@@ -13,6 +13,11 @@ public class AdapterSign implements IPeripheralAdapter {
 		return TileEntitySign.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "vanilla_sign";
+	}
+
 	private static void checkRange(int value, int max) {
 		Preconditions.checkArgument(value >= 0 && value < max, "Value must be in range [1,%s]", max);
 	}

@@ -11,6 +11,11 @@ public class AdapterEnergyConductor implements IPeripheralAdapter {
 		return IEnergyConductor.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "eu_conductor";
+	}
+
 	@LuaCallable(description = "Get the EU conduction loss", returnTypes = LuaReturnType.NUMBER)
 	public double getEUConductionLoss(IEnergyConductor conductor) {
 		return conductor.getConductionLoss();

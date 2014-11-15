@@ -11,6 +11,11 @@ public class AdapterSecureTile implements IPeripheralAdapter {
 		return ISecurable.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "cofh_secure";
+	}
+
 	@LuaCallable(description = "Gets the owner of the machine.", returnTypes = LuaReturnType.STRING)
 	public String getOwnerName(ISecurable tile) {
 		return tile.getOwnerName();

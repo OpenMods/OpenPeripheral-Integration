@@ -8,6 +8,11 @@ import buildcraft.api.tiles.IHasWork;
 public class AdapterMachine implements IPeripheralAdapter {
 
 	@Override
+	public String getSourceId() {
+		return "buildcraft_machine";
+	}
+
+	@Override
 	public Class<?> getTargetClass() {
 		return IHasWork.class;
 	}

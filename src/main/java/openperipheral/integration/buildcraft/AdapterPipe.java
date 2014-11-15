@@ -14,6 +14,11 @@ public class AdapterPipe implements IPeripheralAdapter {
 		return IPipeTile.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "buildcraft_pipe";
+	}
+
 	private static IPipe getPipe(IPipeTile target) {
 		IPipe pipe = target.getPipe();
 		Preconditions.checkNotNull(pipe, "Invalid pipe");

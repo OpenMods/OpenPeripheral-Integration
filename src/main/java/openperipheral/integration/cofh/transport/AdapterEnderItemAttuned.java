@@ -11,6 +11,11 @@ public class AdapterEnderItemAttuned implements IPeripheralAdapter {
 		return IEnderItemHandler.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "ender_item";
+	}
+
 	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaReturnType.STRING)
 	public String getChannelName(IEnderItemHandler tileEntity) {
 		return tileEntity.getChannelString();

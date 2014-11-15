@@ -13,6 +13,11 @@ public class AdapterFluidTank implements IPeripheralAdapter {
 		return IFluidTank.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "fluid_tank";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Returns info containing the capacity of the tank and the FluidStack it holds.")
 	public FluidTankInfo getInfo(IFluidTank tank) {
 		return tank.getInfo();

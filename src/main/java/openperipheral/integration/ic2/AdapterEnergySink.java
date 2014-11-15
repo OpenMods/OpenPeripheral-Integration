@@ -11,6 +11,11 @@ public class AdapterEnergySink implements IPeripheralAdapter {
 		return IEnergySink.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "eu_sink";
+	}
+
 	@LuaCallable(description = "Get the maximum safe EU input", returnTypes = LuaReturnType.NUMBER)
 	public double getDemandedEnergy(IEnergySink sink) {
 		return sink.getDemandedEnergy();

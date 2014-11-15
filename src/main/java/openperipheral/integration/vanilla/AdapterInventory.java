@@ -19,11 +19,14 @@ public class AdapterInventory implements IPeripheralAdapter {
 
 	private static final int ANY_SLOT = -1;
 
-	public AdapterInventory() {}
-
 	@Override
 	public Class<?> getTargetClass() {
 		return IInventory.class;
+	}
+
+	@Override
+	public String getSourceId() {
+		return "inventory";
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "Get the name of this inventory")

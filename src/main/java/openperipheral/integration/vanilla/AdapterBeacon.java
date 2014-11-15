@@ -14,6 +14,11 @@ public class AdapterBeacon implements IPeripheralAdapter {
 		return TileEntityBeacon.class;
 	}
 
+	@Override
+	public String getSourceId() {
+		return "vanilla_beacon";
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "Get the primary effect of the beacon")
 	public String getPrimaryEffect(TileEntityBeacon beacon) {
 		Integer effectId = beacon.getPrimaryEffect();
