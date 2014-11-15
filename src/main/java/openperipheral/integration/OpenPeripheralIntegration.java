@@ -14,10 +14,12 @@ import openperipheral.integration.enderstorage.ModuleEnderStorage;
 import openperipheral.integration.forestry.ModuleForestry;
 import openperipheral.integration.ic2.ModuleIC2;
 import openperipheral.integration.ic2.ModuleIC2Api;
+import openperipheral.integration.mystcraft.ModuleMystcraft;
 import openperipheral.integration.railcraft.ModuleRailcraft;
 import openperipheral.integration.railcraft.ModuleRailcraftCarts;
 import openperipheral.integration.thaumcraft.ModuleThaumcraft;
 import openperipheral.integration.thaumcraft.ModuleThaumcraftApi;
+import openperipheral.integration.tmechworks.ModuleTMechworks;
 import openperipheral.integration.vanilla.ModuleVanilla;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -35,10 +37,8 @@ public class OpenPeripheralIntegration {
 		// Integration.addModule(new ModuleAppEng());
 		//
 		// Integration.addModule(new ModuleMinefactoryReloaded());
-		// Integration.addModule(new ModuleMystcraft());
 		// Integration.addModule(new ModuleSgCraft());
-		// Integration.addModule(new ModuleThaumcraft());
-		// Integration.addModule(new ModuleTMechworks());
+
 		Integration.addModule(new ModuleVanilla());
 
 		Integration.addModule(new ModuleCofhEnergy());
@@ -57,13 +57,16 @@ public class OpenPeripheralIntegration {
 
 		Integration.addModule(new ModuleRailcraft());
 		Integration.addModule(new ModuleRailcraftCarts());
-		
+
 		Integration.addModule(new ModuleThaumcraft());
 		Integration.addModule(new ModuleThaumcraftApi());
 
 		Integration.addModule(new ModuleComputerCraft());
 		Integration.addModule(new ModuleEnderStorage());
 		Integration.addModule(new ModuleForestry());
+		Integration.addModule(new ModuleMystcraft());
+		Integration.addModule(new ModuleThaumcraft());
+		Integration.addModule(new ModuleTMechworks());
 	}
 
 }
