@@ -37,7 +37,6 @@ public class OpenPeripheralIntegration {
 		// Integration.addModule(new ModuleAppEng());
 		//
 		// Integration.addModule(new ModuleMinefactoryReloaded());
-		// Integration.addModule(new ModuleSgCraft());
 
 		Integration.addModule(new ModuleVanilla());
 
