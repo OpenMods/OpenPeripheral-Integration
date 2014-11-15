@@ -1,10 +1,9 @@
 package openperipheral.integration.ic2;
 
 import ic2.api.energy.tile.IEnergyConductor;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaMethod;
-import openperipheral.api.LuaType;
+import openperipheral.api.*;
 
+@Asynchronous
 public class AdapterEnergyConductor implements IPeripheralAdapter {
 
 	@Override
@@ -12,22 +11,22 @@ public class AdapterEnergyConductor implements IPeripheralAdapter {
 		return IEnergyConductor.class;
 	}
 
-	@LuaMethod(onTick = false, description = "Get the EU conduction loss", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get the EU conduction loss", returnTypes = LuaReturnType.NUMBER)
 	public double getEUConductionLoss(IEnergyConductor conductor) {
 		return conductor.getConductionLoss();
 	}
 
-	@LuaMethod(onTick = false, description = "Get the EU conductor breakdown energy", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get the EU conductor breakdown energy", returnTypes = LuaReturnType.NUMBER)
 	public double getEUConductorBreakdownEnergy(IEnergyConductor conductor) {
 		return conductor.getConductorBreakdownEnergy();
 	}
 
-	@LuaMethod(onTick = false, description = "Get the EU insulation breakdown energy", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get the EU insulation breakdown energy", returnTypes = LuaReturnType.NUMBER)
 	public double getEUInsulationBreakdownEnergy(IEnergyConductor conductor) {
 		return conductor.getInsulationBreakdownEnergy();
 	}
 
-	@LuaMethod(onTick = false, description = "Get the EU insulation energy absorption", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get the EU insulation energy absorption", returnTypes = LuaReturnType.NUMBER)
 	public double getEUInsulationEnergyAbsorption(IEnergyConductor conductor) {
 		return conductor.getInsulationEnergyAbsorption();
 	}

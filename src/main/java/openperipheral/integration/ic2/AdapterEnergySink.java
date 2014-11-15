@@ -1,10 +1,9 @@
 package openperipheral.integration.ic2;
 
 import ic2.api.energy.tile.IEnergySink;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaMethod;
-import openperipheral.api.LuaType;
+import openperipheral.api.*;
 
+@Asynchronous
 public class AdapterEnergySink implements IPeripheralAdapter {
 
 	@Override
@@ -12,9 +11,14 @@ public class AdapterEnergySink implements IPeripheralAdapter {
 		return IEnergySink.class;
 	}
 
-	@LuaMethod(onTick = false, description = "Get the maximum safe EU input", returnType = LuaType.NUMBER)
-	public int getMaxSafeEUInput(IEnergySink sink) {
-		return sink.getMaxSafeInput();
+	@LuaCallable(description = "Get the maximum safe EU input", returnTypes = LuaReturnType.NUMBER)
+	public double getDemandedEnergy(IEnergySink sink) {
+		return sink.getDemandedEnergy();
+	}
+
+	@LuaCallable(description = "Determine the tier of this energy sink (1 = LV, 2 = MV, 3 = HV, 4 = EV)", returnTypes = LuaReturnType.NUMBER)
+	public int getEUSinkTier(IEnergySink sink) {
+		return sink.getSinkTier();
 	}
 
 }

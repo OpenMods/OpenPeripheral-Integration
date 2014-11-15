@@ -2,12 +2,11 @@ package openperipheral.integration.ic2;
 
 import ic2.api.reactor.IReactor;
 import ic2.api.reactor.IReactorChamber;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaMethod;
-import openperipheral.api.LuaType;
+import openperipheral.api.*;
 
 import com.google.common.base.Preconditions;
 
+@Asynchronous
 public class AdapterReactorChamber implements IPeripheralAdapter {
 
 	@Override
@@ -21,27 +20,27 @@ public class AdapterReactorChamber implements IPeripheralAdapter {
 		return reactor;
 	}
 
-	@LuaMethod(onTick = false, description = "Check if reactor is in valid state", returnType = LuaType.BOOLEAN)
+	@LuaCallable(description = "Check if reactor is in valid state", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean isValid(IReactorChamber chamber) {
 		return chamber.getReactor() != null;
 	}
 
-	@LuaMethod(onTick = false, description = "Get the heat of the reactor", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get the heat of the reactor", returnTypes = LuaReturnType.NUMBER)
 	public int getHeat(IReactorChamber chamber) {
 		return getReactor(chamber).getHeat();
 	}
 
-	@LuaMethod(onTick = false, description = "Get the maximum heat of the reactor before it explodes", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get the maximum heat of the reactor before it explodes", returnTypes = LuaReturnType.NUMBER)
 	public int getMaxHeat(IReactorChamber chamber) {
 		return getReactor(chamber).getMaxHeat();
 	}
 
-	@LuaMethod(onTick = false, description = "Get the EU output of this reactor", returnType = LuaType.NUMBER)
+	@LuaCallable(description = "Get the EU output of this reactor", returnTypes = LuaReturnType.NUMBER)
 	public float getEUOutput(IReactorChamber chamber) {
 		return getReactor(chamber).getReactorEnergyOutput();
 	}
 
-	@LuaMethod(onTick = false, description = "Returns true if the reactor is active", returnType = LuaType.BOOLEAN)
+	@LuaCallable(description = "Returns true if the reactor is active", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean isActive(IReactorChamber chamber) {
 		return getReactor(chamber).produceEnergy();
 	}

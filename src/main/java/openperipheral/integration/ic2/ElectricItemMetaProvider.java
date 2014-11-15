@@ -6,15 +6,12 @@ import ic2.api.item.IElectricItem;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-class ElectricItemMetaProvider implements IItemStackMetadataProvider<IElectricItem> {
-	@Override
-	public Class<? extends IElectricItem> getTargetClass() {
-		return IElectricItem.class;
-	}
+@SuppressWarnings("serial")
+class ElectricItemMetaProvider extends ItemStackMetaProviderSimple<IElectricItem> {
 
 	@Override
 	public String getKey() {
