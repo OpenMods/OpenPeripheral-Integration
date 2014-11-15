@@ -1,6 +1,9 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.core;
-
-import java.util.ArrayList;
 
 /**
  *  Many things Forestry use temperature and humidity of a biome to determine whether they can or how they can work or spawn at a given location.
@@ -9,19 +12,6 @@ import java.util.ArrayList;
  */
 public enum EnumHumidity {
 	ARID("Arid"), NORMAL("Normal"), DAMP("Damp");
-
-	/**
-	 * Populated by Forestry with vanilla biomes. Add additional arid biomes here. (ex. desert)
-	 */
-	public static ArrayList<Integer> aridBiomeIds = new ArrayList<Integer>();
-	/**
-	 * Populated by Forestry with vanilla biomes. Add additional damp biomes here. (ex. jungle)
-	 */
-	public static ArrayList<Integer> dampBiomeIds = new ArrayList<Integer>();
-	/**
-	 * Populated by Forestry with vanilla biomes. Add additional normal biomes here.
-	 */
-	public static ArrayList<Integer> normalBiomeIds = new ArrayList<Integer>();
 
 	public final String name;
 
@@ -33,15 +23,21 @@ public enum EnumHumidity {
 		return this.name;
 	}
 
-	public static ArrayList<Integer> getBiomeIds(EnumHumidity humidity) {
-		switch (humidity) {
-		case ARID:
-			return aridBiomeIds;
-		case DAMP:
-			return dampBiomeIds;
-		case NORMAL:
-		default:
-			return normalBiomeIds;
+	/**
+	 * Determines the EnumHumidity given a floating point representation of Minecraft Rainfall
+	 * @param rawHumidity raw rainfall value
+	 * @return EnumHumidity corresponding to rainfall value
+	 */
+	public static EnumHumidity getFromValue(float rawHumidity) {
+		EnumHumidity value = EnumHumidity.ARID;
+		
+		if (rawHumidity > 0.85f) { // matches BiomeGenBase.isHighHumidity()
+			value = EnumHumidity.DAMP;
 		}
+		else if (rawHumidity >= 0.3f) {
+			value = EnumHumidity.NORMAL;
+		}
+
+		return value;
 	}
 }

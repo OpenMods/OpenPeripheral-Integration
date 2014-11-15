@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.core;
 
 import cpw.mods.fml.relauncher.Side;
@@ -18,6 +23,8 @@ import cpw.mods.fml.relauncher.SideOnly;
  *  			\ .apiculture       - Bees.
  *  			\ .arboriculture    - Trees.
  *  			\ .lepidopterology  - Butterflies.
+ *  
+ *  Note that if Forestry is not present, all these references will be null.
  */
 public class ForestryAPI {
 
@@ -36,5 +43,10 @@ public class ForestryAPI {
 	 * The currently active {@link IGameMode}.
 	 */
 	public static IGameMode activeMode;
+
+	/**
+	 * Provides information on certain Forestry constants (Villager IDs, Chest gen keys, etc)
+	 */
+	public static IForestryConstants forestryConstants;
 	
 }

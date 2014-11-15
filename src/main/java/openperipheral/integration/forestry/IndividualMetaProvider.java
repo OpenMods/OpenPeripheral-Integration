@@ -1,11 +1,11 @@
 package openperipheral.integration.forestry;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.IItemStackMetadataProvider;
+import openperipheral.api.IItemStackMetaProvider;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IIndividual;
 
-public class IndividualMetaProvider implements IItemStackMetadataProvider<Object> {
+public class IndividualMetaProvider implements IItemStackMetaProvider<Object> {
 	@Override
 	public Class<?> getTargetClass() {
 		return Object.class;

@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.apiculture;
 
 import java.util.Collection;
@@ -8,7 +13,7 @@ import net.minecraft.world.World;
 /**
  * Bees can be seeded either as hive drops or as mutation results.
  * 
- * Add IHiveDrops to BeeManager.hiveDrops
+ * Add IHiveDrops with HiveManager.get___Hive.addDrop
  * 
  * @author SirSengir
  */

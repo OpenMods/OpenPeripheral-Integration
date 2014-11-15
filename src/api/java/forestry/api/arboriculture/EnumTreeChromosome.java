@@ -1,15 +1,21 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.arboriculture;
 
-import net.minecraftforge.common.EnumPlantType;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
 import forestry.api.genetics.IAlleleArea;
+import forestry.api.genetics.IAlleleBoolean;
 import forestry.api.genetics.IAlleleFloat;
 import forestry.api.genetics.IAlleleInteger;
 import forestry.api.genetics.IAllelePlantType;
 import forestry.api.genetics.IChromosomeType;
 import forestry.api.genetics.IFruitFamily;
 import forestry.api.genetics.ISpeciesRoot;
+import net.minecraftforge.common.EnumPlantType;
 
 public enum EnumTreeChromosome implements IChromosomeType {
 
@@ -60,6 +66,10 @@ public enum EnumTreeChromosome implements IChromosomeType {
 	MATURATION(IAlleleInteger.class),
 
 	GIRTH(IAlleleInteger.class),
+	/**
+	 * Determines if the tree can burn.
+	 */
+	FIREPROOF(IAlleleBoolean.class),
 	;
 	
 	Class<? extends IAllele> clss;

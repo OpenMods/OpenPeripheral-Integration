@@ -1,11 +1,18 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.apiculture;
 
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
 import forestry.api.genetics.IAlleleSpecies;
 
 public interface IAlleleBeeSpecies extends IAlleleSpecies {
@@ -37,7 +44,7 @@ public interface IAlleleBeeSpecies extends IAlleleSpecies {
 	boolean isJubilant(IBeeGenome genome, IBeeHousing housing);
 
 	@SideOnly(Side.CLIENT)
-	Icon getIcon(EnumBeeType type, int renderPass);
+	IIcon getIcon(EnumBeeType type, int renderPass);
 
 	/**
 	 * @return Path of the texture to use for entity rendering.

@@ -3,12 +3,6 @@
  * 
  * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
  ******************************************************************************/
+@API(apiVersion="1.1", owner="ForestryAPI|core", provides="ForestryAPI|lepidopterology")
 package forestry.api.lepidopterology;
-
-import forestry.api.genetics.IAllele;
-import forestry.api.genetics.IGenome;
-import forestry.api.genetics.IMutation;
-
-public interface IButterflyMutation extends IMutation {
-	float getChance(IButterflyNursery housing, IAllele allele0, IAllele allele1, IGenome genome0, IGenome genome1);
-}
+import cpw.mods.fml.common.API;

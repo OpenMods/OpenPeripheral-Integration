@@ -1,7 +1,13 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.core;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -11,9 +17,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public interface IIconProvider {
 	
 	@SideOnly(Side.CLIENT)
-	Icon getIcon(short texUID);
+	IIcon getIcon(short texUID);
 	
 	@SideOnly(Side.CLIENT)
-	void registerIcons(IconRegister register);
+	void registerIcons(IIconRegister register);
 
 }

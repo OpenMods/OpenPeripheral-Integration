@@ -1,11 +1,18 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.arboriculture;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import forestry.api.genetics.IFruitFamily;
 
 public interface IFruitProvider {
@@ -41,7 +48,7 @@ public interface IFruitProvider {
 	 * @param ripeningTime
 	 *            Elapsed ripening time for the fruit.
 	 * @param fancy
-	 * @return Icon index of the texture to overlay on the leaf block.
+	 * @return IIcon index of the texture to overlay on the leaf block.
 	 */
 	short getIconIndex(ITreeGenome genome, IBlockAccess world, int x, int y, int z, int ripeningTime, boolean fancy);
 
@@ -63,5 +70,5 @@ public interface IFruitProvider {
 	boolean trySpawnFruitBlock(ITreeGenome genome, World world, int x, int y, int z);
 
 	@SideOnly(Side.CLIENT)
-	void registerIcons(IconRegister register);
+	void registerIcons(IIconRegister register);
 }

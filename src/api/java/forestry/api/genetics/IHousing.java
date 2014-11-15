@@ -1,19 +1,27 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.genetics;
 
-import forestry.api.core.EnumHumidity;
-import forestry.api.core.EnumTemperature;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import com.mojang.authlib.GameProfile;
+
+import forestry.api.core.EnumHumidity;
+import forestry.api.core.EnumTemperature;
+
 /**
- * Any housing, hatchery or nest which is a fixed location in the world. 
+ * Any housing, hatchery or nest which is a fixed location in the world.
  */
 public interface IHousing {
 
 	/**
 	 * @return String containing the login of this housing's owner.
 	 */
-	String getOwnerName();
+	GameProfile getOwnerName();
 
 	World getWorld();
 

@@ -1,13 +1,12 @@
 package openperipheral.integration.forestry;
 
-import openmods.Mods;
 import openperipheral.api.*;
-import openperipheral.integration.OPIntegrationModule;
+import openperipheral.integration.ApiIntegrationModule;
 
-public class ModuleForestry extends OPIntegrationModule {
+public class ModuleForestry extends ApiIntegrationModule {
 	@Override
-	public String getModId() {
-		return Mods.FORESTRY;
+	public String getApiId() {
+		return "ForestryAPI|core";
 	}
 
 	@Override
@@ -18,6 +17,6 @@ public class ModuleForestry extends OPIntegrationModule {
 		final ITypeConvertersRegistry typeRegistry = ApiAccess.getApi(ITypeConvertersRegistry.class);
 		typeRegistry.register(new ConverterIIndividual());
 
-		ApiAccess.getApi(IItemStackMetadataBuilder.class).register(new IndividualMetaProvider());
+		ApiAccess.getApi(IItemStackMetaBuilder.class).register(new IndividualMetaProvider());
 	}
 }

@@ -52,6 +52,21 @@ public class ConverterIIndividual implements ITypeConverter {
 
 	private static final Map<Class<? extends IAllele>, IAlleleConverter<?>> conventers =
 			ImmutableMap.<Class<? extends IAllele>, IAlleleConverter<?>> builder()
+					.put(IAlleleSpecies.class, new IAlleleConverter<IAlleleSpecies>() {
+
+						@Override
+						public Object convert(IAlleleSpecies allele) {
+							Map<String, Object> result = Maps.newHashMap();
+							result.put("authority", allele.getAuthority());
+							result.put("binomialName", allele.getBinomial());
+							result.put("complexity", allele.getComplexity());
+							result.put("humidity", allele.getHumidity());
+							result.put("name", allele.getName());
+							result.put("temperature", allele.getTemperature());
+							return result;
+						}
+
+					})
 					.put(IAlleleFloat.class, new IAlleleConverter<IAlleleFloat>() {
 						@Override
 						public Object convert(IAlleleFloat allele) {
@@ -135,7 +150,7 @@ public class ConverterIIndividual implements ITypeConverter {
 
 		@Override
 		protected void addAlleleInfo(GenomeAccess access, Map<String, Object> result) {
-			result.put("species", convertAllele(access, IAlleleBeeSpecies.class, EnumBeeChromosome.SPECIES));
+			result.put("species", convertAllele(access, IAlleleSpecies.class, EnumBeeChromosome.SPECIES));
 			result.put("speed", convertAllele(access, IAlleleFloat.class, EnumBeeChromosome.SPEED));
 			result.put("lifespan", convertAllele(access, IAlleleInteger.class, EnumBeeChromosome.LIFESPAN));
 			result.put("fertility", convertAllele(access, IAlleleInteger.class, EnumBeeChromosome.FERTILITY));
@@ -159,7 +174,7 @@ public class ConverterIIndividual implements ITypeConverter {
 
 		@Override
 		protected void addAlleleInfo(GenomeAccess access, Map<String, Object> result) {
-			result.put("species", convertAllele(access, IAlleleButterflySpecies.class, EnumButterflyChromosome.SPECIES));
+			result.put("species", convertAllele(access, IAlleleSpecies.class, EnumButterflyChromosome.SPECIES));
 			result.put("size", convertAllele(access, IAlleleFloat.class, EnumButterflyChromosome.SIZE));
 			result.put("speed", convertAllele(access, IAlleleFloat.class, EnumButterflyChromosome.SPEED));
 			result.put("lifespan", convertAllele(access, IAlleleInteger.class, EnumButterflyChromosome.LIFESPAN));

@@ -3,14 +3,6 @@
  * 
  * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
  ******************************************************************************/
-package forestry.api.genetics;
-
-
-public interface IAlleleFlowers extends IAllele {
-
-	/**
-	 * @return FlowerProvider
-	 */
-	IFlowerProvider getProvider();
-
-}
+@API(apiVersion="2.0.2", owner="Forestry", provides="ForestryAPI|core")
+package forestry.api.core;
+import cpw.mods.fml.common.API;

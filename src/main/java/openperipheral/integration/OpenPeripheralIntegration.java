@@ -11,6 +11,7 @@ import openperipheral.integration.cofh.tileentity.ModuleCofhTileEntity;
 import openperipheral.integration.cofh.transport.ModuleCofhTransport;
 import openperipheral.integration.computercraft.ModuleComputerCraft;
 import openperipheral.integration.enderstorage.ModuleEnderStorage;
+import openperipheral.integration.forestry.ModuleForestry;
 import openperipheral.integration.vanilla.ModuleVanilla;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -26,7 +27,6 @@ public class OpenPeripheralIntegration {
 		if (config.hasChanged()) config.save();
 
 		// Integration.addModule(new ModuleAppEng());
-		// Integration.addModule(new ModuleForestry());
 		// Integration.addModule(new ModuleIC2());
 		// Integration.addModule(new ModuleMinefactoryReloaded());
 		// Integration.addModule(new ModuleMystcraft());
@@ -50,6 +50,7 @@ public class OpenPeripheralIntegration {
 
 		Integration.addModule(new ModuleComputerCraft());
 		Integration.addModule(new ModuleEnderStorage());
+		Integration.addModule(new ModuleForestry());
 	}
 
 }

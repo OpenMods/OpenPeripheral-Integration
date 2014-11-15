@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.genetics;
 
 import java.util.ArrayList;
@@ -9,21 +14,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import com.mojang.authlib.GameProfile;
+
 /**
- * Describes a class of species (i.e. bees, trees, butterflies), provides helper functions and access to common functionality. 
+ * Describes a class of species (i.e. bees, trees, butterflies), provides helper functions and access to common functionality.
  */
 public interface ISpeciesRoot {
-	
+
 	/**
 	 * @return A unique identifier for the species class. Should consist of "root" + a common name for the species class in camel-case, i.e. "rootBees", "rootTrees", "rootButterflies".
 	 */
 	String getUID();
 
 	/**
-	 * @return Class of the sub-interface inheriting from {@link IIndividual}. 
+	 * @return Class of the sub-interface inheriting from {@link IIndividual}.
 	 */
-	Class getMemberClass();
-	
+	Class<? extends IIndividual> getMemberClass();
+
 	/**
 	 * @return Integer denoting the number of (counted) species of this type in the world.
 	 */
@@ -43,28 +50,28 @@ public interface ISpeciesRoot {
 	 * @return true if the itemstack contains an {@link IIndividual} of this class, false otherwise.
 	 */
 	boolean isMember(ItemStack stack, int type);
-	
+
 	/**
 	 * Used to check whether the given {@link IIndividual} is member of this class.
 	 * @param individual {@link IIndividual} to check.
 	 * @return true if the individual is member of this class, false otherwise.
 	 */
 	boolean isMember(IIndividual individual);
-	
+
 	IIndividual getMember(ItemStack stack);
-	
+
 	IIndividual getMember(NBTTagCompound compound);
 
 	ItemStack getMemberStack(IIndividual individual, int type);
 
 	/* BREEDING TRACKER */
-	IBreedingTracker getBreedingTracker(World world, String player);
-	
+	IBreedingTracker getBreedingTracker(World world, GameProfile player);
+
 	/* GENOME MANIPULATION */
 	IIndividual templateAsIndividual(IAllele[] template);
-	
+
 	IIndividual templateAsIndividual(IAllele[] templateActive, IAllele[] templateInactive);
-	
+
 	IChromosome[] templateAsChromosomes(IAllele[] template);
 
 	IChromosome[] templateAsChromosomes(IAllele[] templateActive, IAllele[] templateInactive);
@@ -128,33 +135,33 @@ public interface ISpeciesRoot {
 	 * @return All registered mutations the given allele is part of.
 	 */
 	Collection<? extends IMutation> getCombinations(IAllele other);
-	
+
 	/**
 	 * @param result {@link IAllele} to search for.
 	 * @return All registered mutations the given {@link IAllele} is the result of.
 	 */
 	Collection<? extends IMutation> getPaths(IAllele result, int chromosomeOrdinal);
-	
+
 	/* RESEARCH */
 	/**
 	 * @return List of generic catalysts which should be accepted for research by species of this class.
 	 */
 	Map<ItemStack, Float> getResearchCatalysts();
-	
+
 	/**
 	 * Sets an item stack as a valid (generic) research catalyst for this class.
 	 * @param itemstack ItemStack to set as suitable.
 	 * @param suitability Float between 0 and 1 to indicate suitability.
 	 */
 	void setResearchSuitability(ItemStack itemstack, float suitability);
-	
+
 	/**
 	 * @return Array of {@link IChromosomeType} which are in this species genome
 	 */
 	IChromosomeType[] getKaryotype();
 
 	/**
-	 * @return {@link IChromosomeType} which is the "key" for this species class, usually the species chromosome.  
+	 * @return {@link IChromosomeType} which is the "key" for this species class, usually the species chromosome.
 	 */
 	IChromosomeType getKaryotypeKey();
 }

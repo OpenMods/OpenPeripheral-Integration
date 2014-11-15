@@ -1,9 +1,15 @@
+/*******************************************************************************
+ * Copyright 2011-2014 SirSengir
+ * 
+ * This work (the API) is licensed under the "MIT" License, see LICENSE.txt for details.
+ ******************************************************************************/
 package forestry.api.apiculture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.item.ItemStack;
+
 import forestry.api.genetics.IMutation;
 /**
  * 
@@ -12,12 +18,6 @@ import forestry.api.genetics.IMutation;
  * @author SirSengir
  */
 public class BeeManager {
-
-	/**
-	 * Get your own reference to this via AlleleManager.alleleRegistry.getSpeciesRoot("rootBees") and save it somewhere.
-	 */
-	@Deprecated
-	public static IBeeRoot beeInterface;
 	
 	/**
 	 * Species templates for bees that can drop from hives.
@@ -26,6 +26,7 @@ public class BeeManager {
 	 * 
 	 * see {@link IMutation} for template format
 	 */
+	@Deprecated // Deprecated since 3.1. Use HiveManager instead
 	public static ArrayList<IHiveDrop>[] hiveDrops;
 
 	/**
