@@ -1,29 +1,49 @@
 package openperipheral.integration.buildcraft;
 
+import net.minecraftforge.common.util.ForgeDirection;
 import openperipheral.api.*;
-import buildcraft.api.transport.IPipe;
+import buildcraft.api.transport.*;
+import buildcraft.api.transport.IPipeTile.PipeType;
+
+import com.google.common.base.Preconditions;
 
 public class AdapterPipe implements IPeripheralAdapter {
 
 	@Override
 	public Class<?> getTargetClass() {
-		return IPipe.class;
+		return IPipeTile.class;
 	}
 
-	@LuaMethod(description = "Checks if this pipe has a gate.", returnType = LuaType.BOOLEAN)
-	public boolean hasGate(IPipe pipe) {
-		return pipe.hasGate();
+	private static IPipe getPipe(IPipeTile target) {
+		IPipe pipe = target.getPipe();
+		Preconditions.checkNotNull(pipe, "Invalid pipe");
+		return pipe;
 	}
 
-	@LuaMethod(description = "Checks if a wire of your colour choice is on the pipe.", returnType = LuaType.BOOLEAN, args = {
-			@Arg(name = "color", description = "The colour of the wire, can be \"Yellow\", \"Green\", \"Blue\" and \"Red\". (Case sensitive)", type = LuaType.STRING)
-	})
-	public boolean isWired(IPipe pipe, String colour) {
-		try {
-			IPipe.WireColor color = IPipe.WireColor.valueOf(colour);
-			return pipe.isWired(color);
-		} catch (IllegalArgumentException e) {}
-		return false;
+	@LuaCallable(description = "Checks if this pipe has a gate", returnTypes = LuaReturnType.BOOLEAN)
+	public boolean hasGate(IPipeTile target, @Arg(name = "side") ForgeDirection side) {
+		return getPipe(target).hasGate(side);
 	}
 
+	@LuaCallable(description = "Checks if a wire is on the pipe", returnTypes = LuaReturnType.BOOLEAN)
+	public boolean isWired(IPipeTile target,
+			@Arg(name = "wire", description = "The colour of the wire") PipeWire wire) {
+		return getPipe(target).isWired(wire);
+	}
+
+	@LuaCallable(description = "Checks if a wire on the pipe is active", returnTypes = LuaReturnType.BOOLEAN)
+	public boolean isWireActive(IPipeTile target,
+			@Arg(name = "wire", description = "The colour of the wire") PipeWire wire) {
+		return getPipe(target).isWireActive(wire);
+	}
+
+	@LuaCallable(description = "Get type of pipe", returnTypes = LuaReturnType.STRING)
+	public PipeType getPipeType(IPipeTile target) {
+		return target.getPipeType();
+	}
+
+	@LuaCallable(description = "Get type of pipe", returnTypes = LuaReturnType.BOOLEAN)
+	public boolean isPipeConnected(IPipeTile target, @Arg(name = "side") ForgeDirection side) {
+		return target.isPipeConnected(side);
+	}
 }

@@ -1,10 +1,14 @@
 package openperipheral.integration.buildcraft;
 
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import openperipheral.api.*;
 import buildcraft.api.power.IPowerReceptor;
+import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
 
+import com.google.common.base.Preconditions;
+
+@SuppressWarnings("deprecation")
 public class AdapterPowerReceptor implements IPeripheralAdapter {
 
 	@Override
@@ -12,49 +16,64 @@ public class AdapterPowerReceptor implements IPeripheralAdapter {
 		return IPowerReceptor.class;
 	}
 
-	@LuaMethod(returnType = LuaType.NUMBER, description = "Get the activation MJ for this block",
-			args = {
-					@Arg(name = "direction", type = LuaType.STRING, description = "The side of the block that you're interested in") })
-	public Float getActivationEnergy(IPowerReceptor powerReceptor, ForgeDirection direction) {
+	private static PowerReceiver getPowerReceiver(IPowerReceptor powerReceptor, ForgeDirection direction) {
 		PowerReceiver powerReceiver = powerReceptor.getPowerReceiver(direction);
-		if (powerReceiver == null) { return null; }
-		return powerReceiver.getActivationEnergy();
+		Preconditions.checkNotNull(powerReceiver, "Invalid target");
+		return powerReceiver;
 	}
 
-	@LuaMethod(returnType = LuaType.NUMBER, description = "Get the MJ stored for this block",
-			args = {
-					@Arg(name = "direction", type = LuaType.STRING, description = "The side of the block that you're interested in") })
-	public Float getMJStored(IPowerReceptor powerReceptor, ForgeDirection direction) {
-		PowerReceiver powerReceiver = powerReceptor.getPowerReceiver(direction);
-		if (powerReceiver == null) { return null; }
-		return powerReceiver.getEnergyStored();
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	public double getMinMJReceived(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
+		return powerReceiver.getMinEnergyReceived();
 	}
 
-	@LuaMethod(returnType = LuaType.NUMBER, description = "Get the max MJ received",
-			args = {
-					@Arg(name = "direction", type = LuaType.STRING, description = "The side of the block that you're interested in") })
-	public Float getMaxMJReceived(IPowerReceptor powerReceptor, ForgeDirection direction) {
-		PowerReceiver powerReceiver = powerReceptor.getPowerReceiver(direction);
-		if (powerReceiver == null) { return null; }
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	public double getMaxMJReceived(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
 		return powerReceiver.getMaxEnergyReceived();
 	}
 
-	@LuaMethod(returnType = LuaType.NUMBER, description = "Get the max MJ stored",
-			args = {
-					@Arg(name = "direction", type = LuaType.STRING, description = "The side of the block that you're interested in") })
-	public Float getMaxMJStored(IPowerReceptor powerReceptor, ForgeDirection direction) {
-		PowerReceiver powerReceiver = powerReceptor.getPowerReceiver(direction);
-		if (powerReceiver == null) { return null; }
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	public double getMaxMJStored(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
 		return powerReceiver.getMaxEnergyStored();
 	}
 
-	@LuaMethod(returnType = LuaType.NUMBER, description = "Get the min MJ received",
-			args = {
-					@Arg(name = "direction", type = LuaType.STRING, description = "The side of the block that you're interested in") })
-	public Float getMinMJReceived(IPowerReceptor powerReceptor, ForgeDirection direction) {
-		PowerReceiver powerReceiver = powerReceptor.getPowerReceiver(direction);
-		if (powerReceiver == null) { return null; }
-		return powerReceiver.getMinEnergyReceived();
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	public double getActivationMJ(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
+		return powerReceiver.getActivationEnergy();
+	}
+
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	public double getMJStored(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
+		return powerReceiver.getEnergyStored();
+	}
+
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	public double getAverageMJReceived(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
+		return powerReceiver.getAveragePowerReceived();
+	}
+
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	public double getAverageMJUsed(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
+		return powerReceiver.getAveragePowerUsed();
+	}
+
+	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	public double getAverageMJLost(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
+		return powerReceiver.getAveragePowerLost();
+	}
+
+	@LuaCallable(returnTypes = LuaReturnType.STRING)
+	public PowerHandler.Type getPowerReceptorType(IPowerReceptor powerReceptor, @Arg(name = "side") ForgeDirection side) {
+		PowerReceiver powerReceiver = getPowerReceiver(powerReceptor, side);
+		return powerReceiver.getType();
 	}
 
 }

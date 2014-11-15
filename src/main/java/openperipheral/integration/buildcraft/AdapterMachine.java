@@ -1,19 +1,19 @@
 package openperipheral.integration.buildcraft;
 
 import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaMethod;
-import openperipheral.api.LuaType;
-import buildcraft.core.IMachine;
+import openperipheral.api.LuaCallable;
+import openperipheral.api.LuaReturnType;
+import buildcraft.api.tiles.IHasWork;
 
 public class AdapterMachine implements IPeripheralAdapter {
 
 	@Override
 	public Class<?> getTargetClass() {
-		return IMachine.class;
+		return IHasWork.class;
 	}
 
-	@LuaMethod(description = "Checks if the machine is running.", returnType = LuaType.BOOLEAN)
-	public boolean isActive(IMachine action) {
-		return action.isActive();
+	@LuaCallable(description = "Checks if the machine is running.", returnTypes = LuaReturnType.BOOLEAN)
+	public boolean hasWork(IHasWork action) {
+		return action.hasWork();
 	}
 }
