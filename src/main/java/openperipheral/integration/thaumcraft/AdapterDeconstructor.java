@@ -20,12 +20,12 @@ public class AdapterDeconstructor implements IPeripheralAdapter {
 	private static final Class<?> TILE_DECONSTRUCTOR = ReflectionHelper.getClass("thaumcraft.common.tiles.TileDeconstructionTable");
 
 	private static final FieldAccess<Aspect> ASPECT_ACCESS = FieldAccess.create(TILE_DECONSTRUCTOR, "aspect");
-	
+
 	@Override
 	public Class<?> getTargetClass() {
 		return TILE_DECONSTRUCTOR;
 	}
-	
+
 	@Override
 	public String getSourceId() {
 		return "thaumcraft_deconstructor";

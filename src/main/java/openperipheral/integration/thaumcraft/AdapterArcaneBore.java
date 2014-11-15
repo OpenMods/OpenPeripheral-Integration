@@ -25,12 +25,11 @@ public class AdapterArcaneBore implements IPeripheralAdapter {
 	public Class<?> getTargetClass() {
 		return TILE_ARCANE_BORE;
 	}
-	
+
 	@Override
 	public String getSourceId() {
 		return "thaumcraf_bore";
 	}
-	
 
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the arcane bore have a pickaxe.")
 	public boolean hasPickaxe(Object target) {

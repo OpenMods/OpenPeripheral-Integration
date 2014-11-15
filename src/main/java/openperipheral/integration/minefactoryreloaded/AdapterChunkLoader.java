@@ -13,6 +13,7 @@ public class AdapterChunkLoader implements IPeripheralAdapter {
 	public String getSourceId() {
 		return "mfr_chunk_loader";
 	}
+
 	@Override
 	public Class<?> getTargetClass() {
 		return CHUNKLOADER_CLASS;

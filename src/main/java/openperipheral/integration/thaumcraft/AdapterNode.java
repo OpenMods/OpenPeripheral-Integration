@@ -13,7 +13,7 @@ public class AdapterNode implements IPeripheralAdapter {
 	public Class<?> getTargetClass() {
 		return INode.class;
 	}
-	
+
 	@Override
 	public String getSourceId() {
 		return "thaumcraft_node";

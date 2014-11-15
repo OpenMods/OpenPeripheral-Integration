@@ -21,7 +21,7 @@ public class ModuleThaumcraftApi extends ApiIntegrationModule {
 		itemMeta.register(new EssentiaContainerMetaProvider());
 		itemMeta.register(new WandFocusMetaProvider());
 		itemMeta.register(new RunicItemMetaProvider());
-		
+
 		final ITypeConvertersRegistry converters = ApiAccess.getApi(ITypeConvertersRegistry.class);
 		converters.register(new ConverterAspectList());
 	}
