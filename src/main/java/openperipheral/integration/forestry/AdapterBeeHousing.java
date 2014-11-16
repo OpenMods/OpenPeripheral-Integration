@@ -49,7 +49,7 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 	 * Experimental method. Adding it aganist beehousing for now as we need some
 	 * kind of block to run it against
 	 * Trying to get the full breeding tree for all bees
-	 * 
+	 *
 	 * @param computer
 	 * @param housing
 	 * @return

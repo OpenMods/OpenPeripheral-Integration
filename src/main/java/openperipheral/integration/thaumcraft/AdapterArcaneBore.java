@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package openperipheral.integration.thaumcraft;
 
@@ -13,7 +13,7 @@ import openperipheral.api.*;
 
 /**
  * @author Katrina
- * 
+ *
  */
 @Asynchronous
 public class AdapterArcaneBore implements IPeripheralAdapter {

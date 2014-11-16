@@ -26,8 +26,8 @@ public class AdapterReconfigurableFacing implements IPeripheralAdapter {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @, false otherwise.
 	 */
 
@@ -38,8 +38,8 @@ public class AdapterReconfigurableFacing implements IPeripheralAdapter {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @param side
 	 *            The side to set the facing to.
 	 * @return True if the facing was set, false otherwise.

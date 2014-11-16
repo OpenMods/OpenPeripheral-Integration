@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package openperipheral.integration.thaumcraft;
 
@@ -11,7 +11,7 @@ import thaumcraft.api.aspects.Aspect;
 
 /**
  * @author Katrina
- * 
+ *
  */
 @Asynchronous
 public class AdapterDeconstructor implements IPeripheralAdapter {
