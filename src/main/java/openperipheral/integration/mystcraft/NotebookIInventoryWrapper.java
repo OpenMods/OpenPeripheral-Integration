@@ -3,15 +3,23 @@ package openperipheral.integration.mystcraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import openmods.reflection.ReflectionHelper;
-
-import org.apache.commons.lang3.ArrayUtils;
+import openmods.reflection.*;
+import openmods.reflection.MethodAccess.Function1;
+import openmods.reflection.MethodAccess.Function2;
+import openmods.reflection.MethodAccess.Function3;
 
 import com.google.common.base.Preconditions;
 
 public class NotebookIInventoryWrapper implements IInventory {
 
-	private static final Class<?> INVENTORY_CLASS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.inventory.InventoryNotebook");
+	private final Class<?> INVENTORY_CLASS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.inventory.InventoryNotebook");
+
+	private final Function1<Boolean, ItemStack> IS_ITEM_VALID = MethodAccess.create(boolean.class, INVENTORY_CLASS, ItemStack.class, "isItemValid");
+	private final Function1<String, ItemStack> GET_NAME = MethodAccess.create(String.class, INVENTORY_CLASS, ItemStack.class, "getName");
+	private final Function1<Integer, ItemStack> GET_ITEM_COUNT = MethodAccess.create(Integer.class, INVENTORY_CLASS, ItemStack.class, "getItemCount");
+	private final Function1<Integer, ItemStack> GET_LARGEST_SLOT_ID = MethodAccess.create(int.class, INVENTORY_CLASS, ItemStack.class, "getLargestSlotId");
+	private final Function2<ItemStack, ItemStack, Integer> GET_ITEM = MethodAccess.create(ItemStack.class, INVENTORY_CLASS, ItemStack.class, int.class, "getItem");
+	private final Function3<Void, ItemStack, Integer, ItemStack> SET_ITEM = MethodAccess.create(void.class, INVENTORY_CLASS, ItemStack.class, int.class, ItemStack.class, "setItem");
 
 	private ItemStack notebook;
 
@@ -20,21 +28,15 @@ public class NotebookIInventoryWrapper implements IInventory {
 		this.notebook = notebook;
 	}
 
-	public <T> T callOnNotebook(String method, Object... extras) {
-		Object args[] = new Object[] { notebook };
-		if (extras.length > 0) args = ArrayUtils.addAll(args, extras);
-		return ReflectionHelper.callStatic(INVENTORY_CLASS, method, args);
-	}
-
 	@Override
 	public int getSizeInventory() {
-		Integer slotId = callOnNotebook("getLargestSlotId");
+		int slotId = GET_LARGEST_SLOT_ID.call(null, notebook);
 		return slotId + 2;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int i) {
-		return callOnNotebook("getItem", ReflectionHelper.primitive(i));
+		return GET_ITEM.call(null, notebook, i);
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class NotebookIInventoryWrapper implements IInventory {
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack pageStack) {
-		callOnNotebook("setItem", ReflectionHelper.primitive(slot), ReflectionHelper.typed(pageStack, ItemStack.class));
+		SET_ITEM.call(null, notebook, slot, pageStack);
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class NotebookIInventoryWrapper implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return callOnNotebook("getName");
+		return GET_NAME.call(null, notebook);
 	}
 
 	@Override
@@ -94,6 +96,10 @@ public class NotebookIInventoryWrapper implements IInventory {
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
-		return ReflectionHelper.callStatic(INVENTORY_CLASS, "isItemValid", itemstack);
+		return IS_ITEM_VALID.call(null, itemstack);
+	}
+
+	public Integer getItemCount() {
+		return GET_ITEM_COUNT.call(null, notebook);
 	}
 }

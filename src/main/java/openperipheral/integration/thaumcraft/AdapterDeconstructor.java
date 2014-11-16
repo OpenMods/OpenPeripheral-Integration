@@ -3,8 +3,6 @@
  */
 package openperipheral.integration.thaumcraft;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.inventory.IInventory;
 import openmods.reflection.FieldAccess;
 import openmods.reflection.ReflectionHelper;
@@ -33,8 +31,7 @@ public class AdapterDeconstructor implements IPeripheralAdapter {
 
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the Table have an aspect in it")
 	public boolean hasAspect(Object target) throws Exception {
-		Field f = ReflectionHelper.getField(CLASS, "aspect");
-		return f.get(target) != null;
+		return ASPECT.get(target) != null;
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Has the Table any items")

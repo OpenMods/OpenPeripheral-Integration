@@ -7,8 +7,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import openmods.reflection.FieldAccess;
-import openmods.reflection.ReflectionHelper;
+import openmods.reflection.*;
+import openmods.reflection.MethodAccess.Function0;
 import openperipheral.api.*;
 
 /**
@@ -26,6 +26,8 @@ public class AdapterArcaneBore implements IPeripheralAdapter {
 	private final FieldAccess<Integer> AREA = FieldAccess.create(CLASS, "area");
 	private final FieldAccess<Integer> SPEED = FieldAccess.create(CLASS, "speed");
 	private final FieldAccess<Integer> MAX_RADIUS = FieldAccess.create(CLASS, "maxRadius");
+
+	private final Function0<Boolean> GETTING_POWER = MethodAccess.create(boolean.class, CLASS, "gettingPower");
 
 	@Override
 	public Class<?> getTargetClass() {
@@ -61,7 +63,7 @@ public class AdapterArcaneBore implements IPeripheralAdapter {
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Is the Arcane bore active?")
 	public boolean isWorking(Object target) {
 		ItemStack pick = getPick(target);
-		Boolean hasPower = ReflectionHelper.call(target, "gettingPower");
+		Boolean hasPower = GETTING_POWER.call(target);
 		return hasPower && hasFocus(target) && hasPickaxe(target) && pick.isItemStackDamageable() && !isPickaxeBroken(target);
 	}
 

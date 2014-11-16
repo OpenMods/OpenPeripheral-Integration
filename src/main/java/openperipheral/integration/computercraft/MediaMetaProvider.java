@@ -4,6 +4,8 @@ import java.util.Map;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import openmods.reflection.MethodAccess;
+import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.ReflectionHelper;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
@@ -14,6 +16,10 @@ import dan200.computercraft.api.media.IMedia;
 @SuppressWarnings("serial")
 public class MediaMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
+	private final Class<?> API_CLASS = ReflectionHelper.getClass("dan200.computercraft.ComputerCraft");
+
+	private final Function1<IMedia, ItemStack> GET_MEDIA = MethodAccess.create(IMedia.class, API_CLASS, ItemStack.class, "getMedia");
+
 	@Override
 	public String getKey() {
 		return "disk";
@@ -23,7 +29,7 @@ public class MediaMetaProvider extends ItemStackMetaProviderSimple<Item> {
 	public Object getMeta(Item target, ItemStack stack) {
 		if (target instanceof IMedia) return addDiskInfo(stack, (IMedia)target);
 
-		IMedia media = ReflectionHelper.callStatic(ModuleComputerCraft.API_CLASS.get(), "getMedia", stack);
+		IMedia media = GET_MEDIA.call(null, stack);
 		if (media != null) return addDiskInfo(stack, media);
 
 		return null;

@@ -11,7 +11,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import openmods.fakeplayer.FakePlayerPool;
 import openmods.fakeplayer.FakePlayerPool.PlayerUser;
 import openmods.fakeplayer.OpenModsFakePlayer;
-import openmods.reflection.ReflectionHelper;
+import openmods.reflection.*;
+import openmods.reflection.MethodAccess.Function0;
+import openmods.reflection.MethodAccess.Function1;
+import openmods.reflection.MethodAccess.Function2;
 import openmods.utils.BlockUtils;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.*;
@@ -21,6 +24,10 @@ import com.google.common.base.Preconditions;
 
 public class AdapterWritingDesk implements IPeripheralAdapter {
 	private final Class<?> CLASS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.tileentity.TileEntityDesk");
+
+	private final Function0<Integer> GET_MAX_NOTEBOOK_COUNT = MethodAccess.create(int.class, CLASS, "getMaxNotebookCount");
+	private final Function1<ItemStack, Byte> GET_NOTEBOOK = MethodAccess.create(ItemStack.class, CLASS, byte.class, "getNotebook");
+	private final Function2<Void, EntityPlayer, String> WRITE_SYMBOL = MethodAccess.create(void.class, CLASS, EntityPlayer.class, String.class, "writeSymbol");
 
 	@Override
 	public Class<?> getTargetClass() {
@@ -34,7 +41,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 
 	@LuaCallable(description = "Get the maximum number of notebooks this desk can store", returnTypes = LuaReturnType.NUMBER)
 	public int getMaxNotebookCount(Object tileEntityDesk) {
-		return ReflectionHelper.call(tileEntityDesk, "getMaxNotebookCount");
+		return GET_MAX_NOTEBOOK_COUNT.call(tileEntityDesk);
 	}
 
 	@LuaCallable(description = "Get the name of a notebook", returnTypes = LuaReturnType.STRING)
@@ -44,7 +51,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 
 	@LuaCallable(description = "Get the number of pages in a notebook", returnTypes = LuaReturnType.NUMBER)
 	public Integer getNotebookSize(Object desk, @Arg(name = "deskSlot") int deskSlot) {
-		return createInventoryWrapper(desk, deskSlot).callOnNotebook("getItemCount");
+		return createInventoryWrapper(desk, deskSlot).getItemCount();
 	}
 
 	@LuaCallable(description = "Get the contents of a slot in a notebook", returnTypes = LuaReturnType.NUMBER)
@@ -96,7 +103,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 			FakePlayerPool.instance.executeOnPlayer((WorldServer)desk.getWorldObj(), new PlayerUser() {
 				@Override
 				public void usePlayer(OpenModsFakePlayer fakePlayer) {
-					ReflectionHelper.call(CLASS, desk, "writeSymbol", ReflectionHelper.typed(fakePlayer, EntityPlayer.class), symbol);
+					WRITE_SYMBOL.call(desk, fakePlayer, symbol);
 				}
 			});
 		}
@@ -107,7 +114,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 			Item item = info.getItem();
 			if (item != null && "item.myst.page".equals(item.getUnlocalizedName())) {
 				NBTTagCompound tag = info.getTagCompound();
-				if (tag != null) { return tag.getString("symbol"); }
+				if (tag != null) return tag.getString("symbol");
 			}
 		}
 		return null;
@@ -122,7 +129,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 	}
 
 	private NotebookIInventoryWrapper createInventoryWrapper(Object tile, int number) {
-		ItemStack notebook = ReflectionHelper.call(CLASS, tile, "getNotebook", ReflectionHelper.primitive((byte)(number - 1)));
+		ItemStack notebook = GET_NOTEBOOK.call(tile, (byte)(number - 1));
 		return new NotebookIInventoryWrapper(notebook);
 	}
 }

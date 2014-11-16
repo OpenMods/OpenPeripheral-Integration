@@ -6,7 +6,7 @@ import openperipheral.api.*;
 
 @Asynchronous
 public class AdapterArcaneEar implements IPeripheralAdapter {
-	private static final Class<?> CLASS = ReflectionHelper.getClass("thaumcraft.common.tiles.TileSensor");
+	private final Class<?> CLASS = ReflectionHelper.getClass("thaumcraft.common.tiles.TileSensor");
 
 	private final FieldAccess<Byte> NOTE = FieldAccess.create(CLASS, "note");
 	private final FieldAccess<Byte> TONE = FieldAccess.create(CLASS, "tone");

@@ -2,21 +2,26 @@ package openperipheral.integration.computercraft;
 
 import java.util.Map;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import openmods.reflection.MethodAccess;
+import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.ReflectionHelper;
 import openperipheral.api.IItemStackMetaProvider;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
-
-import dan200.computercraft.api.turtle.ITurtleUpgrade;
-import dan200.computercraft.api.turtle.TurtleSide;
 
 public class ComputerMetaProvider implements IItemStackMetaProvider<Object> {
 
+	private final Class<?> CLASS = ReflectionHelper.getClass("dan200.computercraft.shared.computer.items.IComputerItem");
+
+	private final Function1<Integer, ItemStack> GET_COMPUTER_ID = MethodAccess.create(int.class, CLASS, ItemStack.class, "getComputerID");
+	private final Function1<String, ItemStack> GET_LABEL = MethodAccess.create(String.class, CLASS, ItemStack.class, "getLabel");
+	private final Function1<Object, ItemStack> GET_FAMILY = MethodAccess.create(Object.class, CLASS, ItemStack.class, "getFamily");
+
 	@Override
 	public Class<? extends Object> getTargetClass() {
-		return ModuleComputerCraft.COMPUTER_ITEM_CLASS.get();
+		return CLASS;
 	}
 
 	@Override
@@ -27,36 +32,15 @@ public class ComputerMetaProvider implements IItemStackMetaProvider<Object> {
 	@Override
 	public Object getMeta(Object target, ItemStack stack) {
 		Map<String, Object> computerInfo = Maps.newHashMap();
-		int computerID = ReflectionHelper.call(target, "getComputerID", stack);
+		int computerID = GET_COMPUTER_ID.call(target, stack);
 		if (computerID >= 0) {
 			computerInfo.put("id", computerID);
-			String label = ReflectionHelper.call(target, "getLabel", stack);
-			if (label != null) computerInfo.put("label", label);
+			String label = GET_LABEL.call(target, stack);
+			computerInfo.put("label", Strings.nullToEmpty(label));
 		}
 
-		computerInfo.put("type", ReflectionHelper.call(target, "getFamily", stack));
-
-		if (ModuleComputerCraft.TURTLE_ITEM_CLASS.get().isInstance(target)) addTurtleInfo(computerInfo, stack, (Item)target);
+		computerInfo.put("type", GET_FAMILY.call(target, stack));
 
 		return computerInfo;
-	}
-
-	private static void addTurtleInfo(Map<String, Object> map, ItemStack stack, Item item) {
-		addSideInfo(map, "left", ReflectionHelper.<ITurtleUpgrade> call(item, "getUpgrade", stack, TurtleSide.Left));
-		addSideInfo(map, "right", ReflectionHelper.<ITurtleUpgrade> call(item, "getUpgrade", stack, TurtleSide.Right));
-
-		int fuelLevel = ReflectionHelper.call(item, "getFuelLevel", stack);
-		map.put("fuel", fuelLevel);
-	}
-
-	private static void addSideInfo(Map<String, Object> map, String side, ITurtleUpgrade upgrade) {
-		if (upgrade != null) {
-			Map<Object, Object> upgradeMap = Maps.newHashMap();
-
-			upgradeMap.put("adjective", upgrade.getUnlocalisedAdjective());
-			upgradeMap.put("type", upgrade.getType().toString());
-
-			map.put(side, upgradeMap);
-		}
 	}
 }

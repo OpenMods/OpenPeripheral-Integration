@@ -1,8 +1,8 @@
 package openperipheral.integration.enderstorage;
 
 import net.minecraft.tileentity.TileEntity;
-import openmods.reflection.FieldAccess;
-import openmods.reflection.ReflectionHelper;
+import openmods.reflection.*;
+import openmods.reflection.MethodAccess.Function1;
 import openmods.utils.ColorUtils;
 import openmods.utils.ColorUtils.ColorMeta;
 import openperipheral.api.*;
@@ -13,6 +13,8 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 	private final Class<?> CLASS = ReflectionHelper.getClass("codechicken.enderstorage.common.TileFrequencyOwner");
 
 	private final FieldAccess<Integer> FREQ = FieldAccess.create(CLASS, "freq");
+
+	private final Function1<Void, Integer> SET_FREQ = MethodAccess.create(void.class, CLASS, int.class, "setFreq");
 
 	@Override
 	public Class<?> getTargetClass() {
@@ -89,9 +91,9 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 		setFreq(frequencyOwner, frequency);
 	}
 
-	private static void setFreq(TileEntity frequencyOwner, int frequency) {
+	private void setFreq(TileEntity frequencyOwner, int frequency) {
 		Preconditions.checkElementIndex(frequency, 4096, "frequency");
-		ReflectionHelper.call(frequencyOwner, "setFreq", ReflectionHelper.primitive(frequency));
+		SET_FREQ.call(frequencyOwner, frequency);
 	}
 
 	private static int parseComputerCraftColor(int bitmask) {

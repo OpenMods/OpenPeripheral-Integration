@@ -5,7 +5,7 @@ import java.util.Map;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.Vec3;
-import openmods.reflection.ReflectionHelper;
+import openmods.reflection.FieldAccess;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 
@@ -13,6 +13,8 @@ import com.google.common.collect.Maps;
 
 @SuppressWarnings("serial")
 public class EntityHorseMetaProvider extends EntityMetaProviderSimple<EntityHorse> {
+
+	private final FieldAccess<IInventory> HORSE_CHEST = FieldAccess.create(EntityHorse.class, "horseChest", "field_110296_bG");
 
 	@Override
 	public String getKey() {
@@ -35,7 +37,7 @@ public class EntityHorseMetaProvider extends EntityMetaProviderSimple<EntityHors
 		final boolean chested = target.isChested();
 		map.put("chestedHorse", chested);
 		if (chested) {
-			IInventory invent = (IInventory)ReflectionHelper.getProperty("", target, "horseChest", "field_110296_bG");
+			IInventory invent = HORSE_CHEST.get(target);
 			map.put("chest", InventoryUtils.getAllItems(invent));
 		}
 

@@ -2,12 +2,17 @@ package openperipheral.integration.minefactoryreloaded;
 
 import java.util.Map;
 
+import openmods.reflection.MethodAccess;
+import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.ReflectionHelper;
 import openperipheral.api.*;
 
 public class AdapterHarvester implements IPeripheralAdapter {
 
-	private static final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityHarvester");
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityHarvester");
+
+	@SuppressWarnings("rawtypes")
+	private final Function0<Map> GET_SETTINGS = MethodAccess.create(Map.class, CLASS, "getSettings");
 
 	@Override
 	public Class<?> getTargetClass() {
@@ -39,8 +44,9 @@ public class AdapterHarvester implements IPeripheralAdapter {
 		getSettings(tileEntityHarvester).put("harvestSmallMushrooms", harvestShrooms);
 	}
 
-	private static Map<String, Boolean> getSettings(Object tileEntityHarvester) {
-		return ReflectionHelper.call(tileEntityHarvester, "getSettings");
+	@SuppressWarnings("unchecked")
+	private Map<String, Boolean> getSettings(Object tileEntityHarvester) {
+		return GET_SETTINGS.call(tileEntityHarvester);
 	}
 
 }
