@@ -7,8 +7,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import openmods.utils.FieldAccess;
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.FieldAccess;
+import openmods.reflection.ReflectionHelper;
 import openperipheral.api.*;
 
 /**

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.ReflectionHelper;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;

@@ -5,8 +5,8 @@ import java.util.Map;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.Vec3;
+import openmods.reflection.ReflectionHelper;
 import openmods.utils.InventoryUtils;
-import openmods.utils.ReflectionHelper;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;

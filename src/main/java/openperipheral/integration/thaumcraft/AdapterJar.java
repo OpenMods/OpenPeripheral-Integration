@@ -3,8 +3,8 @@ package openperipheral.integration.thaumcraft;
 import java.util.List;
 import java.util.Map;
 
-import openmods.utils.FieldAccess;
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.FieldAccess;
+import openmods.reflection.ReflectionHelper;
 import openperipheral.api.*;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IAspectContainer;

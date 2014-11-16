@@ -1,8 +1,8 @@
 package openperipheral.integration.computercraft;
 
-import static openmods.utils.ReflectionHelper.safeLoad;
+import static openmods.reflection.ReflectionHelper.safeLoad;
 import openmods.Mods;
-import openmods.utils.SafeClassLoad;
+import openmods.reflection.SafeClassLoad;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IItemStackMetaBuilder;
 import openperipheral.integration.ModIntegrationModule;

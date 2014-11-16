@@ -1,7 +1,7 @@
 package openperipheral.integration.ic2;
 
-import openmods.utils.FieldAccess;
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.FieldAccess;
+import openmods.reflection.ReflectionHelper;
 import openperipheral.api.*;
 
 @Asynchronous

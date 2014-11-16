@@ -3,7 +3,7 @@ package openperipheral.integration.mystcraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.ReflectionHelper;
 
 import org.apache.commons.lang3.ArrayUtils;
 

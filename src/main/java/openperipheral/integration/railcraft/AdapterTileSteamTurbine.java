@@ -3,7 +3,7 @@ package openperipheral.integration.railcraft;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.ReflectionHelper;
 import openperipheral.api.IPeripheralAdapter;
 import openperipheral.api.LuaCallable;
 import openperipheral.api.LuaReturnType;

@@ -1,7 +1,9 @@
 package openperipheral.integration.enderstorage;
 
 import net.minecraft.tileentity.TileEntity;
-import openmods.utils.*;
+import openmods.reflection.FieldAccess;
+import openmods.reflection.ReflectionHelper;
+import openmods.utils.ColorUtils;
 import openmods.utils.ColorUtils.ColorMeta;
 import openperipheral.api.*;
 

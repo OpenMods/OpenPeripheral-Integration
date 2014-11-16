@@ -3,7 +3,7 @@ package openperipheral.integration.computercraft;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.ReflectionHelper;
 import openperipheral.api.IItemStackMetaProvider;
 
 import com.google.common.collect.Maps;

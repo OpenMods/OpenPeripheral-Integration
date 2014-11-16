@@ -11,9 +11,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 import openmods.fakeplayer.FakePlayerPool;
 import openmods.fakeplayer.FakePlayerPool.PlayerUser;
 import openmods.fakeplayer.OpenModsFakePlayer;
+import openmods.reflection.ReflectionHelper;
 import openmods.utils.BlockUtils;
 import openmods.utils.InventoryUtils;
-import openmods.utils.ReflectionHelper;
 import openperipheral.api.*;
 
 import com.google.common.base.Objects;

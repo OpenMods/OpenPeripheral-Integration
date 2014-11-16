@@ -2,7 +2,7 @@ package openperipheral.integration.minefactoryreloaded;
 
 import java.util.Map;
 
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.ReflectionHelper;
 import openperipheral.api.*;
 
 public class AdapterHarvester implements IPeripheralAdapter {

@@ -1,6 +1,6 @@
 package openperipheral.integration.minefactoryreloaded;
 
-import openmods.utils.ReflectionHelper;
+import openmods.reflection.ReflectionHelper;
 import openperipheral.api.*;
 
 public class AdapterAutoAnvil implements IPeripheralAdapter {
