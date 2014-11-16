@@ -5,9 +5,7 @@ import openperipheral.api.*;
 
 public class AdapterAutoAnvil implements IPeripheralAdapter {
 
-	private static final Class<?> AUTOANVIL_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoAnvil"
-			);
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoAnvil");
 
 	@Override
 	public String getSourceId() {
@@ -16,7 +14,7 @@ public class AdapterAutoAnvil implements IPeripheralAdapter {
 
 	@Override
 	public Class<?> getTargetClass() {
-		return AUTOANVIL_CLASS;
+		return CLASS;
 	}
 
 	@LuaCallable(description = "Get value of repair only toggle", returnTypes = LuaReturnType.BOOLEAN)

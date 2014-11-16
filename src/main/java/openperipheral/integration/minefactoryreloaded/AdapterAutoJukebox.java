@@ -5,13 +5,11 @@ import openperipheral.api.*;
 
 public class AdapterAutoJukebox implements IPeripheralAdapter {
 
-	private static final Class<?> AUTOJUKEBOX_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoJukebox"
-			);
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoJukebox");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return AUTOJUKEBOX_CLASS;
+		return CLASS;
 	}
 
 	@Override

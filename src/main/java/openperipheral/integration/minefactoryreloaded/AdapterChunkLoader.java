@@ -5,9 +5,7 @@ import openperipheral.api.*;
 
 public class AdapterChunkLoader implements IPeripheralAdapter {
 
-	private static final Class<?> CHUNKLOADER_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityChunkLoader"
-			);
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityChunkLoader");
 
 	@Override
 	public String getSourceId() {
@@ -16,7 +14,7 @@ public class AdapterChunkLoader implements IPeripheralAdapter {
 
 	@Override
 	public Class<?> getTargetClass() {
-		return CHUNKLOADER_CLASS;
+		return CLASS;
 	}
 
 	@LuaCallable(description = "Get chunk loader radius", returnTypes = LuaReturnType.NUMBER)

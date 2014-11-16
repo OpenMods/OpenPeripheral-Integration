@@ -10,11 +10,11 @@ import openperipheral.api.LuaReturnType;
 
 public class AdapterTileSteamTurbine implements IPeripheralAdapter {
 
-	private static final Class<?> CLAZZ = ReflectionHelper.getClass("mods.railcraft.common.blocks.machine.alpha.TileSteamTurbine");
+	private final Class<?> CLASS = ReflectionHelper.getClass("mods.railcraft.common.blocks.machine.alpha.TileSteamTurbine");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return CLAZZ;
+		return CLASS;
 	}
 
 	@Override

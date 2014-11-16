@@ -4,9 +4,7 @@ import openmods.utils.ReflectionHelper;
 import openperipheral.api.*;
 
 public class AdapterAutoSpawner implements IPeripheralAdapter {
-	private static final Class<?> AUTOSPAWNER_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoSpawner"
-			);
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoSpawner");
 
 	@Override
 	public String getSourceId() {
@@ -15,7 +13,7 @@ public class AdapterAutoSpawner implements IPeripheralAdapter {
 
 	@Override
 	public Class<?> getTargetClass() {
-		return AUTOSPAWNER_CLASS;
+		return CLASS;
 	}
 
 	@LuaCallable(description = "Get value of spawn exact copy toggle", returnTypes = LuaReturnType.BOOLEAN)

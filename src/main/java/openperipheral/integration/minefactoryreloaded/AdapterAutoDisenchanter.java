@@ -5,9 +5,7 @@ import openperipheral.api.*;
 
 public class AdapterAutoDisenchanter implements IPeripheralAdapter {
 
-	private static final Class<?> AUTODISENCHANTER_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoDisenchanter"
-			);
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoDisenchanter");
 
 	@Override
 	public String getSourceId() {
@@ -16,7 +14,7 @@ public class AdapterAutoDisenchanter implements IPeripheralAdapter {
 
 	@Override
 	public Class<?> getTargetClass() {
-		return AUTODISENCHANTER_CLASS;
+		return CLASS;
 	}
 
 	@LuaCallable(description = "Get value of repeat disenchant toggle", returnTypes = LuaReturnType.BOOLEAN)

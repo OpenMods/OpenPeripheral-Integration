@@ -5,13 +5,11 @@ import openperipheral.api.*;
 
 public class AdapterEjector implements IPeripheralAdapter {
 
-	private static final Class<?> EJECTOR_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityEjector"
-			);
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityEjector");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return EJECTOR_CLASS;
+		return CLASS;
 	}
 
 	@Override

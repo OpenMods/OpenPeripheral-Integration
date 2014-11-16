@@ -7,18 +7,16 @@ import openperipheral.api.*;
 
 public class AdapterHarvester implements IPeripheralAdapter {
 
-	private static final Class<?> HARVESTER_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityHarvester"
-			);
+	private static final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityHarvester");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return HARVESTER_CLASS;
+		return CLASS;
 	}
 
 	@Override
 	public String getSourceId() {
-		return "mfr_";
+		return "mfr_harvester";
 	}
 
 	@LuaCallable(description = "Get value of shear leaves", returnTypes = LuaReturnType.BOOLEAN)

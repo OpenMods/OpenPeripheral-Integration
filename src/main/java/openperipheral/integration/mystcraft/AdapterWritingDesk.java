@@ -20,11 +20,11 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 
 public class AdapterWritingDesk implements IPeripheralAdapter {
-	private static final Class<?> DESK_CLASS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.tileentity.TileEntityDesk");
+	private final Class<?> CLASS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.tileentity.TileEntityDesk");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return DESK_CLASS;
+		return CLASS;
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 			FakePlayerPool.instance.executeOnPlayer((WorldServer)desk.getWorldObj(), new PlayerUser() {
 				@Override
 				public void usePlayer(OpenModsFakePlayer fakePlayer) {
-					ReflectionHelper.call(DESK_CLASS, desk, "writeSymbol", ReflectionHelper.typed(fakePlayer, EntityPlayer.class), symbol);
+					ReflectionHelper.call(CLASS, desk, "writeSymbol", ReflectionHelper.typed(fakePlayer, EntityPlayer.class), symbol);
 				}
 			});
 		}
@@ -121,8 +121,8 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 		return (IInventory)targetTile;
 	}
 
-	private static NotebookIInventoryWrapper createInventoryWrapper(Object tile, int number) {
-		ItemStack notebook = ReflectionHelper.call(DESK_CLASS, tile, "getNotebook", ReflectionHelper.primitive((byte)(number - 1)));
+	private NotebookIInventoryWrapper createInventoryWrapper(Object tile, int number) {
+		ItemStack notebook = ReflectionHelper.call(CLASS, tile, "getNotebook", ReflectionHelper.primitive((byte)(number - 1)));
 		return new NotebookIInventoryWrapper(notebook);
 	}
 }

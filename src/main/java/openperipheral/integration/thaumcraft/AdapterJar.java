@@ -12,13 +12,13 @@ import thaumcraft.api.aspects.IAspectContainer;
 @Asynchronous
 public class AdapterJar implements IPeripheralAdapter {
 
-	private static final Class<?> TILE_JAR_FILLABLE_CLASS = ReflectionHelper.getClass("thaumcraft.common.tiles.TileJarFillable");
+	private final Class<?> CLASS = ReflectionHelper.getClass("thaumcraft.common.tiles.TileJarFillable");
 
-	private static final FieldAccess<Aspect> ASPECT_FILTER_ACCESS = FieldAccess.create(TILE_JAR_FILLABLE_CLASS, "aspectFilter");
+	private final FieldAccess<Aspect> ASPECT_FILTER = FieldAccess.create(CLASS, "aspectFilter");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return TILE_JAR_FILLABLE_CLASS;
+		return CLASS;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class AdapterJar implements IPeripheralAdapter {
 
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the aspect filtered by this block block")
 	public String getAspectFilter(Object target) {
-		Aspect aspect = ASPECT_FILTER_ACCESS.get(target);
+		Aspect aspect = ASPECT_FILTER.get(target);
 		return aspect != null? aspect.getName() : "";
 	}
 
@@ -37,7 +37,7 @@ public class AdapterJar implements IPeripheralAdapter {
 	public List<Map<String, Object>> getAspects(IAspectContainer container) {
 		List<Map<String, Object>> result = ConverterAspectList.aspectsToMap(container.getAspects());
 		if (result.isEmpty()) {
-			Aspect filter = ASPECT_FILTER_ACCESS.get(container);
+			Aspect filter = ASPECT_FILTER.get(container);
 			if (filter != null) ConverterAspectList.appendAspectEntry(result, filter, 0);
 		}
 

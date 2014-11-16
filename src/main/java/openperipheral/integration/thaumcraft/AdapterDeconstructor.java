@@ -17,13 +17,13 @@ import thaumcraft.api.aspects.Aspect;
  */
 @Asynchronous
 public class AdapterDeconstructor implements IPeripheralAdapter {
-	private static final Class<?> TILE_DECONSTRUCTOR = ReflectionHelper.getClass("thaumcraft.common.tiles.TileDeconstructionTable");
+	private final Class<?> CLASS = ReflectionHelper.getClass("thaumcraft.common.tiles.TileDeconstructionTable");
 
-	private static final FieldAccess<Aspect> ASPECT_ACCESS = FieldAccess.create(TILE_DECONSTRUCTOR, "aspect");
+	private final FieldAccess<Aspect> ASPECT = FieldAccess.create(CLASS, "aspect");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return TILE_DECONSTRUCTOR;
+		return CLASS;
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class AdapterDeconstructor implements IPeripheralAdapter {
 
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the Table have an aspect in it")
 	public boolean hasAspect(Object target) throws Exception {
-		Field f = ReflectionHelper.getField(TILE_DECONSTRUCTOR, "aspect");
+		Field f = ReflectionHelper.getField(CLASS, "aspect");
 		return f.get(target) != null;
 	}
 
@@ -49,7 +49,7 @@ public class AdapterDeconstructor implements IPeripheralAdapter {
 
 	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "What aspect does the Table contain")
 	public String getAspect(Object target) throws Exception {
-		Aspect aspect = ASPECT_ACCESS.get(target);
+		Aspect aspect = ASPECT.get(target);
 		return aspect != null? aspect.getTag() : "";
 	}
 

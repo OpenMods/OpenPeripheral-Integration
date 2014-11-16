@@ -4,10 +4,8 @@ import openmods.utils.ReflectionHelper;
 import openperipheral.api.*;
 
 public class AdapterChronotyper implements IPeripheralAdapter {
-	// TileEntityChronotyper
-	private static final Class<?> CHRONOTYPER_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityChronotyper"
-			);
+
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityChronotyper");
 
 	@Override
 	public String getSourceId() {
@@ -16,7 +14,7 @@ public class AdapterChronotyper implements IPeripheralAdapter {
 
 	@Override
 	public Class<?> getTargetClass() {
-		return CHRONOTYPER_CLASS;
+		return CLASS;
 	}
 
 	@LuaCallable(description = "Should adults be moved?", returnTypes = LuaReturnType.BOOLEAN)

@@ -7,7 +7,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import openmods.utils.FieldAccessHelpers;
+import openmods.utils.FieldAccess;
 import openmods.utils.ReflectionHelper;
 import openperipheral.api.*;
 
@@ -18,12 +18,18 @@ import openperipheral.api.*;
 @Asynchronous
 public class AdapterArcaneBore implements IPeripheralAdapter {
 
-	private static final Class<?> TILE_ARCANE_BORE = ReflectionHelper.getClass("thaumcraft.common.tiles.TileArcaneBore");
-	private static final Class<?> ITEM_ELEMENTAL_PICK = ReflectionHelper.getClass("thaumcraft.common.items.equipment.ItemElementalPickaxe");
+	private final Class<?> CLASS = ReflectionHelper.getClass("thaumcraft.common.tiles.TileArcaneBore");
+	private final Class<?> ITEM_ELEMENTAL_PICK = ReflectionHelper.getClass("thaumcraft.common.items.equipment.ItemElementalPickaxe");
+
+	private final FieldAccess<Boolean> HAS_PICKAXE = FieldAccess.create(CLASS, "hasPickaxe");
+	private final FieldAccess<Boolean> HAS_FOCUS = FieldAccess.create(CLASS, "hasFocus");
+	private final FieldAccess<Integer> AREA = FieldAccess.create(CLASS, "area");
+	private final FieldAccess<Integer> SPEED = FieldAccess.create(CLASS, "speed");
+	private final FieldAccess<Integer> MAX_RADIUS = FieldAccess.create(CLASS, "maxRadius");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return TILE_ARCANE_BORE;
+		return CLASS;
 	}
 
 	@Override
@@ -33,12 +39,12 @@ public class AdapterArcaneBore implements IPeripheralAdapter {
 
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the arcane bore have a pickaxe.")
 	public boolean hasPickaxe(Object target) {
-		return getBooleanField(target, "hasPickaxe");
+		return HAS_PICKAXE.get(target);
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the arcane bore have a focus.")
 	public boolean hasFocus(Object target) {
-		return getBooleanField(target, "hasFocus");
+		return HAS_FOCUS.get(target);
 	}
 
 	public ItemStack getPick(Object bore) {
@@ -61,12 +67,12 @@ public class AdapterArcaneBore implements IPeripheralAdapter {
 
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Gets the radius of the bore's effects")
 	public int getRadius(Object target) {
-		return 1 + (getIntField(target, "area") + getIntField(target, "maxRadius")) * 2;
+		return 1 + (AREA.get(target) + MAX_RADIUS.get(target)) * 2;
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Gets the speed of the bore")
 	public int getSpeed(Object target) {
-		return getIntField(target, "speed");
+		return SPEED.get(target);
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the bore mine native clusters as well as normal ores")
@@ -85,13 +91,5 @@ public class AdapterArcaneBore implements IPeripheralAdapter {
 	public boolean hasSilkTouch(Object target) {
 		ItemStack pick = getPick(target);
 		return EnchantmentHelper.getEnchantmentLevel(Enchantment.silkTouch.effectId, pick) > 0;
-	}
-
-	private static int getIntField(Object target, String field) {
-		return FieldAccessHelpers.getIntField(TILE_ARCANE_BORE, target, field);
-	}
-
-	private static boolean getBooleanField(Object target, String field) {
-		return FieldAccessHelpers.getBooleanField(TILE_ARCANE_BORE, target, field);
 	}
 }

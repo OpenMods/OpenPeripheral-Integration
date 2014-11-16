@@ -5,9 +5,7 @@ import openperipheral.api.*;
 
 public class AdapterAutoEnchanter implements IPeripheralAdapter {
 
-	private static final Class<?> AUTOENCHANTER_CLASS = ReflectionHelper.getClass(
-			"powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoEnchanter"
-			);
+	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoEnchanter");
 
 	@Override
 	public String getSourceId() {
@@ -16,7 +14,7 @@ public class AdapterAutoEnchanter implements IPeripheralAdapter {
 
 	@Override
 	public Class<?> getTargetClass() {
-		return AUTOENCHANTER_CLASS;
+		return CLASS;
 	}
 
 	@LuaCallable(description = "Get target level of enchantment", returnTypes = LuaReturnType.NUMBER)

@@ -6,13 +6,13 @@ import openperipheral.api.*;
 
 @Asynchronous
 public class AdapterBrainJar implements IPeripheralAdapter {
-	private static final Class<?> TILE_JAR_BRAIN_CLASS = ReflectionHelper.getClass("thaumcraft.common.tiles.TileJarBrain");
+	private final Class<?> CLASS = ReflectionHelper.getClass("thaumcraft.common.tiles.TileJarBrain");
 
-	private static final FieldAccess<Integer> XP_ACCESS = FieldAccess.create(TILE_JAR_BRAIN_CLASS, "xp");
+	private final FieldAccess<Integer> XP = FieldAccess.create(CLASS, "xp");
 
 	@Override
 	public Class<?> getTargetClass() {
-		return TILE_JAR_BRAIN_CLASS;
+		return CLASS;
 	}
 
 	@Override
@@ -22,6 +22,6 @@ public class AdapterBrainJar implements IPeripheralAdapter {
 
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Returns the amount of XP stored in the Brain in a Jar")
 	public int getXP(Object target) {
-		return XP_ACCESS.get(target);
+		return XP.get(target);
 	}
 }
