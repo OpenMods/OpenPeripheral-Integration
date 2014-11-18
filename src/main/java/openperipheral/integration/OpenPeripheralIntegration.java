@@ -26,7 +26,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = "OpenPeripheralIntegration", name = "OpenPeripheralIntegration", version = "@VERSION@", dependencies = "required-after:OpenMods@[0.5.1,];required-after:ComputerCraft@[1.60,];required-after:OpenPeripheralCore")
+@Mod(modid = "OpenPeripheralIntegration", name = "OpenPeripheralIntegration", version = "$VERSION$", dependencies = "required-after:OpenMods@[$LIB-VERSION$];required-after:ComputerCraft@[1.64,];required-after:OpenPeripheralCore")
 public class OpenPeripheralIntegration {
 
 	@EventHandler
