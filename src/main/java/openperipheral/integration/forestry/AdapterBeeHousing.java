@@ -13,7 +13,7 @@ import com.google.common.collect.Maps;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.genetics.*;
 
-@OnTickSafe
+@Synchronizable
 public class AdapterBeeHousing implements IPeripheralAdapter {
 
 	@Override

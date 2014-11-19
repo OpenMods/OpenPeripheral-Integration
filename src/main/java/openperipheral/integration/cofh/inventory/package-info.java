@@ -1,2 +1,2 @@
-@openperipheral.api.OnTickSafe
+@openperipheral.api.Synchronizable
 package openperipheral.integration.cofh.inventory;

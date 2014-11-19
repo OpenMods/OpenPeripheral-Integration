@@ -1,3 +1,3 @@
-@openperipheral.api.Prefixed("target")
+@openperipheral.api.Synchronizable
 package openperipheral.integration.railcraft;
 

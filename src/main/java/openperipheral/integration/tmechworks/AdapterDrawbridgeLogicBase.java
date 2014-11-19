@@ -3,7 +3,7 @@ package openperipheral.integration.tmechworks;
 import openperipheral.api.*;
 import tmechworks.lib.blocks.IDrawbridgeLogicBase;
 
-@OnTickSafe
+@Synchronizable
 public class AdapterDrawbridgeLogicBase implements IPeripheralAdapter {
 
 	@Override
