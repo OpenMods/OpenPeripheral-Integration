@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import openmods.Log;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;
@@ -21,15 +22,22 @@ public class BookMetaProvider extends ItemStackMetaProviderSimple<Item> {
 	@Override
 	public Object getMeta(Item target, ItemStack stack) {
 		final String unlocalizedName = target.getUnlocalizedName();
-		if ("item.myst.linkbook".equals(unlocalizedName) || "item.myst.agebook".equals(unlocalizedName)) {
+		final boolean isLinkbook = "item.myst.linkbook".equals(unlocalizedName);
+		final boolean isAgebook = "item.myst.agebook".equals(unlocalizedName);
+		if (isLinkbook || isAgebook) {
 			NBTTagCompound tag = stack.getTagCompound();
 
 			if (tag != null) {
 				Map<String, Object> result = Maps.newHashMap();
 
+				Log.info("%s", tag);
+				result.put("type", isLinkbook? "link" : (isAgebook? "age" : "unknown"));
 				result.put("destination", tag.getString("agename"));
+				result.put("dimension", tag.getInteger("Dimension"));
 				addLinkingBookFlags(result, tag);
 				addCoordinates(result, tag);
+
+				return result;
 			}
 		}
 		return null;

@@ -29,14 +29,19 @@ public class TicketMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override
 	public Object getMeta(Item target, ItemStack stack) {
-		if (stack.isItemEqual(ticketStack)) {
+		final boolean isTicket = stack.getItem() == TicketItemHolder.ticket;
+		final boolean isGoldenTicket = stack.getItem() == TicketItemHolder.ticketGold;
+		if (isTicket || isGoldenTicket) {
+			Map<String, Object> map = Maps.newHashMap();
+			map.put("golden", isGoldenTicket);
+
 			NBTTagCompound tag = stack.stackTagCompound;
 			if (tag != null) {
-				Map<String, Object> map = Maps.newHashMap();
+
 				map.put("owner", tag.getString("owner"));
 				map.put("dest", tag.getString("dest"));
-				return map;
 			}
+			return map;
 		}
 		return null;
 	}

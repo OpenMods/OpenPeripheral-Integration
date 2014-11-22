@@ -16,7 +16,11 @@ public class IndividualMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override
 	public Object getMeta(Item target, ItemStack stack) {
-		IIndividual ind = AlleleManager.alleleRegistry.getIndividual(stack);
-		return ind != null? ConverterIIndividual.describeIndividual(ind) : null;
+		if (AlleleManager.alleleRegistry != null) {
+			IIndividual ind = AlleleManager.alleleRegistry.getIndividual(stack);
+			if (ind != null) return ConverterIIndividual.describeIndividual(ind);
+		}
+
+		return null;
 	}
 }
