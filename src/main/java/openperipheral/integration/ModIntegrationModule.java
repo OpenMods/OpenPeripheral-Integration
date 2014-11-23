@@ -1,9 +1,6 @@
 package openperipheral.integration;
 
 import openmods.integration.IIntegrationModule;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import cpw.mods.fml.common.Loader;
 
 public abstract class ModIntegrationModule implements IIntegrationModule {
@@ -18,6 +15,6 @@ public abstract class ModIntegrationModule implements IIntegrationModule {
 	@Override
 	public boolean canLoad() {
 		final String modId = getModId();
-		return Loader.isModLoaded(modId) && !ArrayUtils.contains(Config.modBlacklist, modId);
+		return Loader.isModLoaded(modId);
 	}
 }

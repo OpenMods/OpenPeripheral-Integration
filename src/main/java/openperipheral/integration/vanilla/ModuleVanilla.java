@@ -8,9 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import openmods.integration.IIntegrationModule;
 import openperipheral.api.*;
-import openperipheral.integration.Config;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -25,7 +22,7 @@ public class ModuleVanilla implements IIntegrationModule {
 
 	@Override
 	public boolean canLoad() {
-		return !ArrayUtils.contains(Config.modBlacklist, DUMMY_VANILLA_MODID);
+		return true;
 	}
 
 	@Override
