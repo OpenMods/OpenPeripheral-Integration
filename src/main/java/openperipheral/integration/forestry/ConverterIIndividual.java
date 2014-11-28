@@ -114,7 +114,7 @@ public class ConverterIIndividual implements ITypeConverter {
 
 		@SuppressWarnings("unchecked")
 		protected <A extends IAllele> A getAllele(GenomeAccess access, Class<A> cls, E chromosome) {
-			Preconditions.checkArgument(chromosome.getAlleleClass() == cls);
+			Preconditions.checkArgument(cls.isAssignableFrom(chromosome.getAlleleClass()));
 			IAllele allele = access.getAllele(genome, chromosome.ordinal());
 			return (A)allele;
 		}
@@ -199,7 +199,7 @@ public class ConverterIIndividual implements ITypeConverter {
 
 		@Override
 		protected void addAlleleInfo(GenomeAccess access, Map<String, Object> result) {
-			result.put("species", convertAllele(access, IAlleleTreeSpecies.class, EnumTreeChromosome.SPECIES));
+			result.put("species", convertAllele(access, IAlleleSpecies.class, EnumTreeChromosome.SPECIES));
 			result.put("growth", convertAllele(access, IAlleleGrowth.class, EnumTreeChromosome.GROWTH));
 			result.put("height", convertAllele(access, IAlleleFloat.class, EnumTreeChromosome.HEIGHT));
 			result.put("fertility", convertAllele(access, IAlleleFloat.class, EnumTreeChromosome.FERTILITY));
