@@ -18,22 +18,22 @@ public class AdapterEnergyInfo implements IPeripheralAdapter {
 	}
 
 	@LuaCallable(description = "Gets the EnergyPerTick of the machine.", returnTypes = LuaReturnType.NUMBER)
-	public int getEnergyPerTick(IEnergyInfo tileEntity) {
+	public int getEnergyPerTickInfo(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoEnergyPerTick();
 	}
 
 	@LuaCallable(description = "Gets the max EnergyPerTick of the machine.", returnTypes = LuaReturnType.NUMBER)
-	public int getMaxEnergyPerTick(IEnergyInfo tileEntity) {
+	public int getMaxEnergyPerTickInfo(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoMaxEnergyPerTick();
 	}
 
 	@LuaCallable(description = "Gets the stored Energy of the machine.", returnTypes = LuaReturnType.NUMBER)
-	public int getEnergy(IEnergyInfo tileEntity) {
+	public int getEnergyInfo(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoEnergyStored();
 	}
 
 	@LuaCallable(description = "Gets the max Energy of the machine.", returnTypes = LuaReturnType.NUMBER)
-	public int getMaxEnergy(IEnergyInfo tileEntity) {
+	public int getMaxEnergyInfo(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoMaxEnergyStored();
 	}
 }
