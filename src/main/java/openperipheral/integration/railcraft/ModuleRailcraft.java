@@ -1,6 +1,5 @@
 package openperipheral.integration.railcraft;
 
-import openmods.Log;
 import openmods.Mods;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
@@ -22,7 +21,5 @@ public class ModuleRailcraft extends ModIntegrationModule {
 
 		final IItemStackMetaBuilder itemMeta = ApiAccess.getApi(IItemStackMetaBuilder.class);
 		itemMeta.register(new TicketMetaProvider());
-
-		Log.info("%s", TicketItemHolder.ticket);
 	}
 }
