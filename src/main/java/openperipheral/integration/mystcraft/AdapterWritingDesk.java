@@ -73,7 +73,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 			returnTypes = LuaReturnType.NUMBER,
 			description = "Push a page from the notebook into a specific slot in external inventory. Returns the amount of items moved")
 	public int pushNotebookPage(
-			Object desk,
+			TileEntity desk,
 			@Arg(name = "deskSlot") int deskSlot,
 			@Arg(name = "direction", description = "The direction of the other inventory. (north, south, east, west, up or down)") ForgeDirection direction,
 			@Arg(name = "fromSlot", description = "The page slot in inventory that you're pushing from") int fromSlot,
@@ -85,7 +85,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Pull an item from the target inventory into any slot in the current one. Returns the amount of items moved")
-	public int pullNotebookPage(Object desk,
+	public int pullNotebookPage(TileEntity desk,
 			@Arg(name = "deskSlot") int deskSlot,
 			@Arg(name = "direction", description = "The direction of the other inventory)") ForgeDirection direction,
 			@Arg(name = "fromSlot", description = "The slot in the other inventory that you're pulling from") int notebookSlot) {
@@ -120,10 +120,9 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 		return null;
 	}
 
-	private static IInventory getTargetTile(Object target, ForgeDirection direction) {
+	private static IInventory getTargetTile(TileEntity target, ForgeDirection direction) {
 		Preconditions.checkArgument(direction != ForgeDirection.UNKNOWN, "Invalid direction");
-		Preconditions.checkArgument(target instanceof TileEntity);
-		TileEntity targetTile = BlockUtils.getTileInDirection((TileEntity)target, direction);
+		TileEntity targetTile = BlockUtils.getTileInDirection(target, direction);
 		Preconditions.checkArgument(targetTile instanceof IInventory, "Target direction is not a valid inventory");
 		return (IInventory)targetTile;
 	}

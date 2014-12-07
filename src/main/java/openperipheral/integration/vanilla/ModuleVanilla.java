@@ -29,6 +29,7 @@ public class ModuleVanilla implements IIntegrationModule {
 	public void load() {
 		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
 		adapterRegistry.register(new AdapterInventory());
+		adapterRegistry.register(new AdapterWorldInventory());
 		adapterRegistry.register(new AdapterNoteBlock());
 		adapterRegistry.register(new AdapterComparator());
 		adapterRegistry.register(new AdapterBeacon());
