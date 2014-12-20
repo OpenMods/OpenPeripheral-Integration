@@ -4,6 +4,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.*;
 
@@ -89,9 +90,10 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 			@Arg(name = "intoSlot", description = "The slot in the current inventory that you want to pull into") Integer intoSlot) {
 
 		final IInventory otherInventory = getNeighborInventory(target, direction);
+		Preconditions.checkNotNull(otherInventory, "Other inventory not found");
 		final IInventory thisInventory = InventoryUtils.getInventory(target);
 
-		if (otherInventory == null || otherInventory == target) return 0;
+		if (otherInventory == target) return 0;
 		if (maxAmount == null) maxAmount = 64;
 		if (intoSlot == null) intoSlot = 0;
 
@@ -101,7 +103,13 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 		checkSlotId(otherInventory, fromSlot, "input");
 		checkSlotId(thisInventory, intoSlot, "output");
 
-		return InventoryUtils.moveItemInto(otherInventory, fromSlot, thisInventory, intoSlot, maxAmount, direction.getOpposite(), true);
+		final int amount = ItemDistribution.moveItemInto(otherInventory, fromSlot, thisInventory, intoSlot, maxAmount, direction.getOpposite(), true);
+		if (amount > 0) {
+			thisInventory.markDirty();
+			otherInventory.markDirty();
+		}
+
+		return amount;
 	}
 
 	@Alias("pushItemIntoSlot")
@@ -113,9 +121,10 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 			@Arg(name = "intoSlot", description = "The slot in the other inventory that you want to push into") Integer intoSlot) {
 
 		final IInventory otherInventory = getNeighborInventory(target, direction);
+		Preconditions.checkNotNull(otherInventory, "Other inventory not found");
 		final IInventory thisInventory = InventoryUtils.getInventory(target);
 
-		if (otherInventory == null || otherInventory == target) return 0;
+		if (otherInventory == target) return 0;
 		if (maxAmount == null) maxAmount = 64;
 		if (intoSlot == null) intoSlot = 0;
 
@@ -125,6 +134,12 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 		checkSlotId(thisInventory, fromSlot, "input");
 		checkSlotId(otherInventory, intoSlot, "output");
 
-		return InventoryUtils.moveItemInto(thisInventory, fromSlot, otherInventory, intoSlot, maxAmount, direction, true);
+		int amount = ItemDistribution.moveItemInto(thisInventory, fromSlot, otherInventory, intoSlot, maxAmount, direction, true);
+		if (amount > 0) {
+			thisInventory.markDirty();
+			otherInventory.markDirty();
+		}
+
+		return amount;
 	}
 }

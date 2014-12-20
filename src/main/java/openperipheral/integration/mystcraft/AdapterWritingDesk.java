@@ -11,6 +11,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import openmods.fakeplayer.FakePlayerPool;
 import openmods.fakeplayer.FakePlayerPool.PlayerUser;
 import openmods.fakeplayer.OpenModsFakePlayer;
+import openmods.inventory.legacy.ItemDistribution;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
@@ -81,7 +82,9 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 		IInventory source = createInventoryWrapper(desk, deskSlot);
 		IInventory target = getTargetTile(desk, direction);
 
-		return InventoryUtils.moveItemInto(source, fromSlot - 1, target, Objects.firstNonNull(intoSlot, 0) - 1, 64, direction.getOpposite(), true);
+		final int amount = ItemDistribution.moveItemInto(source, fromSlot - 1, target, Objects.firstNonNull(intoSlot, 0) - 1, 64, direction.getOpposite(), true);
+		if (amount > 0) target.markDirty();
+		return amount;
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Pull an item from the target inventory into any slot in the current one. Returns the amount of items moved")
@@ -91,7 +94,9 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 			@Arg(name = "fromSlot", description = "The slot in the other inventory that you're pulling from") int notebookSlot) {
 		IInventory source = getTargetTile(desk, direction);
 		IInventory target = createInventoryWrapper(desk, deskSlot);
-		return InventoryUtils.moveItemInto(source, notebookSlot - 1, target, -1, 1, direction.getOpposite(), true, false);
+		final int amount = ItemDistribution.moveItemInto(source, notebookSlot - 1, target, -1, 1, direction.getOpposite(), true, false);
+		if (amount > 0) source.markDirty();
+		return amount;
 	}
 
 	@LuaCallable(description = "Create a symbol page from the target symbol")

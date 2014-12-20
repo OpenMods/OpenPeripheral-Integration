@@ -6,6 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
+import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.*;
 
@@ -50,9 +51,10 @@ public class AdapterInventory implements IPeripheralAdapter {
 			inventory.setInventorySlotContents(i, null);
 		}
 
-		for (ItemStack stack : stacks) {
-			InventoryUtils.insertItemIntoInventory(inventory, stack, ForgeDirection.UNKNOWN, ANY_SLOT);
-		}
+		for (ItemStack stack : stacks)
+			ItemDistribution.insertItemIntoInventory(inventory, stack, ForgeDirection.UNKNOWN, ANY_SLOT);
+
+		target.markDirty();
 	}
 
 	@LuaCallable(description = "Swap two slots in the inventory")
@@ -67,8 +69,9 @@ public class AdapterInventory implements IPeripheralAdapter {
 			InventoryUtils.swapStacks((ISidedInventory)inventory,
 					fromSlot - 1, Objects.firstNonNull(fromDirection, ForgeDirection.UNKNOWN),
 					intoSlot - 1, Objects.firstNonNull(toDirection, ForgeDirection.UNKNOWN));
-		}
-		else InventoryUtils.swapStacks(inventory, fromSlot - 1, intoSlot - 1);
+		} else InventoryUtils.swapStacks(inventory, fromSlot - 1, intoSlot - 1);
+
+		inventory.markDirty();
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get details of an item in a particular slot")
@@ -95,13 +98,14 @@ public class AdapterInventory implements IPeripheralAdapter {
 	public void destroyStack(IInventory target,
 			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
 	{
-		IInventory invent = InventoryUtils.getInventory(target);
+		IInventory inventory = InventoryUtils.getInventory(target);
 		slot -= 1;
-		Preconditions.checkElementIndex(slot, invent.getSizeInventory(), "slot id");
-		invent.setInventorySlotContents(slot, null);
+		Preconditions.checkElementIndex(slot, inventory.getSizeInventory(), "slot id");
+		inventory.setInventorySlotContents(slot, null);
+		inventory.markDirty();
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE)
+	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get full stack information from stub one {id=..., [qty=...], [dmg=...]}")
 	public ItemStack expandStack(@Arg(name = "stack", type = LuaArgType.TABLE) ItemStack itemStack) {
 		return itemStack;
 	}
