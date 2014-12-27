@@ -51,7 +51,7 @@ public class OpenPeripheralIntegration {
 		return property.getBoolean();
 	}
 
-	@Instance
+	@Instance(MOD_ID)
 	public static OpenPeripheralIntegration instance;
 
 	Configuration config;
