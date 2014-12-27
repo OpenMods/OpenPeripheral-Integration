@@ -19,8 +19,8 @@ public class AdapterFluidHandler implements IPeripheralAdapter {
 
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "A table of tanks will be returned, each with a table of information")
 	public FluidTankInfo[] getTankInfo(IFluidHandler fluidHandler,
-			@Arg(name = "direction", description = "The internal direction of the tank. If you're not sure, use 'unknown' (north, south, east, west, up, down or unknown)") ForgeDirection direction) {
-		return fluidHandler.getTankInfo(direction);
+			@Optionals @Arg(name = "direction", description = "The internal direction of the tank. If you're not sure, use 'unknown' (north, south, east, west, up, down or unknown)") ForgeDirection direction) {
+		return fluidHandler.getTankInfo(direction != null? direction : ForgeDirection.UNKNOWN);
 	}
 
 }

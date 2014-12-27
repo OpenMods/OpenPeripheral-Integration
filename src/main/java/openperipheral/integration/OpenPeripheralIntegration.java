@@ -19,6 +19,7 @@ import openperipheral.integration.minefactoryreloaded.ModuleMinefactoryReloaded;
 import openperipheral.integration.mystcraft.ModuleMystcraft;
 import openperipheral.integration.railcraft.ModuleRailcraft;
 import openperipheral.integration.railcraft.ModuleRailcraftCarts;
+import openperipheral.integration.railcraft.ModuleRailcraftFuel;
 import openperipheral.integration.thaumcraft.ModuleThaumcraft;
 import openperipheral.integration.thaumcraft.ModuleThaumcraftApi;
 import openperipheral.integration.tmechworks.ModuleTMechworks;
@@ -86,6 +87,7 @@ public class OpenPeripheralIntegration {
 
 		if (checkConfig(config, "railcraft-mod")) Integration.addModule(new ModuleRailcraft());
 		if (checkConfig(config, "railcraft-api-carts")) Integration.addModule(new ModuleRailcraftCarts());
+		if (checkConfig(config, "railcraft-api-fuel")) Integration.addModule(new ModuleRailcraftFuel());
 
 		if (checkConfig(config, "thaumcraft-mod")) Integration.addModule(new ModuleThaumcraft());
 		if (checkConfig(config, "thaumcraft-api")) Integration.addModule(new ModuleThaumcraftApi());
