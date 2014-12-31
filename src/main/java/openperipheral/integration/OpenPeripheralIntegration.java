@@ -22,6 +22,7 @@ import openperipheral.integration.railcraft.ModuleRailcraftCarts;
 import openperipheral.integration.railcraft.ModuleRailcraftFuel;
 import openperipheral.integration.thaumcraft.ModuleThaumcraft;
 import openperipheral.integration.thaumcraft.ModuleThaumcraftApi;
+import openperipheral.integration.thermalexpansion.ModuleThermalExpansion;
 import openperipheral.integration.tmechworks.ModuleTMechworks;
 import openperipheral.integration.vanilla.ModuleVanilla;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -99,6 +100,7 @@ public class OpenPeripheralIntegration {
 		if (checkConfig(config, "thaumcraft-mod")) Integration.addModule(new ModuleThaumcraft());
 		if (checkConfig(config, "tmechworks-mod")) Integration.addModule(new ModuleTMechworks());
 		if (checkConfig(config, "mfr-mod")) Integration.addModule(new ModuleMinefactoryReloaded());
+		if (checkConfig(config, "thermalexpansion-mod")) Integration.addModule(new ModuleThermalExpansion());
 
 		FMLCommonHandler.instance().bus().register(new ConfigChangeListener());
 
