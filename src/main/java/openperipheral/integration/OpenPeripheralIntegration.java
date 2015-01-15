@@ -32,7 +32,12 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-@Mod(modid = OpenPeripheralIntegration.MOD_ID, name = OpenPeripheralIntegration.MOD_ID, version = "$VERSION$", guiFactory = "openperipheral.integration.ConfigGuiFactory", dependencies = "required-after:OpenMods@[$LIB-VERSION$];required-after:ComputerCraft@[1.64,];required-after:OpenPeripheralCore")
+@Mod(modid = OpenPeripheralIntegration.MOD_ID,
+		name = OpenPeripheralIntegration.MOD_ID,
+		version = "$VERSION$",
+		guiFactory = "openperipheral.integration.ConfigGuiFactory",
+		acceptableRemoteVersions = "*",
+		dependencies = "required-after:OpenMods@[$LIB-VERSION$];required-after:ComputerCraft@[1.64,];required-after:OpenPeripheralCore")
 public class OpenPeripheralIntegration {
 
 	public class ConfigChangeListener {
