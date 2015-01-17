@@ -106,7 +106,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get full stack information from stub one {id=..., [qty=...], [dmg=...]}")
-	public ItemStack expandStack(@Arg(name = "stack", type = LuaArgType.TABLE) ItemStack itemStack) {
+	public ItemStack expandStack(IInventory target, @Arg(name = "stack", type = LuaArgType.TABLE) ItemStack itemStack) {
 		return itemStack;
 	}
 }
