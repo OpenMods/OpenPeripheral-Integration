@@ -27,27 +27,31 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 	}
 
 	@Asynchronous
+	@MultipleReturn
 	@Alias("getColours")
 	@LuaCallable(returnTypes = { LuaReturnType.NUMBER, LuaReturnType.NUMBER, LuaReturnType.NUMBER },
 			description = "Get the colours active on this chest or tank")
-	public IMultiReturn getColors(TileEntity frequencyOwner) {
+	public int[] getColors(TileEntity frequencyOwner) {
 		int frequency = FREQ.get(frequencyOwner);
 		// return a map of the frequency in ComputerCraft colour format
-		return MultiReturn.wrap(
+		return new int[] {
 				1 << (frequency >> 8 & 0xF),
 				1 << (frequency >> 4 & 0xF),
-				1 << (frequency >> 0 & 0xF));
+				1 << (frequency >> 0 & 0xF)
+		};
 	}
 
 	@Asynchronous
+	@MultipleReturn
 	@LuaCallable(returnTypes = { LuaReturnType.STRING, LuaReturnType.STRING, LuaReturnType.STRING },
 			description = "Get the colours active on this chest or tank")
-	public IMultiReturn getColorNames(TileEntity frequencyOwner) {
+	public String[] getColorNames(TileEntity frequencyOwner) {
 		int frequency = FREQ.get(frequencyOwner);
-		return MultiReturn.wrap(
+		return new String[] {
 				colorToName(frequency >> 8 & 0xF),
 				colorToName(frequency >> 4 & 0xF),
-				colorToName(frequency >> 0 & 0xF));
+				colorToName(frequency >> 0 & 0xF)
+		};
 	}
 
 	@Alias("setColours")
