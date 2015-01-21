@@ -106,6 +106,7 @@ public class OpenPeripheralIntegration {
 		if (checkConfig(config, "tmechworks-mod")) Integration.addModule(new ModuleTMechworks());
 		if (checkConfig(config, "mfr-mod")) Integration.addModule(new ModuleMinefactoryReloaded());
 		if (checkConfig(config, "thermalexpansion-mod")) Integration.addModule(new ModuleThermalExpansion());
+		if (checkConfig(config, "ae2-mod")) Integration.addModule(new ModuleAppEng());
 
 		FMLCommonHandler.instance().bus().register(new ConfigChangeListener());
 
