@@ -3,7 +3,6 @@ package openperipheral.integration.tmechworks;
 import openperipheral.api.*;
 import tmechworks.lib.blocks.IDrawbridgeLogicBase;
 
-@Synchronizable
 public class AdapterDrawbridgeLogicBase implements IPeripheralAdapter {
 
 	@Override
@@ -16,6 +15,7 @@ public class AdapterDrawbridgeLogicBase implements IPeripheralAdapter {
 		return "tmechworks_drawbridge";
 	}
 
+	@Asynchronous
 	@LuaCallable(description = "Checks if the drawbridge is extended or not", returnTypes = LuaReturnType.BOOLEAN)
 	public boolean hasExtended(IDrawbridgeLogicBase drawbridge) {
 		return drawbridge.hasExtended();

@@ -13,7 +13,6 @@ import com.google.common.collect.Maps;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.genetics.*;
 
-@Synchronizable
 public class AdapterBeeHousing implements IPeripheralAdapter {
 
 	@Override
@@ -54,6 +53,7 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 	 * @param housing
 	 * @return
 	 */
+	@Asynchronous
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the full breeding list thingy. Experimental!")
 	public Map<Integer, Map<String, Object>> getBeeBreedingData(IBeeHousing housing) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
