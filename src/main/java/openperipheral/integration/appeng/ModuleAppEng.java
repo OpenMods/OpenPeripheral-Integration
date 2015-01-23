@@ -1,5 +1,6 @@
 package openperipheral.integration.appeng;
 
+import openmods.Mods;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
 import openperipheral.api.IItemStackMetaBuilder;
@@ -11,14 +12,14 @@ public class ModuleAppEng extends ModIntegrationModule {
 
 	@Override
 	public String getModId() {
-		// TODO: This should be openmods.Mods.APPLIEDENERGISTICS, but it
-		// currently contains the wrong modid.
-		return "appliedenergistics2";
+		return Mods.APPLIEDENERGISTICS2;
 	}
 
 	@Override
 	public void load() {
 		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		adapterRegistry.register(new AdapterChest());
+		adapterRegistry.register(new AdapterDrive());
 		adapterRegistry.register(new AdapterInterface());
 		adapterRegistry.register(new AdapterNetwork());
 
