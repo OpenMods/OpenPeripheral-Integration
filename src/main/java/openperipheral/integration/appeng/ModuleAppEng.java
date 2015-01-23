@@ -1,17 +1,32 @@
 package openperipheral.integration.appeng;
 
-import openmods.Mods;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.api.ITypeConvertersRegistry;
 import openperipheral.integration.ModIntegrationModule;
 
 public class ModuleAppEng extends ModIntegrationModule {
+	public static final String CC_EVENT_STATE_CHANGED = "crafting_state";
 
 	@Override
 	public String getModId() {
-		return Mods.APPLIEDENERGISTICS;
+		// TODO: This should be openmods.Mods.APPLIEDENERGISTICS, but it
+		// currently contains the wrong modid.
+		return "appliedenergistics2";
 	}
 
 	@Override
 	public void load() {
-		// TODO reeimplement from base (new API)
+		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		adapterRegistry.register(new AdapterInterface());
+		adapterRegistry.register(new AdapterNetwork());
+
+		final ITypeConvertersRegistry convertersRegistry = ApiAccess.getApi(ITypeConvertersRegistry.class);
+		convertersRegistry.register(new ConverterSearchNeedle());
+
+		final IItemStackMetaBuilder metaBuilder = ApiAccess.getApi(IItemStackMetaBuilder.class);
+		metaBuilder.register(new NBTHashMetaProvider());
+		metaBuilder.register(new AEItemStackMetaProvider());
 	}
 }
