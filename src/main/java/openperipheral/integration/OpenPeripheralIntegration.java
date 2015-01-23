@@ -4,6 +4,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import openmods.integration.Integration;
+import openperipheral.integration.appeng.ModuleAppEng;
 import openperipheral.integration.buildcraft.*;
 import openperipheral.integration.cofh.energy.ModuleCofhEnergy;
 import openperipheral.integration.cofh.inventory.ModuleCofhInventory;
