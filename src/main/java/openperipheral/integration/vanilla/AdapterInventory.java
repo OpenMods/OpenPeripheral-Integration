@@ -84,6 +84,14 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return invent.getStackInSlot(slot);
 	}
 
+	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get fingerpring of an item in a particular slot")
+	public ItemFingerprint getStackFingerprint(IInventory target,
+			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
+	{
+		ItemStack stack = getStackInSlot(target, slot);
+		return stack != null? new ItemFingerprint(stack) : null;
+	}
+
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get a table with all the items of the chest")
 	public ItemStack[] getAllStacks(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);

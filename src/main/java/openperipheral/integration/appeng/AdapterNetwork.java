@@ -1,24 +1,26 @@
 package openperipheral.integration.appeng;
 
-import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaReturnType;
-
-import appeng.api.networking.crafting.ICraftingCPU;
-import appeng.api.networking.crafting.ICraftingGrid;
-import appeng.api.networking.energy.IEnergyGrid;
-import appeng.api.networking.storage.IStorageGrid;
-import appeng.api.storage.data.IAEItemStack;
-
-import com.google.common.collect.Maps;
-import com.google.common.collect.Lists;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.item.ItemStack;
+import openperipheral.api.*;
+import openperipheral.integration.vanilla.ItemFingerprint;
+import appeng.api.networking.IGridHost;
+import appeng.api.networking.crafting.ICraftingCPU;
+import appeng.api.networking.crafting.ICraftingGrid;
+import appeng.api.networking.storage.IStorageGrid;
+import appeng.api.storage.data.IAEItemStack;
+import appeng.api.storage.data.IItemList;
 
-public class AdapterNetwork extends AbstractGridAdapter {
-	public AdapterNetwork() {
-		super("appeng.api.networking.IGridHost");
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+public class AdapterNetwork extends AdapterGridBase {
+
+	@Override
+	public Class<?> getTargetClass() {
+		return IGridHost.class;
 	}
 
 	@Override
@@ -27,56 +29,48 @@ public class AdapterNetwork extends AbstractGridAdapter {
 	}
 
 	@LuaCallable(description = "Get a list of the stored and craftable items in the network.", returnTypes = LuaReturnType.TABLE)
-	public List<ItemStack> getAvailableItems(Object tileEntityController) {
-		IStorageGrid storageGrid = getStorageGrid(tileEntityController);
-		List<ItemStack> items = Lists.newArrayList();
-		for (IAEItemStack iaeItemStack : storageGrid.getItemInventory().getStorageList()) {
-			items.add(NBTHashMetaProvider.convertStacks(iaeItemStack));
-		}
-
-		return items;
+	public List<IAEItemStack> getAvailableItems(IGridHost host) {
+		IStorageGrid storageGrid = getStorageGrid(host);
+		return Lists.newArrayList(storageGrid.getItemInventory().getStorageList());
 	}
 
-	// The following callables are all basic AE-Api <-> OpenPeripheral 1on1s
-	// There is not much to say about those. The "complicated" stuff can be
-	// found in the AdapterInterface class and the AE2 callbacks it's calling.
+	@LuaCallable(description = "Retrieves details about the specified item from the ME Network.", returnTypes = LuaReturnType.TABLE)
+	public ItemStack getItemDetail(IGridHost host,
+			@Arg(name = "item", description = "Details of the item you are looking for: { id, [ dmg, [nbt_hash]] }", type = LuaArgType.TABLE) ItemFingerprint needle) {
+		final IItemList<IAEItemStack> items = getStorageGrid(host).getItemInventory().getStorageList();
+		final IAEItemStack stack = findStack(items, needle);
+		return stack.getItemStack();
+	}
+
 	@LuaCallable(description = "Get the average power injection into the network", returnTypes = LuaReturnType.NUMBER)
-	public double getAvgPowerInjection(Object tileEntityController) {
-		IEnergyGrid energyGrid = getEnergyGrid(tileEntityController);
-		return energyGrid.getAvgPowerInjection();
+	public double getAvgPowerInjection(IGridHost host) {
+		return getEnergyGrid(host).getAvgPowerInjection();
 	}
 
 	@LuaCallable(description = "Get the average power usage of the network.", returnTypes = LuaReturnType.NUMBER)
-	public double getAvgPowerUsage(Object tileEntityController) {
-		IEnergyGrid energyGrid = getEnergyGrid(tileEntityController);
-		return energyGrid.getAvgPowerUsage();
+	public double getAvgPowerUsage(IGridHost host) {
+		return getEnergyGrid(host).getAvgPowerUsage();
 	}
 
 	@LuaCallable(description = "Get the idle power usage of the network.", returnTypes = LuaReturnType.NUMBER)
-	public double getIdlePowerUsage(Object tileEntityController) {
-		IEnergyGrid energyGrid = getEnergyGrid(tileEntityController);
-		return energyGrid.getIdlePowerUsage();
+	public double getIdlePowerUsage(IGridHost host) {
+		return getEnergyGrid(host).getIdlePowerUsage();
 	}
 
 	@LuaCallable(description = "Get the maximum stored power in the network.", returnTypes = LuaReturnType.NUMBER)
-	public double getMaxStoredPower(Object tileEntityController) {
-		IEnergyGrid energyGrid = getEnergyGrid(tileEntityController);
-		return energyGrid.getMaxStoredPower();
+	public double getMaxStoredPower(IGridHost host) {
+		return getEnergyGrid(host).getMaxStoredPower();
 	}
 
 	@LuaCallable(description = "Get the stored power in the network.", returnTypes = LuaReturnType.NUMBER)
-	public double getStoredPower(Object tileEntityController) {
-		IEnergyGrid energyGrid = getEnergyGrid(tileEntityController);
-		return energyGrid.getStoredPower();
+	public double getStoredPower(IGridHost host) {
+		return getEnergyGrid(host).getStoredPower();
 	}
 
 	@LuaCallable(description = "Get a list of tables representing the available CPUs in the network.", returnTypes = LuaReturnType.TABLE)
-	public List<Map<String, Object>> getCraftingCPUs(Object tileEntityController) {
-		ICraftingGrid craftingGrid = getCraftingGrid(tileEntityController);
+	public List<Map<String, Object>> getCraftingCPUs(IGridHost host) {
+		ICraftingGrid craftingGrid = getCraftingGrid(host);
 
-		// This is a simple Object -> Map mapping. This could be a converter,
-		// but this is
-		// good enough for now.
 		List<Map<String, Object>> cpus = Lists.newArrayList();
 		for (ICraftingCPU cpu : craftingGrid.getCpus()) {
 			Map<String, Object> cpuDetails = Maps.newHashMap();

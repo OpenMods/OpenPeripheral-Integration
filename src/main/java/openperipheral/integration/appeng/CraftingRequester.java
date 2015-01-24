@@ -1,5 +1,7 @@
 package openperipheral.integration.appeng;
 
+import net.minecraftforge.common.util.ForgeDirection;
+import openperipheral.api.IArchitectureAccess;
 import appeng.api.config.Actionable;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.crafting.ICraftingLink;
@@ -8,24 +10,19 @@ import appeng.api.networking.security.IActionHost;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.api.util.AECableType;
 
-import dan200.computercraft.api.peripheral.IComputerAccess;
-
-import net.minecraftforge.common.util.ForgeDirection;
-
 import com.google.common.collect.ImmutableSet;
 
 public class CraftingRequester implements ICraftingRequester {
-	IActionHost original;
-	IComputerAccess computer;
-	Object requestedStack;
+	private final IActionHost original;
+	private final IArchitectureAccess access;
+	private final Object requestedStack;
 
-	public CraftingRequester(IComputerAccess computer, IActionHost original, Object requestedStack) {
-		this.computer = computer;
+	public CraftingRequester(IActionHost original, IArchitectureAccess access, Object requestedStack) {
 		this.original = original;
+		this.access = access;
 		this.requestedStack = requestedStack;
 	}
 
-	@Override
 	// We want to put the crafted items straight back into the AE network.
 	// We could put them directly into the inventory we are pointing at, but
 	// that would introduce two problems:
@@ -33,21 +30,15 @@ public class CraftingRequester implements ICraftingRequester {
 	// b) maybe the user does not want the items in the inventory in the first
 	// place, and if he does, he can simply extract them as soon as he received
 	// the event
+	@Override
 	public IAEItemStack injectCraftedItems(ICraftingLink link, IAEItemStack items, Actionable mode) {
 		return items;
 	}
 
-	// We broadcast the two possible events to the computer, nothing fancy about
-	// it.
-	// We're passing the already toLua converted itemstack we requested in the
-	// first place as an argument.
+	// We broadcast the two possible events to the computer, nothing fancy about it.
 	@Override
 	public void jobStateChange(ICraftingLink link) {
-		if (link.isCanceled()) {
-			computer.queueEvent(ModuleAppEng.CC_EVENT_STATE_CHANGED, new Object[] { requestedStack, "canceled" });
-		} else if (link.isDone()) {
-			computer.queueEvent(ModuleAppEng.CC_EVENT_STATE_CHANGED, new Object[] { requestedStack, "done" });
-		}
+		access.signal(ModuleAppEng.CC_EVENT_STATE_CHANGED, requestedStack, link.isCanceled()? "canceled" : "done");
 	}
 
 	// This method should never be called on our instance since it's never

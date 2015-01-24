@@ -1,10 +1,14 @@
 package openperipheral.integration.appeng;
 
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.ItemDistribution;
-import openmods.reflection.MethodAccess;
+import openmods.reflection.ReflectionHelper;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.*;
-
+import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
 import appeng.api.networking.crafting.ICraftingCPU;
@@ -14,24 +18,16 @@ import appeng.api.networking.security.MachineSource;
 import appeng.api.networking.storage.IStorageGrid;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEItemStack;
+import appeng.api.util.IOrientable;
 
-import dan200.computercraft.api.peripheral.IComputerAccess;
+import com.google.common.base.Preconditions;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+public class AdapterInterface extends AdapterGridBase {
+	private final Class<?> CLASS = ReflectionHelper.getClass("appeng.tile.misc.TileInterface");
 
-import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.EnumSet;
-
-public class AdapterInterface extends AbstractGridAdapter implements IPeripheralAdapter {
-	private final MethodAccess.Function0<EnumSet> GET_TARGETS;
-
-	public AdapterInterface() {
-		super("appeng.tile.misc.TileInterface");
-
-		GET_TARGETS = MethodAccess.create(EnumSet.class, CLASS, "getTargets");
+	@Override
+	public Class<?> getTargetClass() {
+		return CLASS;
 	}
 
 	@Override
@@ -39,185 +35,114 @@ public class AdapterInterface extends AbstractGridAdapter implements IPeripheral
 		return "me_interface";
 	}
 
-	// Method using reflection to determine the side the ME Interface is
-	// currently
-	// pointing to. This is a helper method used to check whether the ME
-	// Interface
-	// is really pointing at an IInventory later on.
-	private ForgeDirection getPointedAt(Object tileEntityInterface) {
-		EnumSet<ForgeDirection> targets = GET_TARGETS.call(tileEntityInterface);
-		if (targets.size() != 1) { return null; }
-
-		return targets.iterator().next();
-	}
-
-	// Another helper method. Returns the IInventory the ME Interface is
-	// pointing
-	// at. Or null.
-	private IInventory getNeighborInventory(Object tileEntityInterface) {
-		ForgeDirection dir = getPointedAt(tileEntityInterface);
-		if (dir == null) { return null; }
-
-		TileEntity tileEntity = (TileEntity)tileEntityInterface;
-
-		return InventoryUtils.getInventory(tileEntity.getWorldObj(), tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, dir);
-	}
-
-	@LuaCallable(description = "Returns true when the interface is pointing at a valid inventory.", returnTypes = LuaReturnType.BOOLEAN)
-	public boolean hasValidTarget(Object tileEntityInterface) {
-		if (getNeighborInventory(tileEntityInterface) != null) { return true; }
-
-		return false;
-	}
-
-	@LuaCallable(description = "Retrieves details about the specified item from the ME Network.", returnTypes = LuaReturnType.TABLE)
-	public ItemStack getItemDetail(Object tileEntityInterface,
-			@Arg(name = "item", description = "Details of the item you are looking for: { id, [ dmg, [nbt_id]] }", type = LuaArgType.TABLE) SearchNeedle needle) {
-		// Search for the item in the storage grid and return it if found.
-		// Nothing fancy about this.
-		for (IAEItemStack stack : getStorageGrid(tileEntityInterface).getItemInventory().getStorageList()) {
-			if (needle.compareToAEStack(stack)) {
-				// We're wringing this through our nbt-hash provider so the
-				// nbt-id
-				// will get included in the result.
-				return NBTHashMetaProvider.convertStacks(stack);
-			}
-		}
-
-		return null;
-	}
-
 	@LuaCallable(description = "Requests the specified item to get crafted.")
-	public void requestCrafting(Object tileEntityInterface,
-			@Env("computer") IComputerAccess computer,
-			@Arg(name = "item", description = "Details of the item you want to craft: { id, [ dmg, [nbt_id]] }", type = LuaArgType.TABLE) SearchNeedle needle,
-			@Optionals @Arg(name = "qty", description = "The quantity of items you want to craft") Integer quantity,
+	public void requestCrafting(IActionHost host,
+			@Env(Constants.ARG_ACCESS) IArchitectureAccess access,
+			@Env(Constants.ARG_CONVERTER) ITypeConvertersRegistry converter,
+			@Arg(name = "item", description = "Details of the item you want to craft. Can be found with .getStackFingerprint on inventory and .getAvailableItems on AE network", type = LuaArgType.TABLE) ItemFingerprint needle,
+			@Optionals @Arg(name = "qty", description = "The quantity of items you want to craft") Long quantity,
 			@Arg(name = "cpu", description = "The name of the CPU you want to use") String wantedCpuName) {
-		// Get access to the crafting grid of the ME network
-		ICraftingGrid craftingGrid = getCraftingGrid(tileEntityInterface);
+		ICraftingGrid craftingGrid = getCraftingGrid(host);
+		if (quantity == null) quantity = 1L;
 
-		// If the lua code does not specify a quantity to request, we assume he
-		// meant 1
-		if (quantity == null) {
-			quantity = 1;
-		}
+		ICraftingCPU wantedCpu = findCpi(craftingGrid, wantedCpuName);
 
-		// By default and when passing null to submitJob the first free CPU will
-		// be used.
-		// We want to allow the lua program to choose which CPU should be used
-		// so we need
-		// to find the correct ICraftingCPU to the cpuName we got passed from
-		// lua code.
-		// If no CPU with that name exists, we will use the first free one as
-		// well.
-		// If several CPUs with the same name exist, we will use the first one
-		// of those.
-		ICraftingCPU wantedCpu = null;
-		if (wantedCpuName != null) {
-			for (ICraftingCPU cpu : craftingGrid.getCpus()) {
-				if (cpu.getName().equals(wantedCpuName)) {
-					// Found it!
-					wantedCpu = cpu;
-					break;
-				}
-			}
-		}
-
-		// First make sure the item exists in the network and is craftable
-		// Get the storage data from the grid
-		IStorageGrid storageGrid = getStorageGrid(tileEntityInterface);
+		IStorageGrid storageGrid = getStorageGrid(host);
 		IMEMonitor<IAEItemStack> monitor = storageGrid.getItemInventory();
 
-		// Iterate over it's contents to get the stack we're looking for
-		for (IAEItemStack stack : monitor.getStorageList()) {
-			if (stack.isCraftable() && needle.compareToAEStack(stack)) {
-				// Found it! As we don't want to manipulate the original stack
-				// we're grabbing ourselves
-				// a copy and set its quantity to the one specified by the lua
-				// code. We're doing this
-				// because we're using this stack to actually request the item
-				// from the network.
-				IAEItemStack copy = stack.copy();
-				copy.setStackSize(quantity);
+		IAEItemStack stack = findCraftableStack(storageGrid.getItemInventory().getStorageList(), needle);
 
-				// Create a new CraftingCallback. This callback is called when
-				// the network finished
-				// calculating the required items. It can do two things for us:
-				// a) It sends an event when items are missing to complete the
-				// request
-				// b) Otherwise it starts the crafting job, which itself is a
-				// CraftingRequester
-				// sending more events to the computer.
-				CraftingCallback craftingCallback = new CraftingCallback(computer, craftingGrid, monitor, (IActionHost)tileEntityInterface, wantedCpu, copy);
+		final IAEItemStack toCraft = stack.copy();
+		toCraft.setStackSize(quantity);
 
-				// We will need access to the worldObj of the ME Interface ->
-				// cast to TileEntity
-				TileEntity tileEntity = (TileEntity)tileEntityInterface;
+		// Create a new CraftingCallback. This callback is called when
+		// the network finished calculating the required items. It can do two things for us:
+		// a) It sends an event when items are missing to complete the request
+		// b) Otherwise it starts the crafting job, which itself is a CraftingRequester OSsending more events to the computer.
+		final CraftingCallback craftingCallback = new CraftingCallback(access, converter, craftingGrid, monitor, host, wantedCpu, toCraft);
 
-				// Tell the craftingGrid to begin calculating and to report
-				// everything to the CraftingCallback
-				craftingGrid.beginCraftingJob(tileEntity.getWorldObj(), getGridNode(tileEntityInterface).getGrid(), new MachineSource((IActionHost)tileEntityInterface), copy, craftingCallback);
-				break;
-			}
-		}
+		// We will need access to the worldObj of the ME Interface -> cast to TileEntity
+		final TileEntity tileEntity = (TileEntity)host;
+
+		// Tell the craftingGrid to begin calculating and to report everything to the CraftingCallback
+		craftingGrid.beginCraftingJob(tileEntity.getWorldObj(), getGrid(host), new MachineSource(host), toCraft, craftingCallback);
+
+	}
+
+	@LuaCallable(description = "Returns true when the interface can extact to side.", returnTypes = LuaReturnType.BOOLEAN)
+	public boolean canExtract(Object tileEntityInterface, @Arg(name = "direction", description = "Location of target inventory") ForgeDirection direction) {
+		if (!canExport(tileEntityInterface, direction)) return false;
+		return getNeighborInventory(tileEntityInterface, direction) != null;
 	}
 
 	@LuaCallable(description = "Exports the specified item into the target inventory.", returnTypes = LuaReturnType.TABLE)
-	public ItemStack exportItem(Object tileEntityInterface,
-			@Arg(name = "item", description = "Details of the item you want to export", type = LuaArgType.TABLE) SearchNeedle needle,
+	public IAEItemStack exportItem(Object tileEntityInterface,
+			@Arg(name = "item", description = "Details of the item you want to export", type = LuaArgType.TABLE) ItemFingerprint needle,
+			@Arg(name = "direction", description = "Location of target inventory") ForgeDirection direction,
 			@Optionals @Arg(name = "maxAmount", description = "The maximum amount of items you want to export") Integer maxAmount,
 			@Arg(name = "intoSlot", description = "The slot in the other inventory that you want to export into") Integer intoSlot) {
 
-		// We can only export an item from the network if the interface is
-		// explicitly pointing at
-		// an inventory. Abort and return nil if that's not the case.
-		if (!hasValidTarget(tileEntityInterface)) { return null; }
+		final IActionHost host = (IActionHost)tileEntityInterface;
+		final IInventory neighbor = getNeighborInventory(tileEntityInterface, direction);
+		Preconditions.checkArgument(neighbor != null, "No neighbour attached");
+		Preconditions.checkArgument(canExport(tileEntityInterface, direction), "Can't extract to side");
 
-		// If no specific target slot has been specified use the best one we can
-		// find.
-		if (intoSlot == null) {
-			intoSlot = -1;
-		}
+		if (intoSlot == null) intoSlot = -1;
 
-		// Get access to the network and its item storage
-		IStorageGrid storageGrid = getStorageGrid(tileEntityInterface);
+		IStorageGrid storageGrid = getStorageGrid(host);
 		IMEMonitor<IAEItemStack> monitor = storageGrid.getItemInventory();
 
-		// Search for the item by using the id, dmg and a hash over the nbt
-		// data; Take a look at
-		// SearchNeedle for more details.
-		for (IAEItemStack stack : monitor.getStorageList()) {
-			if (needle.compareToAEStack(stack)) {
-				// Found it!
-				// Make sure we are only requesting MaxStackSize items and more
-				// than 0
-				IAEItemStack copy = stack.copy();
-				if (maxAmount == null || maxAmount < 1 || maxAmount > copy.getItemStack().getMaxStackSize()) {
-					copy.setStackSize(copy.getItemStack().getMaxStackSize());
-				} else {
-					copy.setStackSize(maxAmount);
-				}
+		IAEItemStack stack = findStack(monitor.getStorageList(), needle);
 
-				// Actually export the items from the ME system.
-				MachineSource machineSource = new MachineSource((IActionHost)tileEntityInterface);
-				IAEItemStack out = monitor.extractItems(copy, Actionable.MODULATE, machineSource);
-				ItemStack exportedStack = out.getItemStack().copy();
+		IAEItemStack toExtract = stack.copy();
+		if (maxAmount == null || maxAmount < 1 || maxAmount > toExtract.getItemStack().getMaxStackSize()) {
+			toExtract.setStackSize(toExtract.getItemStack().getMaxStackSize());
+		} else {
+			toExtract.setStackSize(maxAmount);
+		}
 
-				// Put the item in the neighbor inventory
-				ItemDistribution.insertItemIntoInventory(getNeighborInventory(tileEntityInterface), exportedStack, getPointedAt(tileEntityInterface).getOpposite(), intoSlot);
+		// Actually export the items from the ME system.
+		MachineSource machineSource = new MachineSource(host);
+		IAEItemStack extracted = monitor.extractItems(toExtract, Actionable.MODULATE, machineSource);
+		if (extracted == null) return null;
 
-				// If we've moved some items, but others are still remaining
-				// insert them back into the ME system.
-				if (exportedStack.stackSize > 0) {
-					monitor.injectItems(AEApi.instance().storage().createItemStack(exportedStack), Actionable.MODULATE, machineSource);
-					copy.setStackSize(copy.getStackSize() - exportedStack.stackSize);
-				}
+		ItemStack toInsert = extracted.getItemStack().copy();
 
-				// Return what we've actually extracted
-				return copy.getItemStack();
-			}
+		// Put the item in the neighbor inventory
+		ItemDistribution.insertItemIntoInventory(neighbor, toInsert, direction.getOpposite(), intoSlot);
+
+		// If we've moved some items, but others are still remaining.
+		// Insert them back into the ME system.
+		if (toInsert.stackSize > 0) {
+			final IAEItemStack toReturn = AEApi.instance().storage().createItemStack(toInsert);
+			monitor.injectItems(toReturn, Actionable.MODULATE, machineSource);
+			extracted.decStackSize(toInsert.stackSize);
+		}
+
+		// Return what we've actually extracted
+		return extracted;
+	}
+
+	private static ICraftingCPU findCpi(ICraftingGrid craftingGrid, String cpuName) {
+		if (cpuName != null) {
+			for (ICraftingCPU cpu : craftingGrid.getCpus())
+				if (cpu.getName().equals(cpuName)) return cpu;
 		}
 
 		return null;
+	}
+
+	private static boolean canExport(Object te, ForgeDirection side) {
+		if (te instanceof IOrientable) {
+			ForgeDirection direction = ((IOrientable)te).getForward();
+			return direction == ForgeDirection.UNKNOWN || direction == side;
+		}
+
+		return true;
+	}
+
+	private static IInventory getNeighborInventory(Object te, ForgeDirection dir) {
+		TileEntity tileEntity = (TileEntity)te;
+		return InventoryUtils.getInventory(tileEntity.getWorldObj(), tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, dir);
 	}
 }

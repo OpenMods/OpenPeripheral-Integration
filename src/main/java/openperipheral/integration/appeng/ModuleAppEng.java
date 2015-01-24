@@ -2,7 +2,6 @@ package openperipheral.integration.appeng;
 
 import openperipheral.api.ApiAccess;
 import openperipheral.api.IAdapterRegistry;
-import openperipheral.api.IItemStackMetaBuilder;
 import openperipheral.api.ITypeConvertersRegistry;
 import openperipheral.integration.ModIntegrationModule;
 
@@ -23,10 +22,7 @@ public class ModuleAppEng extends ModIntegrationModule {
 		adapterRegistry.register(new AdapterNetwork());
 
 		final ITypeConvertersRegistry convertersRegistry = ApiAccess.getApi(ITypeConvertersRegistry.class);
-		convertersRegistry.register(new ConverterSearchNeedle());
-
-		final IItemStackMetaBuilder metaBuilder = ApiAccess.getApi(IItemStackMetaBuilder.class);
-		metaBuilder.register(new NBTHashMetaProvider());
-		metaBuilder.register(new AEItemStackMetaProvider());
+		convertersRegistry.register(new ConverterAEItemStack());
 	}
+
 }

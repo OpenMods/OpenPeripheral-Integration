@@ -62,6 +62,9 @@ public class ModuleVanilla implements IIntegrationModule {
 		entityMeta.register(new EntityWitchMetaProvider());
 		entityMeta.register(new EntityWolfMetaProvider());
 		entityMeta.register(new EntityZombieMetaProvider());
+
+		final ITypeConvertersRegistry converters = ApiAccess.getApi(ITypeConvertersRegistry.class);
+		converters.register(new ConverterItemFingerprint());
 	}
 
 	public static Object listEnchantments(NBTTagList ench) {
