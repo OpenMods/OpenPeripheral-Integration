@@ -61,13 +61,13 @@ public abstract class AdapterGridBase implements IPeripheralAdapter {
 		for (IAEItemStack stack : items)
 			if (compareToAEStack(fingerprint, stack)) return stack;
 
-		throw new IllegalArgumentException(String.format("Can't find item fingerprint %s", fingerprint));
+		return null;
 	}
 
 	protected static IAEItemStack findCraftableStack(IItemList<IAEItemStack> items, ItemFingerprint fingerprint) {
 		for (IAEItemStack stack : items)
 			if (compareToAEStack(fingerprint, stack, true)) return stack;
 
-		throw new IllegalArgumentException(String.format("Can't find craftable item fingerprint %s", fingerprint));
+		return null;
 	}
 }
