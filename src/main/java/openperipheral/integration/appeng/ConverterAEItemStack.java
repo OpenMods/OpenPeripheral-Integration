@@ -18,20 +18,12 @@ public class ConverterAEItemStack implements ITypeConverter {
 		return null;
 	}
 
-	public static NBTTagCompound getTag(IAEItemStack stack) {
-		final IAETagCompound tag = stack.getTagCompound();
-		return tag != null? tag.getNBTTagCompoundCopy() : null;
-	}
-
 	@Override
 	public Object toLua(ITypeConvertersRegistry registry, Object obj) {
 		if (obj instanceof IAEItemStack) {
 			IAEItemStack aeStack = (IAEItemStack)obj;
-			ItemFingerprint fingerprint = new ItemFingerprint(aeStack.getItem(), aeStack.getItemDamage(), getTag(aeStack));
 
-			Map<String, Object> result = Maps.newHashMap();
-			result.put("fingerprint", fingerprint);
-			result.put("size", aeStack.getStackSize());
+			Map<String, Object> result = (Map<String, Object>)registry.toLua(aeStack.getItemStack());
 			result.put("is_craftable", aeStack.isCraftable());
 			result.put("is_fluid", aeStack.isFluid());
 			result.put("is_item", aeStack.isItem());
