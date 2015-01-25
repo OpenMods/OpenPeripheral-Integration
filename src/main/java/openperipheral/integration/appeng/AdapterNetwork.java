@@ -31,7 +31,7 @@ public class AdapterNetwork extends AdapterGridBase {
 	@LuaCallable(description = "Get a list of the stored and craftable items in the network with full item details.", returnTypes = LuaReturnType.TABLE)
 	public Object getAvailableItems(IGridHost host, @Optionals @Arg(name = "full", description = "Whether to provide full item information", type = LuaArgType.BOOLEAN) Boolean full) {
 		IStorageGrid storageGrid = getStorageGrid(host);
-		if(full != null && full.booleanValue()) {
+		if(full == Boolean.TRUE) {
 			return Lists.newArrayList(storageGrid.getItemInventory().getStorageList());
 		} else {
 			List<ItemFingerprint> result = Lists.newArrayList();
