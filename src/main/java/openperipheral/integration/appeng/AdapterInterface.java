@@ -11,6 +11,7 @@ import openperipheral.api.*;
 import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
+import appeng.api.networking.IGridHost;
 import appeng.api.networking.crafting.ICraftingCPU;
 import appeng.api.networking.crafting.ICraftingGrid;
 import appeng.api.networking.security.IActionHost;
@@ -18,7 +19,6 @@ import appeng.api.networking.security.MachineSource;
 import appeng.api.networking.storage.IStorageGrid;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEItemStack;
-import appeng.api.util.IOrientable;
 
 import com.google.common.base.Preconditions;
 
@@ -45,12 +45,13 @@ public class AdapterInterface extends AdapterGridBase {
 		ICraftingGrid craftingGrid = getCraftingGrid(host);
 		if (quantity == null) quantity = 1L;
 
-		ICraftingCPU wantedCpu = findCpi(craftingGrid, wantedCpuName);
+		ICraftingCPU wantedCpu = findCpu(craftingGrid, wantedCpuName);
 
 		IStorageGrid storageGrid = getStorageGrid(host);
 		IMEMonitor<IAEItemStack> monitor = storageGrid.getItemInventory();
 
 		IAEItemStack stack = findCraftableStack(storageGrid.getItemInventory().getStorageList(), needle);
+		Preconditions.checkArgument(stack != null, "Can't find craftable item fingerprint %s", needle);
 
 		final IAEItemStack toCraft = stack.copy();
 		toCraft.setStackSize(quantity);
@@ -69,9 +70,8 @@ public class AdapterInterface extends AdapterGridBase {
 
 	}
 
-	@LuaCallable(description = "Returns true when the interface can extact to side.", returnTypes = LuaReturnType.BOOLEAN)
-	public boolean canExtract(Object tileEntityInterface, @Arg(name = "direction", description = "Location of target inventory") ForgeDirection direction) {
-		if (!canExport(tileEntityInterface, direction)) return false;
+	@LuaCallable(description = "Returns true when the interface can export to side.", returnTypes = LuaReturnType.BOOLEAN)
+	public boolean canExport(IGridHost tileEntityInterface, @Arg(name = "direction", description = "Location of target inventory") ForgeDirection direction) {
 		return getNeighborInventory(tileEntityInterface, direction) != null;
 	}
 
@@ -85,7 +85,6 @@ public class AdapterInterface extends AdapterGridBase {
 		final IActionHost host = (IActionHost)tileEntityInterface;
 		final IInventory neighbor = getNeighborInventory(tileEntityInterface, direction);
 		Preconditions.checkArgument(neighbor != null, "No neighbour attached");
-		Preconditions.checkArgument(canExport(tileEntityInterface, direction), "Can't extract to side");
 
 		if (intoSlot == null) intoSlot = -1;
 
@@ -93,6 +92,7 @@ public class AdapterInterface extends AdapterGridBase {
 		IMEMonitor<IAEItemStack> monitor = storageGrid.getItemInventory();
 
 		IAEItemStack stack = findStack(monitor.getStorageList(), needle);
+		Preconditions.checkArgument(stack != null, "Can't find item fingerprint %s", needle);
 
 		IAEItemStack toExtract = stack.copy();
 		if (maxAmount == null || maxAmount < 1 || maxAmount > toExtract.getItemStack().getMaxStackSize()) {
@@ -123,22 +123,13 @@ public class AdapterInterface extends AdapterGridBase {
 		return extracted;
 	}
 
-	private static ICraftingCPU findCpi(ICraftingGrid craftingGrid, String cpuName) {
+	private static ICraftingCPU findCpu(ICraftingGrid craftingGrid, String cpuName) {
 		if (cpuName != null) {
 			for (ICraftingCPU cpu : craftingGrid.getCpus())
 				if (cpu.getName().equals(cpuName)) return cpu;
 		}
 
 		return null;
-	}
-
-	private static boolean canExport(Object te, ForgeDirection side) {
-		if (te instanceof IOrientable) {
-			ForgeDirection direction = ((IOrientable)te).getForward();
-			return direction == ForgeDirection.UNKNOWN || direction == side;
-		}
-
-		return true;
 	}
 
 	private static IInventory getNeighborInventory(Object te, ForgeDirection dir) {

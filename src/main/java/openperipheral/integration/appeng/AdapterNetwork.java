@@ -29,9 +29,21 @@ public class AdapterNetwork extends AdapterGridBase {
 	}
 
 	@LuaCallable(description = "Get a list of the stored and craftable items in the network.", returnTypes = LuaReturnType.TABLE)
-	public List<IAEItemStack> getAvailableItems(IGridHost host) {
+	public List<?> getAvailableItems(IGridHost host,
+			@Env(Constants.ARG_CONVERTER) ITypeConvertersRegistry converter,
+			@Optionals @Arg(name = "full", description = "Whether to provide full item information") Boolean full) {
 		IStorageGrid storageGrid = getStorageGrid(host);
-		return Lists.newArrayList(storageGrid.getItemInventory().getStorageList());
+		final IItemList<IAEItemStack> storageList = storageGrid.getItemInventory().getStorageList();
+
+		List<Object> result = Lists.newArrayList();
+		for (IAEItemStack stack : storageList) {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> map = (Map<String, Object>)converter.toLua(stack);
+			if (full == Boolean.TRUE) map.put("item", stack.getItemStack());
+			result.add(map);
+		}
+
+		return result;
 	}
 
 	@LuaCallable(description = "Retrieves details about the specified item from the ME Network.", returnTypes = LuaReturnType.TABLE)
@@ -39,7 +51,7 @@ public class AdapterNetwork extends AdapterGridBase {
 			@Arg(name = "item", description = "Details of the item you are looking for: { id, [ dmg, [nbt_hash]] }", type = LuaArgType.TABLE) ItemFingerprint needle) {
 		final IItemList<IAEItemStack> items = getStorageGrid(host).getItemInventory().getStorageList();
 		final IAEItemStack stack = findStack(items, needle);
-		return stack.getItemStack();
+		return stack != null? stack.getItemStack() : null;
 	}
 
 	@LuaCallable(description = "Get the average power injection into the network", returnTypes = LuaReturnType.NUMBER)

@@ -1,6 +1,7 @@
 package openperipheral.integration.vanilla;
 
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -13,6 +14,7 @@ import openperipheral.api.*;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 @Asynchronous
 public class AdapterInventory implements IPeripheralAdapter {
@@ -75,31 +77,26 @@ public class AdapterInventory implements IPeripheralAdapter {
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get details of an item in a particular slot")
-	public ItemStack getStackInSlot(IInventory target,
-			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
+	public Object getStackInSlot(IInventory target,
+			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot,
+			@Optionals @Arg(name = "fingerprintOnly") Boolean fingerprintOnly)
 	{
-		IInventory invent = InventoryUtils.getInventory(target);
+		IInventory inventory = InventoryUtils.getInventory(target);
 		slot -= 1;
-		Preconditions.checkElementIndex(slot, invent.getSizeInventory(), "slot id");
-		return invent.getStackInSlot(slot);
-	}
-
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get fingerpring of an item in a particular slot")
-	public ItemFingerprint getStackFingerprint(IInventory target,
-			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
-	{
-		ItemStack stack = getStackInSlot(target, slot);
-		return stack != null? new ItemFingerprint(stack) : null;
+		Preconditions.checkElementIndex(slot, inventory.getSizeInventory(), "slot id");
+		ItemStack stack = inventory.getStackInSlot(slot);
+		return fingerprintOnly == Boolean.TRUE? new ItemFingerprint(stack) : stack;
 	}
 
 	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get a table with all the items of the chest")
-	public ItemStack[] getAllStacks(IInventory target) {
-		IInventory inventory = InventoryUtils.getInventory(target);
-		ItemStack[] allStacks = new ItemStack[inventory.getSizeInventory()];
+	public Map<Integer, Object> getAllStacks(IInventory target, @Optionals @Arg(name = "fingerprintsOnly") Boolean fingerprintsOnly) {
+		final IInventory inventory = InventoryUtils.getInventory(target);
+		Map<Integer, Object> result = Maps.newHashMap();
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
-			allStacks[i] = inventory.getStackInSlot(i);
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack != null) result.put(i + 1, (fingerprintsOnly == Boolean.TRUE)? new ItemFingerprint(stack) : stack);
 		}
-		return allStacks;
+		return result;
 	}
 
 	@LuaCallable(description = "Destroy a stack")
