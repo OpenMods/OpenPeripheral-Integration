@@ -39,7 +39,7 @@ public class AdapterInterface extends AdapterGridBase {
 	public void requestCrafting(IActionHost host,
 			@Env(Constants.ARG_ACCESS) IArchitectureAccess access,
 			@Env(Constants.ARG_CONVERTER) ITypeConvertersRegistry converter,
-			@Arg(name = "item", description = "Details of the item you want to craft. Can be found with .getStackFingerprint on inventory and .getAvailableItems on AE network", type = LuaArgType.TABLE) ItemFingerprint needle,
+			@Arg(name = "fingerprint", description = "Details of the item you want to craft. Can be found with .getStackInSlot on inventory and .getAvailableItems on AE network", type = LuaArgType.TABLE) ItemFingerprint needle,
 			@Optionals @Arg(name = "qty", description = "The quantity of items you want to craft") Long quantity,
 			@Arg(name = "cpu", description = "The name of the CPU you want to use") String wantedCpuName) {
 		ICraftingGrid craftingGrid = getCraftingGrid(host);
@@ -77,7 +77,7 @@ public class AdapterInterface extends AdapterGridBase {
 
 	@LuaCallable(description = "Exports the specified item into the target inventory.", returnTypes = LuaReturnType.TABLE)
 	public IAEItemStack exportItem(Object tileEntityInterface,
-			@Arg(name = "item", description = "Details of the item you want to export", type = LuaArgType.TABLE) ItemFingerprint needle,
+			@Arg(name = "fingerprint", description = "Details of the item you want to export (can be result of .getStackInSlot() or .getAvailableItems())", type = LuaArgType.TABLE) ItemFingerprint needle,
 			@Arg(name = "direction", description = "Location of target inventory") ForgeDirection direction,
 			@Optionals @Arg(name = "maxAmount", description = "The maximum amount of items you want to export") Integer maxAmount,
 			@Arg(name = "intoSlot", description = "The slot in the other inventory that you want to export into") Integer intoSlot) {
