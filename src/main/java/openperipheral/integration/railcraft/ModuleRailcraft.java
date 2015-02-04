@@ -2,8 +2,8 @@ package openperipheral.integration.railcraft;
 
 import openmods.Mods;
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IAdapterRegistry;
-import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.api.adapter.IPeripheralAdapterRegistry;
+import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ModIntegrationModule;
 
 public class ModuleRailcraft extends ModIntegrationModule {
@@ -15,7 +15,7 @@ public class ModuleRailcraft extends ModIntegrationModule {
 
 	@Override
 	public void load() {
-		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
 		adapterRegistry.register(new AdapterTileSteamTurbine());
 		adapterRegistry.register(new AdapterTileBoilerFirebox());
 

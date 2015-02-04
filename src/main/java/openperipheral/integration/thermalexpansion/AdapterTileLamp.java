@@ -4,7 +4,9 @@ import net.minecraft.tileentity.TileEntity;
 import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.ReflectionHelper;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.*;
 
 public class AdapterTileLamp implements IPeripheralAdapter {
 
@@ -24,7 +26,7 @@ public class AdapterTileLamp implements IPeripheralAdapter {
 
 	@Asynchronous
 	@Alias("setColour")
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Sets the colour of the lamp")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Sets the colour of the lamp")
 	public boolean setColor(TileEntity tile,
 			@Arg(description = "The colour you want to set to (in RGB hexadecimal 0xRRGGBB)", name = "color") int colour) {
 		return SET_COLOR.call(tile, colour);

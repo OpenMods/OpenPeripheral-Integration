@@ -9,7 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.*;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
@@ -31,19 +33,19 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return "inventory";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "Get the name of this inventory")
+	@ScriptCallable(returnTypes = ReturnType.STRING, description = "Get the name of this inventory")
 	public String getInventoryName(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		return inventory != null? inventory.getInventoryName() : null;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get the size of this inventory")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get the size of this inventory")
 	public int getInventorySize(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		return inventory != null? inventory.getSizeInventory() : 0;
 	}
 
-	@LuaCallable(description = "Condense and tidy the stacks in an inventory")
+	@ScriptCallable(description = "Condense and tidy the stacks in an inventory")
 	public void condenseItems(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		List<ItemStack> stacks = Lists.newArrayList();
@@ -59,7 +61,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		target.markDirty();
 	}
 
-	@LuaCallable(description = "Swap two slots in the inventory")
+	@ScriptCallable(description = "Swap two slots in the inventory")
 	public void swapStacks(IInventory target,
 			@Arg(name = "from", description = "The first slot") int fromSlot,
 			@Arg(name = "to", description = "The other slot") int intoSlot,
@@ -76,7 +78,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		inventory.markDirty();
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get details of an item in a particular slot")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get details of an item in a particular slot")
 	public Object getStackInSlot(IInventory target,
 			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot,
 			@Optionals @Arg(name = "fingerprintOnly") Boolean fingerprintOnly)
@@ -88,7 +90,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return fingerprintOnly == Boolean.TRUE? new ItemFingerprint(stack) : stack;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get a table with all the items of the chest")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get a table with all the items of the chest")
 	public Map<Integer, Object> getAllStacks(IInventory target, @Optionals @Arg(name = "fingerprintsOnly") Boolean fingerprintsOnly) {
 		final IInventory inventory = InventoryUtils.getInventory(target);
 		Map<Integer, Object> result = Maps.newHashMap();
@@ -99,7 +101,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return result;
 	}
 
-	@LuaCallable(description = "Destroy a stack")
+	@ScriptCallable(description = "Destroy a stack")
 	public void destroyStack(IInventory target,
 			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
 	{
@@ -110,8 +112,8 @@ public class AdapterInventory implements IPeripheralAdapter {
 		inventory.markDirty();
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get full stack information from stub one {id=..., [qty=...], [dmg=...]}")
-	public ItemStack expandStack(IInventory target, @Arg(name = "stack", type = LuaArgType.TABLE) ItemStack itemStack) {
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get full stack information from stub one {id=..., [qty=...], [dmg=...]}")
+	public ItemStack expandStack(IInventory target, @Arg(name = "stack", type = ArgType.TABLE) ItemStack itemStack) {
 		return itemStack;
 	}
 }

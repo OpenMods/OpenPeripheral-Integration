@@ -5,7 +5,10 @@ import java.util.Map;
 import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.ReflectionHelper;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterHarvester implements IPeripheralAdapter {
 
@@ -24,22 +27,22 @@ public class AdapterHarvester implements IPeripheralAdapter {
 		return "mfr_harvester";
 	}
 
-	@LuaCallable(description = "Get value of shear leaves", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Get value of shear leaves", returnTypes = ReturnType.BOOLEAN)
 	public Boolean getShearLeaves(Object tileEntityHarvester) {
 		return getSettings(tileEntityHarvester).get("silkTouch");
 	}
 
-	@LuaCallable(description = "Get value of harvest small mushrooms", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Get value of harvest small mushrooms", returnTypes = ReturnType.BOOLEAN)
 	public Boolean getHarvestShrooms(Object tileEntityHarvester) {
 		return getSettings(tileEntityHarvester).get("harvestSmallMushrooms");
 	}
 
-	@LuaCallable(description = "Set value of shear leaves")
+	@ScriptCallable(description = "Set value of shear leaves")
 	public void setShearLeaves(Object tileEntityHarvester, @Arg(name = "shearLeaves") boolean shearLeaves) {
 		getSettings(tileEntityHarvester).put("silkTouch", shearLeaves);
 	}
 
-	@LuaCallable(description = "Set value of harvest small mushrooms")
+	@ScriptCallable(description = "Set value of harvest small mushrooms")
 	public void setHarvestShrooms(Object tileEntityHarvester, @Arg(name = "harvestShrooms") boolean harvestShrooms) {
 		getSettings(tileEntityHarvester).put("harvestSmallMushrooms", harvestShrooms);
 	}

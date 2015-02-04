@@ -1,6 +1,9 @@
 package openperipheral.integration.cofh.transport;
 
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import openperipheral.integration.cofh.tileentity.SecurityUtils;
 import cofh.api.transport.IEnderFluidHandler;
 
@@ -11,7 +14,7 @@ public class AdapterEnderFluidAttuned implements IPeripheralAdapter {
 		return IEnderFluidHandler.class;
 	}
 
-	@LuaCallable(description = "Get the channel name of the machine.", returnTypes = LuaReturnType.STRING)
+	@ScriptCallable(description = "Get the channel name of the machine.", returnTypes = ReturnType.STRING)
 	public String getChannelName(IEnderFluidHandler tileEntity) {
 		return tileEntity.getChannelString();
 	}
@@ -21,30 +24,30 @@ public class AdapterEnderFluidAttuned implements IPeripheralAdapter {
 		return "cofh_ender_fluid";
 	}
 
-	@LuaCallable(description = "Get the active frequency of the machine.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the active frequency of the machine.", returnTypes = ReturnType.NUMBER)
 	public int getFrequency(IEnderFluidHandler tileEntity) {
 		return tileEntity.getFrequency();
 	}
 
-	@LuaCallable(description = "set the active frequency of the machine.", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "set the active frequency of the machine.", returnTypes = ReturnType.BOOLEAN)
 	public boolean setFrequency(IEnderFluidHandler tileEntity,
 			@Arg(name = "frequency", description = "the frequency you want to set to.") int frequency) {
 		SecurityUtils.checkAccess(tileEntity);
 		return tileEntity.setFrequency(frequency);
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Clean the active frequency of the machine.")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Clean the active frequency of the machine.")
 	public boolean clearFrequency(IEnderFluidHandler tileEntity) {
 		SecurityUtils.checkAccess(tileEntity);
 		return tileEntity.clearFrequency();
 	}
 
-	@LuaCallable(description = "Can the machine output fluids via the ender net.", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Can the machine output fluids via the ender net.", returnTypes = ReturnType.BOOLEAN)
 	public boolean canSendFluid(IEnderFluidHandler tileEntity) {
 		return tileEntity.canSendFluid();
 	}
 
-	@LuaCallable(description = "Can the machine input fluids via the ender net.", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Can the machine input fluids via the ender net.", returnTypes = ReturnType.BOOLEAN)
 	public boolean canReceiveFluid(IEnderFluidHandler tileEntity) {
 		return tileEntity.canReceiveFluid();
 	}

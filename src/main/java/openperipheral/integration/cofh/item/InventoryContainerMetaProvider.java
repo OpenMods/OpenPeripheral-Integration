@@ -8,7 +8,6 @@ import cofh.api.item.IInventoryContainerItem;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class InventoryContainerMetaProvider extends ItemStackMetaProviderSimple<IInventoryContainerItem> {
 
 	@Override

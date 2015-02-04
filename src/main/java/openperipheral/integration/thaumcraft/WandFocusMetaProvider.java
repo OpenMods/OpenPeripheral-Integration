@@ -8,7 +8,6 @@ import thaumcraft.api.wands.IWandFocus;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class WandFocusMetaProvider extends ItemStackMetaProviderSimple<IWandFocus> {
 
 	@Override

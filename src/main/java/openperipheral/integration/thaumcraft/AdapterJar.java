@@ -5,7 +5,10 @@ import java.util.Map;
 
 import openmods.reflection.FieldAccess;
 import openmods.reflection.ReflectionHelper;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.IAspectContainer;
 
@@ -26,14 +29,14 @@ public class AdapterJar implements IPeripheralAdapter {
 		return "thaumcraft_jar";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the aspect filtered by this block block")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the aspect filtered by this block block")
 	public String getAspectFilter(Object target) {
 		Aspect aspect = ASPECT_FILTER.get(target);
 		return aspect != null? aspect.getName() : "";
 	}
 
 	// special casing jar, for TT compatibility
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the Aspects stored in the block")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the Aspects stored in the block")
 	public List<Map<String, Object>> getAspects(IAspectContainer container) {
 		List<Map<String, Object>> result = ConverterAspectList.aspectsToMap(container.getAspects());
 		if (result.isEmpty()) {

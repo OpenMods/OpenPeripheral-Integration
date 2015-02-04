@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.*;
+import openperipheral.api.Constants;
+import openperipheral.api.adapter.method.*;
+import openperipheral.api.converter.IConverter;
 import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.crafting.ICraftingCPU;
@@ -28,9 +30,9 @@ public class AdapterNetwork extends AdapterGridBase {
 		return "me_network";
 	}
 
-	@LuaCallable(description = "Get a list of the stored and craftable items in the network.", returnTypes = LuaReturnType.TABLE)
+	@ScriptCallable(description = "Get a list of the stored and craftable items in the network.", returnTypes = ReturnType.TABLE)
 	public List<?> getAvailableItems(IGridHost host,
-			@Env(Constants.ARG_CONVERTER) ITypeConvertersRegistry converter,
+			@Env(Constants.ARG_CONVERTER) IConverter converter,
 			@Optionals @Arg(name = "full", description = "Whether to provide full item information") Boolean full) {
 		IStorageGrid storageGrid = getStorageGrid(host);
 		final IItemList<IAEItemStack> storageList = storageGrid.getItemInventory().getStorageList();
@@ -46,40 +48,40 @@ public class AdapterNetwork extends AdapterGridBase {
 		return result;
 	}
 
-	@LuaCallable(description = "Retrieves details about the specified item from the ME Network.", returnTypes = LuaReturnType.TABLE)
+	@ScriptCallable(description = "Retrieves details about the specified item from the ME Network.", returnTypes = ReturnType.TABLE)
 	public ItemStack getItemDetail(IGridHost host,
-			@Arg(name = "item", description = "Details of the item you are looking for: { id, [ dmg, [nbt_hash]] }", type = LuaArgType.TABLE) ItemFingerprint needle) {
+			@Arg(name = "item", description = "Details of the item you are looking for: { id, [ dmg, [nbt_hash]] }", type = ArgType.TABLE) ItemFingerprint needle) {
 		final IItemList<IAEItemStack> items = getStorageGrid(host).getItemInventory().getStorageList();
 		final IAEItemStack stack = findStack(items, needle);
 		return stack != null? stack.getItemStack() : null;
 	}
 
-	@LuaCallable(description = "Get the average power injection into the network", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the average power injection into the network", returnTypes = ReturnType.NUMBER)
 	public double getAvgPowerInjection(IGridHost host) {
 		return getEnergyGrid(host).getAvgPowerInjection();
 	}
 
-	@LuaCallable(description = "Get the average power usage of the network.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the average power usage of the network.", returnTypes = ReturnType.NUMBER)
 	public double getAvgPowerUsage(IGridHost host) {
 		return getEnergyGrid(host).getAvgPowerUsage();
 	}
 
-	@LuaCallable(description = "Get the idle power usage of the network.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the idle power usage of the network.", returnTypes = ReturnType.NUMBER)
 	public double getIdlePowerUsage(IGridHost host) {
 		return getEnergyGrid(host).getIdlePowerUsage();
 	}
 
-	@LuaCallable(description = "Get the maximum stored power in the network.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the maximum stored power in the network.", returnTypes = ReturnType.NUMBER)
 	public double getMaxStoredPower(IGridHost host) {
 		return getEnergyGrid(host).getMaxStoredPower();
 	}
 
-	@LuaCallable(description = "Get the stored power in the network.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the stored power in the network.", returnTypes = ReturnType.NUMBER)
 	public double getStoredPower(IGridHost host) {
 		return getEnergyGrid(host).getStoredPower();
 	}
 
-	@LuaCallable(description = "Get a list of tables representing the available CPUs in the network.", returnTypes = LuaReturnType.TABLE)
+	@ScriptCallable(description = "Get a list of tables representing the available CPUs in the network.", returnTypes = ReturnType.TABLE)
 	public List<Map<String, Object>> getCraftingCPUs(IGridHost host) {
 		ICraftingGrid craftingGrid = getCraftingGrid(host);
 

@@ -5,7 +5,6 @@ import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IEssentiaContainerItem;
 
-@SuppressWarnings("serial")
 public class EssentiaContainerMetaProvider extends ItemStackMetaProviderSimple<IEssentiaContainerItem> {
 
 	@Override

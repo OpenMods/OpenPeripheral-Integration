@@ -9,7 +9,6 @@ import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.ImmutableSet;
 
-@SuppressWarnings("serial")
 public class SafariNetMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	private final Set<String> safariNets = ImmutableSet.of(

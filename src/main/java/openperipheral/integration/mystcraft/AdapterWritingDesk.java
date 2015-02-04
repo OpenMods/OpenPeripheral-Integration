@@ -18,7 +18,8 @@ import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.MethodAccess.Function2;
 import openmods.utils.BlockUtils;
 import openmods.utils.InventoryUtils;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.*;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
@@ -40,38 +41,38 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 		return "mystcraft_desk";
 	}
 
-	@LuaCallable(description = "Get the maximum number of notebooks this desk can store", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the maximum number of notebooks this desk can store", returnTypes = ReturnType.NUMBER)
 	public int getMaxNotebookCount(Object tileEntityDesk) {
 		return GET_MAX_NOTEBOOK_COUNT.call(tileEntityDesk);
 	}
 
-	@LuaCallable(description = "Get the name of a notebook", returnTypes = LuaReturnType.STRING)
+	@ScriptCallable(description = "Get the name of a notebook", returnTypes = ReturnType.STRING)
 	public String getNotebookName(Object desk, @Arg(name = "slot", description = "The writing desk slot you are interested in") int deskSlot) {
 		return createInventoryWrapper(desk, deskSlot).getInventoryName();
 	}
 
-	@LuaCallable(description = "Get the number of pages in a notebook", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the number of pages in a notebook", returnTypes = ReturnType.NUMBER)
 	public Integer getNotebookSize(Object desk, @Arg(name = "deskSlot") int deskSlot) {
 		return createInventoryWrapper(desk, deskSlot).getItemCount();
 	}
 
-	@LuaCallable(description = "Get the contents of a slot in a notebook", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the contents of a slot in a notebook", returnTypes = ReturnType.NUMBER)
 	public ItemStack getNotebookStackInSlot(Object desk, @Arg(name = "deskSlot") int deskSlot, @Arg(name = "notebookSlot") int notebookSlot) {
 		return createInventoryWrapper(desk, deskSlot).getStackInSlot(notebookSlot - 1);
 	}
 
-	@LuaCallable(description = "Get the last slot index in a notebook", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the last slot index in a notebook", returnTypes = ReturnType.NUMBER)
 	public Integer getLastNotebookSlot(Object desk, @Arg(name = "deskSlot") int deskSlot) {
 		return createInventoryWrapper(desk, deskSlot).getSizeInventory() - 1;
 	}
 
-	@LuaCallable(description = "Swap notebook slots")
+	@ScriptCallable(description = "Swap notebook slots")
 	public void swapNotebookPages(Object desk, @Arg(name = "deskSlot") int deskSlot, @Arg(name = "from") int from, @Arg(name = "to") int to) {
 		InventoryUtils.swapStacks(createInventoryWrapper(desk, deskSlot), from - 1, to - 1);
 	}
 
-	@LuaCallable(
-			returnTypes = LuaReturnType.NUMBER,
+	@ScriptCallable(
+			returnTypes = ReturnType.NUMBER,
 			description = "Push a page from the notebook into a specific slot in external inventory. Returns the amount of items moved")
 	public int pushNotebookPage(
 			TileEntity desk,
@@ -87,7 +88,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 		return amount;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Pull an item from the target inventory into any slot in the current one. Returns the amount of items moved")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Pull an item from the target inventory into any slot in the current one. Returns the amount of items moved")
 	public int pullNotebookPage(TileEntity desk,
 			@Arg(name = "deskSlot") int deskSlot,
 			@Arg(name = "direction", description = "The direction of the other inventory)") ForgeDirection direction,
@@ -99,7 +100,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 		return amount;
 	}
 
-	@LuaCallable(description = "Create a symbol page from the target symbol")
+	@ScriptCallable(description = "Create a symbol page from the target symbol")
 	public void writeSymbol(final TileEntity desk,
 			@Arg(name = "deskSlot") int deskSlot,
 			@Arg(name = "notebookSlot", description = "The source symbol to copy") int notebookSlot) {

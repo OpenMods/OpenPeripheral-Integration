@@ -4,7 +4,10 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import cofh.api.inventory.IInventoryHandler;
 
 public class AdapterInventoryHandler implements IPeripheralAdapter {
@@ -19,7 +22,7 @@ public class AdapterInventoryHandler implements IPeripheralAdapter {
 		return "cofh_inventory";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the contents of the IInventoryHandler's inventory")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the contents of the IInventoryHandler's inventory")
 	List<ItemStack> getInventoryContents(IInventoryHandler target,
 			@Arg(name = "from") ForgeDirection from) {
 		return target.getInventoryContents(from);

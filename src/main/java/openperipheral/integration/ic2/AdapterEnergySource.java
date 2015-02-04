@@ -1,7 +1,10 @@
 package openperipheral.integration.ic2;
 
 import ic2.api.energy.tile.IEnergySource;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 @Asynchronous
 public class AdapterEnergySource implements IPeripheralAdapter {
@@ -16,12 +19,12 @@ public class AdapterEnergySource implements IPeripheralAdapter {
 		return "eu_source";
 	}
 
-	@LuaCallable(description = "Get the EU output", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the EU output", returnTypes = ReturnType.NUMBER)
 	public double getOfferedEnergy(IEnergySource source) {
 		return source.getOfferedEnergy();
 	}
 
-	@LuaCallable(description = "Determine the tier of this energy source (1 = LV, 2 = MV, 3 = HV, 4 = EV)", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Determine the tier of this energy source (1 = LV, 2 = MV, 3 = HV, 4 = EV)", returnTypes = ReturnType.NUMBER)
 	public int getEUSourceTier(IEnergySource sink) {
 		return sink.getSourceTier();
 	}

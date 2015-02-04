@@ -4,7 +4,6 @@ import net.minecraft.item.ItemStack;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 import cofh.api.item.IEmpowerableItem;
 
-@SuppressWarnings("serial")
 public class EmpoweredItemMetaProvider extends ItemStackMetaProviderSimple<IEmpowerableItem> {
 
 	@Override

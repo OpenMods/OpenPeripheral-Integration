@@ -5,7 +5,7 @@ import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import openperipheral.api.IItemStackMetaProvider;
+import openperipheral.api.meta.IItemStackMetaProvider;
 
 import com.google.common.collect.Maps;
 

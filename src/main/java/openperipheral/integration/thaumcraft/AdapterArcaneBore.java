@@ -9,7 +9,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 /**
  * @author Katrina
@@ -39,12 +42,12 @@ public class AdapterArcaneBore implements IPeripheralAdapter {
 		return "thaumcraf_bore";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the arcane bore have a pickaxe.")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Does the arcane bore have a pickaxe.")
 	public boolean hasPickaxe(Object target) {
 		return HAS_PICKAXE.get(target);
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the arcane bore have a focus.")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Does the arcane bore have a focus.")
 	public boolean hasFocus(Object target) {
 		return HAS_FOCUS.get(target);
 	}
@@ -53,43 +56,43 @@ public class AdapterArcaneBore implements IPeripheralAdapter {
 		return (bore instanceof IInventory)? ((IInventory)bore).getStackInSlot(1) : null;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Is the pick broken?")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Is the pick broken?")
 	public boolean isPickaxeBroken(Object target) {
 		ItemStack pick = getPick(target);
 		return pick != null && pick.getItemDamage() + 1 == pick.getMaxDamage();
 	}
 
 	@Asynchronous(false)
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Is the Arcane bore active?")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Is the Arcane bore active?")
 	public boolean isWorking(Object target) {
 		ItemStack pick = getPick(target);
 		Boolean hasPower = GETTING_POWER.call(target);
 		return hasPower && hasFocus(target) && hasPickaxe(target) && pick.isItemStackDamageable() && !isPickaxeBroken(target);
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Gets the radius of the bore's effects")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Gets the radius of the bore's effects")
 	public int getRadius(Object target) {
 		return 1 + (AREA.get(target) + MAX_RADIUS.get(target)) * 2;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Gets the speed of the bore")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Gets the speed of the bore")
 	public int getSpeed(Object target) {
 		return SPEED.get(target);
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the bore mine native clusters as well as normal ores")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Does the bore mine native clusters as well as normal ores")
 	public boolean hasNativeClusters(Object target) {
 		ItemStack pick = getPick(target);
 		return pick != null && ITEM_ELEMENTAL_PICK.isInstance(pick.getItem());
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Gets the fortune level the Bore is mining with")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Gets the fortune level the Bore is mining with")
 	public int getFortune(Object target) {
 		ItemStack pick = getPick(target);
 		return EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, pick);
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the Bore mine with silk touch")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Does the Bore mine with silk touch")
 	public boolean hasSilkTouch(Object target) {
 		ItemStack pick = getPick(target);
 		return EnchantmentHelper.getEnchantmentLevel(Enchantment.silkTouch.effectId, pick) > 0;

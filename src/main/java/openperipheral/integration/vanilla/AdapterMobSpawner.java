@@ -2,9 +2,9 @@ package openperipheral.integration.vanilla;
 
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.TileEntityMobSpawner;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaReturnType;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterMobSpawner implements IPeripheralAdapter {
 
@@ -18,7 +18,7 @@ public class AdapterMobSpawner implements IPeripheralAdapter {
 		return "vanilla_spawner";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "The name of the mob that spawns from the spawner")
+	@ScriptCallable(returnTypes = ReturnType.STRING, description = "The name of the mob that spawns from the spawner")
 	public String getSpawningMobName(TileEntityMobSpawner spawner) {
 		return getSpawnerLogic(spawner).getEntityNameToSpawn();
 	}

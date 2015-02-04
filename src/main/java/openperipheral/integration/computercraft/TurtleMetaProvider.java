@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.MethodAccess.Function2;
-import openperipheral.api.IItemStackMetaProvider;
+import openperipheral.api.meta.IItemStackMetaProvider;
 
 import com.google.common.collect.Maps;
 

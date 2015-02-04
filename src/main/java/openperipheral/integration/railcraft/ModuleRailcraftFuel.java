@@ -1,7 +1,7 @@
 package openperipheral.integration.railcraft;
 
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ApiIntegrationModule;
 
 public class ModuleRailcraftFuel extends ApiIntegrationModule {

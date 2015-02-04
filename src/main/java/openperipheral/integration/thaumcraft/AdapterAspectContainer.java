@@ -2,7 +2,11 @@ package openperipheral.integration.thaumcraft;
 
 import java.util.Map;
 
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
@@ -24,12 +28,12 @@ public class AdapterAspectContainer implements IPeripheralAdapter {
 		return "thaumcraft_aspect_container";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the Aspects stored in the block")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the Aspects stored in the block")
 	public AspectList getAspects(IAspectContainer container) {
 		return container.getAspects();
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the map of aspects stored in the block (summed, if there are multiple entries)")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the map of aspects stored in the block (summed, if there are multiple entries)")
 	public Map<String, Integer> getAspectsSum(IAspectContainer container) {
 		AspectList aspectList = container.getAspects();
 		if (aspectList == null) return null;
@@ -43,7 +47,7 @@ public class AdapterAspectContainer implements IPeripheralAdapter {
 		return result;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get amount of specific aspect stored in this block")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get amount of specific aspect stored in this block")
 	public int getAspectCount(IAspectContainer container,
 			@Arg(name = "aspect", description = "Aspect to be checked") String aspectName) {
 

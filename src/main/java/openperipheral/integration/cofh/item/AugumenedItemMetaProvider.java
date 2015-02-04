@@ -8,7 +8,6 @@ import cofh.api.item.IAugmentItem;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class AugumenedItemMetaProvider extends ItemStackMetaProviderSimple<IAugmentItem> {
 
 	@Override

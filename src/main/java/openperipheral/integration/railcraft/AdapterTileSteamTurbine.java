@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.ReflectionHelper;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaReturnType;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterTileSteamTurbine implements IPeripheralAdapter {
 
@@ -27,7 +27,7 @@ public class AdapterTileSteamTurbine implements IPeripheralAdapter {
 		return "railcraft_turbine";
 	}
 
-	@LuaCallable(description = "Get the undamagedness of the rotor, from 0% (dead) to 100% (brand new)", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the undamagedness of the rotor, from 0% (dead) to 100% (brand new)", returnTypes = ReturnType.NUMBER)
 	public Integer getTurbineRotorStatus(Object tileSteamTurbine) {
 		IInventory inventory = GET_INVENTORY.call(tileSteamTurbine);
 
@@ -41,7 +41,7 @@ public class AdapterTileSteamTurbine implements IPeripheralAdapter {
 		return null;
 	}
 
-	@LuaCallable(description = "Get power output percentage", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get power output percentage", returnTypes = ReturnType.NUMBER)
 	public float getTurbineOutput(Object tileSteamTurbine) {
 		return GET_OUTPUT.call(tileSteamTurbine);
 	}

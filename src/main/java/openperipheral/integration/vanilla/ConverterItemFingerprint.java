@@ -2,8 +2,8 @@ package openperipheral.integration.vanilla;
 
 import java.util.Map;
 
-import openperipheral.api.ITypeConverter;
-import openperipheral.api.ITypeConvertersRegistry;
+import openperipheral.api.converter.IConverter;
+import openperipheral.api.converter.ITypeConverter;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
@@ -15,7 +15,7 @@ public class ConverterItemFingerprint implements ITypeConverter {
 	private static final String TAG_ID = "id";
 
 	@Override
-	public Object fromLua(ITypeConvertersRegistry registry, Object obj, Class<?> expected) {
+	public Object fromLua(IConverter registry, Object obj, Class<?> expected) {
 		if (!(expected == ItemFingerprint.class && obj instanceof Map)) return null;
 
 		Map<?, ?> map = (Map<?, ?>)obj;
@@ -31,7 +31,7 @@ public class ConverterItemFingerprint implements ITypeConverter {
 	}
 
 	@Override
-	public Object toLua(ITypeConvertersRegistry registry, Object obj) {
+	public Object toLua(IConverter registry, Object obj) {
 		if (obj instanceof ItemFingerprint) {
 			ItemFingerprint fingerprint = (ItemFingerprint)obj;
 			Map<String, Object> result = Maps.newHashMap();

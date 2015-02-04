@@ -2,7 +2,7 @@ package openperipheral.integration.appeng;
 
 import net.minecraftforge.common.util.ForgeDirection;
 import openmods.utils.ItemUtils;
-import openperipheral.api.IPeripheralAdapter;
+import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.networking.IGrid;
 import appeng.api.networking.IGridCache;

@@ -3,7 +3,10 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterAutoSpawner implements IPeripheralAdapter {
 	private final Class<?> CLASS = ReflectionHelper.getClass("powercrystals.minefactoryreloaded.tile.machine.TileEntityAutoSpawner");
@@ -21,12 +24,12 @@ public class AdapterAutoSpawner implements IPeripheralAdapter {
 		return CLASS;
 	}
 
-	@LuaCallable(description = "Get value of spawn exact copy toggle", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Get value of spawn exact copy toggle", returnTypes = ReturnType.BOOLEAN)
 	public boolean getSpawnExact(Object tileEntityAutoSpawner) {
 		return GET_SPAWN_EXACT.call(tileEntityAutoSpawner);
 	}
 
-	@LuaCallable(description = "Set the value of spawn exact copy")
+	@ScriptCallable(description = "Set the value of spawn exact copy")
 	public void setSpawnExact(Object tileEntityAutoSpawner, @Arg(name = "spawnExact") boolean spawnExact) {
 		SET_SPAWN_EXACT.call(tileEntityAutoSpawner, spawnExact);
 	}

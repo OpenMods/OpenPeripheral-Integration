@@ -1,8 +1,8 @@
 package openperipheral.integration.cofh.tileentity;
 
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaReturnType;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import cofh.api.tileentity.IEnergyInfo;
 
 public class AdapterEnergyInfo implements IPeripheralAdapter {
@@ -17,22 +17,22 @@ public class AdapterEnergyInfo implements IPeripheralAdapter {
 		return "rf_info";
 	}
 
-	@LuaCallable(description = "Gets the EnergyPerTick of the machine.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Gets the EnergyPerTick of the machine.", returnTypes = ReturnType.NUMBER)
 	public int getEnergyPerTickInfo(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoEnergyPerTick();
 	}
 
-	@LuaCallable(description = "Gets the max EnergyPerTick of the machine.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Gets the max EnergyPerTick of the machine.", returnTypes = ReturnType.NUMBER)
 	public int getMaxEnergyPerTickInfo(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoMaxEnergyPerTick();
 	}
 
-	@LuaCallable(description = "Gets the stored Energy of the machine.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Gets the stored Energy of the machine.", returnTypes = ReturnType.NUMBER)
 	public int getEnergyInfo(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoEnergyStored();
 	}
 
-	@LuaCallable(description = "Gets the max Energy of the machine.", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Gets the max Energy of the machine.", returnTypes = ReturnType.NUMBER)
 	public int getMaxEnergyInfo(IEnergyInfo tileEntity) {
 		return tileEntity.getInfoMaxEnergyStored();
 	}

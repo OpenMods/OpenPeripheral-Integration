@@ -10,7 +10,6 @@ import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 class ElectricItemMetaProvider extends ItemStackMetaProviderSimple<IElectricItem> {
 
 	@Override

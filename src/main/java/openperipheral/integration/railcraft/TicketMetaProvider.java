@@ -12,7 +12,6 @@ import com.google.common.collect.Maps;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@SuppressWarnings("serial")
 public class TicketMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	private final ItemStack ticketStack;

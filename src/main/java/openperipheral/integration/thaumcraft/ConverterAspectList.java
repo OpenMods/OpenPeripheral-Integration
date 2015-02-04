@@ -3,8 +3,8 @@ package openperipheral.integration.thaumcraft;
 import java.util.List;
 import java.util.Map;
 
-import openperipheral.api.ITypeConverter;
-import openperipheral.api.ITypeConvertersRegistry;
+import openperipheral.api.converter.IConverter;
+import openperipheral.api.converter.ITypeConverter;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
@@ -32,12 +32,12 @@ public class ConverterAspectList implements ITypeConverter {
 	}
 
 	@Override
-	public Object fromLua(ITypeConvertersRegistry registry, Object obj, Class<?> expected) {
+	public Object fromLua(IConverter registry, Object obj, Class<?> expected) {
 		return null;
 	}
 
 	@Override
-	public Object toLua(ITypeConvertersRegistry registry, Object obj) {
+	public Object toLua(IConverter registry, Object obj) {
 		if (obj instanceof AspectList) return aspectsToMap((AspectList)obj);
 
 		return null;

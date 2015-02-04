@@ -5,7 +5,9 @@ import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function1;
 import openmods.utils.ColorUtils;
 import openmods.utils.ColorUtils.ColorMeta;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.*;
 
 import com.google.common.base.Preconditions;
 
@@ -29,7 +31,7 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 	@Asynchronous
 	@MultipleReturn
 	@Alias("getColours")
-	@LuaCallable(returnTypes = { LuaReturnType.NUMBER, LuaReturnType.NUMBER, LuaReturnType.NUMBER },
+	@ScriptCallable(returnTypes = { ReturnType.NUMBER, ReturnType.NUMBER, ReturnType.NUMBER },
 			description = "Get the colours active on this chest or tank")
 	public int[] getColors(TileEntity frequencyOwner) {
 		int frequency = FREQ.get(frequencyOwner);
@@ -43,7 +45,7 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 
 	@Asynchronous
 	@MultipleReturn
-	@LuaCallable(returnTypes = { LuaReturnType.STRING, LuaReturnType.STRING, LuaReturnType.STRING },
+	@ScriptCallable(returnTypes = { ReturnType.STRING, ReturnType.STRING, ReturnType.STRING },
 			description = "Get the colours active on this chest or tank")
 	public String[] getColorNames(TileEntity frequencyOwner) {
 		int frequency = FREQ.get(frequencyOwner);
@@ -55,7 +57,7 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 	}
 
 	@Alias("setColours")
-	@LuaCallable(description = "Set the frequency of this chest or tank")
+	@ScriptCallable(description = "Set the frequency of this chest or tank")
 	public void setColors(TileEntity frequencyOwner,
 			@Arg(name = "color_left", description = "The first color") int colorLeft,
 			@Arg(name = "color_middle", description = "The second color") int colorMiddle,
@@ -69,7 +71,7 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 		setFreq(frequencyOwner, frequency);
 	}
 
-	@LuaCallable(description = "Set the frequency of this chest or tank")
+	@ScriptCallable(description = "Set the frequency of this chest or tank")
 	public void setColorNames(TileEntity frequencyOwner,
 			@Arg(name = "color_left") String colorLeft,
 			@Arg(name = "color_middle") String colorMiddle,
@@ -84,12 +86,12 @@ public class AdapterFrequencyOwner implements IPeripheralAdapter {
 	}
 
 	@Asynchronous
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get the frequency of this chest or tank")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get the frequency of this chest or tank")
 	public int getFrequency(TileEntity frequencyOwner) {
 		return FREQ.get(frequencyOwner);
 	}
 
-	@LuaCallable(description = "Set the frequency of this chest or tank")
+	@ScriptCallable(description = "Set the frequency of this chest or tank")
 	public void setFrequency(TileEntity frequencyOwner,
 			@Arg(name = "frequency", description = "A single number that represents all three colours on this chest or tank") int frequency) {
 		setFreq(frequencyOwner, frequency);

@@ -7,7 +7,11 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import openmods.integration.IIntegrationModule;
-import openperipheral.api.*;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.adapter.IPeripheralAdapterRegistry;
+import openperipheral.api.converter.IConverterManager;
+import openperipheral.api.meta.IEntityMetaBuilder;
+import openperipheral.api.meta.IItemStackMetaBuilder;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -27,7 +31,7 @@ public class ModuleVanilla implements IIntegrationModule {
 
 	@Override
 	public void load() {
-		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
 		adapterRegistry.register(new AdapterInventory());
 		adapterRegistry.register(new AdapterWorldInventory());
 		adapterRegistry.register(new AdapterNoteBlock());
@@ -64,7 +68,7 @@ public class ModuleVanilla implements IIntegrationModule {
 		entityMeta.register(new EntityWolfMetaProvider());
 		entityMeta.register(new EntityZombieMetaProvider());
 
-		final ITypeConvertersRegistry converters = ApiAccess.getApi(ITypeConvertersRegistry.class);
+		final IConverterManager converters = ApiAccess.getApi(IConverterManager.class);
 		converters.register(new ConverterItemFingerprint());
 	}
 

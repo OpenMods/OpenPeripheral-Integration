@@ -2,7 +2,7 @@ package openperipheral.integration.computercraft;
 
 import openmods.Mods;
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ModIntegrationModule;
 
 public class ModuleComputerCraft extends ModIntegrationModule {

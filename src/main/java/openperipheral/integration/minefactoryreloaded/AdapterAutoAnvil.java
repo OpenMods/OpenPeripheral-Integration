@@ -3,7 +3,10 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterAutoAnvil implements IPeripheralAdapter {
 
@@ -22,12 +25,12 @@ public class AdapterAutoAnvil implements IPeripheralAdapter {
 		return CLASS;
 	}
 
-	@LuaCallable(description = "Get value of repair only toggle", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Get value of repair only toggle", returnTypes = ReturnType.BOOLEAN)
 	public boolean getRepairOnly(Object tileEntityAutoAnvil) {
 		return GET_REPAIR_ONLY.call(tileEntityAutoAnvil);
 	}
 
-	@LuaCallable(description = "Set the value of repair only toggle")
+	@ScriptCallable(description = "Set the value of repair only toggle")
 	public void setRepairOnly(Object tileEntityAutoAnvil, @Arg(name = "repair") boolean repair) {
 		// NOTE: This doesn't seem to always work as expected. Consulting Skyboy
 		// about it.

@@ -11,7 +11,6 @@ import buildcraft.api.facades.IFacadeItem;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class FacadeMetaProvider extends ItemStackMetaProviderSimple<IFacadeItem> {
 
 	@Override

@@ -1,7 +1,10 @@
 package openperipheral.integration.buildcraft;
 
 import net.minecraftforge.common.util.ForgeDirection;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import buildcraft.api.transport.*;
 import buildcraft.api.transport.IPipeTile.PipeType;
 
@@ -25,29 +28,29 @@ public class AdapterPipe implements IPeripheralAdapter {
 		return pipe;
 	}
 
-	@LuaCallable(description = "Checks if this pipe has a gate", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Checks if this pipe has a gate", returnTypes = ReturnType.BOOLEAN)
 	public boolean hasGate(IPipeTile target, @Arg(name = "side") ForgeDirection side) {
 		return getPipe(target).hasGate(side);
 	}
 
-	@LuaCallable(description = "Checks if a wire is on the pipe", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Checks if a wire is on the pipe", returnTypes = ReturnType.BOOLEAN)
 	public boolean isWired(IPipeTile target,
 			@Arg(name = "wire", description = "The colour of the wire") PipeWire wire) {
 		return getPipe(target).isWired(wire);
 	}
 
-	@LuaCallable(description = "Checks if a wire on the pipe is active", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Checks if a wire on the pipe is active", returnTypes = ReturnType.BOOLEAN)
 	public boolean isWireActive(IPipeTile target,
 			@Arg(name = "wire", description = "The colour of the wire") PipeWire wire) {
 		return getPipe(target).isWireActive(wire);
 	}
 
-	@LuaCallable(description = "Get type of pipe", returnTypes = LuaReturnType.STRING)
+	@ScriptCallable(description = "Get type of pipe", returnTypes = ReturnType.STRING)
 	public PipeType getPipeType(IPipeTile target) {
 		return target.getPipeType();
 	}
 
-	@LuaCallable(description = "Get type of pipe", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Get type of pipe", returnTypes = ReturnType.BOOLEAN)
 	public boolean isPipeConnected(IPipeTile target, @Arg(name = "side") ForgeDirection side) {
 		return target.isPipeConnected(side);
 	}

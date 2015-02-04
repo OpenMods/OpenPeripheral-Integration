@@ -1,9 +1,9 @@
 package openperipheral.integration.vanilla;
 
 import net.minecraft.tileentity.TileEntityBrewingStand;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaReturnType;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterBrewingStand implements IPeripheralAdapter {
 
@@ -17,7 +17,7 @@ public class AdapterBrewingStand implements IPeripheralAdapter {
 		return "vanilla_brewing";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(returnTypes = ReturnType.NUMBER)
 	public int getBrewTime(TileEntityBrewingStand brewingStand) {
 		return brewingStand.getBrewTime();
 	}

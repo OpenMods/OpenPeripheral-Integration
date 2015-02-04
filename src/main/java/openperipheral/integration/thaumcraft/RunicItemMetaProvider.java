@@ -8,7 +8,6 @@ import thaumcraft.api.IRunicArmor;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class RunicItemMetaProvider extends ItemStackMetaProviderSimple<IRunicArmor> {
 
 	@Override

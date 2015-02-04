@@ -6,7 +6,6 @@ import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IIndividual;
 
-@SuppressWarnings("serial")
 public class IndividualMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override

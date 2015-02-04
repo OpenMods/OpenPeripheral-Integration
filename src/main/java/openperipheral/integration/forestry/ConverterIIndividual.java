@@ -2,8 +2,8 @@ package openperipheral.integration.forestry;
 
 import java.util.Map;
 
-import openperipheral.api.ITypeConverter;
-import openperipheral.api.ITypeConvertersRegistry;
+import openperipheral.api.converter.IConverter;
+import openperipheral.api.converter.ITypeConverter;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
@@ -17,7 +17,7 @@ import forestry.api.lepidopterology.*;
 public class ConverterIIndividual implements ITypeConverter {
 
 	@Override
-	public Object fromLua(ITypeConvertersRegistry registry, Object obj, Class<?> expected) {
+	public Object fromLua(IConverter registry, Object obj, Class<?> expected) {
 		return null;
 	}
 
@@ -215,7 +215,7 @@ public class ConverterIIndividual implements ITypeConverter {
 	}
 
 	@Override
-	public Object toLua(ITypeConvertersRegistry registry, Object obj) {
+	public Object toLua(IConverter registry, Object obj) {
 		if (obj instanceof IIndividual) {
 			IIndividual individual = (IIndividual)obj;
 			Map<String, Object> map = describeIndividual(individual);

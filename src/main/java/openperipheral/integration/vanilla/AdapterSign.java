@@ -1,7 +1,11 @@
 package openperipheral.integration.vanilla;
 
 import net.minecraft.tileentity.TileEntitySign;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,7 +26,7 @@ public class AdapterSign implements IPeripheralAdapter {
 		Preconditions.checkArgument(value >= 0 && value < max, "Value must be in range [1,%s]", max);
 	}
 
-	@LuaCallable(description = "Sets the text on the sign")
+	@ScriptCallable(description = "Sets the text on the sign")
 	public void setLine(TileEntitySign sign,
 			@Arg(name = "line", description = "The line number to set the text on the sign") int line,
 			@Arg(name = "text", description = "The text to display on the sign") String text) {
@@ -33,7 +37,7 @@ public class AdapterSign implements IPeripheralAdapter {
 	}
 
 	@Asynchronous
-	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "Gets the text from the supplied line of the sign")
+	@ScriptCallable(returnTypes = ReturnType.STRING, description = "Gets the text from the supplied line of the sign")
 	public String getLine(TileEntitySign sign,
 			@Arg(name = "line", description = "The line number to get from the sign") int line)
 	{
@@ -42,7 +46,7 @@ public class AdapterSign implements IPeripheralAdapter {
 		return sign.signText[line];
 	}
 
-	@LuaCallable(description = "Sets the text on the sign")
+	@ScriptCallable(description = "Sets the text on the sign")
 	public void setText(TileEntitySign sign,
 			@Arg(name = "text", description = "The text to display on the sign") String text)
 	{
@@ -58,7 +62,7 @@ public class AdapterSign implements IPeripheralAdapter {
 	}
 
 	@Asynchronous
-	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "Gets the text on the sign")
+	@ScriptCallable(returnTypes = ReturnType.STRING, description = "Gets the text on the sign")
 	public String getText(TileEntitySign sign) {
 		return StringUtils.join(sign.signText, '\n');
 	}

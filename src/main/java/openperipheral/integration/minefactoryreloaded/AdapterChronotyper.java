@@ -3,7 +3,10 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterChronotyper implements IPeripheralAdapter {
 
@@ -22,12 +25,12 @@ public class AdapterChronotyper implements IPeripheralAdapter {
 		return CLASS;
 	}
 
-	@LuaCallable(description = "Should adults be moved?", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Should adults be moved?", returnTypes = ReturnType.BOOLEAN)
 	public boolean getMoveAdults(Object tileEntityChronotyper) {
 		return GET_MOVE_ADULTS.call(tileEntityChronotyper);
 	}
 
-	@LuaCallable(description = "Set wheather adults should be moved")
+	@ScriptCallable(description = "Set wheather adults should be moved")
 	public void setMoveAdults(Object tileEntityChronotyper, @Arg(name = "adults") boolean adults) {
 		SET_MOVE_ADULTS.call(tileEntityChronotyper, adults);
 	}

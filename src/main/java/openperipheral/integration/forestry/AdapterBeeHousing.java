@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -25,19 +29,19 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		return "forestry_bees";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Can the bees breed?")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Can the bees breed?")
 	public boolean canBreed(IBeeHousing beeHousing) {
 		return beeHousing.canBreed();
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the drone")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the drone")
 	public IIndividual getDrone(IBeeHousing beeHousing) {
 		ItemStack drone = beeHousing.getDrone();
 		if (drone != null) { return AlleleManager.alleleRegistry.getIndividual(drone); }
 		return null;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the queen")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the queen")
 	public IIndividual getQueen(IBeeHousing beeHousing) {
 		ItemStack queen = beeHousing.getQueen();
 		if (queen != null) { return AlleleManager.alleleRegistry.getIndividual(queen); }
@@ -54,7 +58,7 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 	 * @return
 	 */
 	@Asynchronous
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the full breeding list thingy. Experimental!")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the full breeding list thingy. Experimental!")
 	public Map<Integer, Map<String, Object>> getBeeBreedingData(IBeeHousing housing) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
 		if (beeRoot == null) { return null; }
@@ -81,7 +85,7 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		return result;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get all known bees mutations")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get all known bees mutations")
 	public List<Map<String, String>> listAllSpecies(IBeeHousing housing) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
 		if (beeRoot == null) return null;
@@ -98,7 +102,7 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		return result;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the parents for a particular mutation")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the parents for a particular mutation")
 	public List<Map<String, Object>> getBeeParents(IBeeHousing housing,
 			@Arg(name = "childType", description = "The type of bee you want the parents for") String childType) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");

@@ -1,7 +1,7 @@
 package openperipheral.integration.buildcraft;
 
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.ApiIntegrationModule;
 
 public class ModuleBuildCraftTile extends ApiIntegrationModule {
@@ -13,7 +13,7 @@ public class ModuleBuildCraftTile extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
 		adapterRegistry.register(new AdapterMachine());
 	}
 }

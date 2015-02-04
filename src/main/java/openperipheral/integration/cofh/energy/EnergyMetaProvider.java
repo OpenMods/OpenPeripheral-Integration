@@ -8,7 +8,6 @@ import cofh.api.energy.IEnergyContainerItem;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class EnergyMetaProvider extends ItemStackMetaProviderSimple<IEnergyContainerItem> {
 
 	@Override

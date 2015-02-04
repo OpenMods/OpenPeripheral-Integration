@@ -3,7 +3,10 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterAutoEnchanter implements IPeripheralAdapter {
 
@@ -22,12 +25,12 @@ public class AdapterAutoEnchanter implements IPeripheralAdapter {
 		return CLASS;
 	}
 
-	@LuaCallable(description = "Get target level of enchantment", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get target level of enchantment", returnTypes = ReturnType.NUMBER)
 	public int getTargetLevel(Object tileEntityAutoEnchanter) {
 		return GET_TARGET_LEVEL.call(tileEntityAutoEnchanter);
 	}
 
-	@LuaCallable(description = "Set the target level of enchantment (1-30)")
+	@ScriptCallable(description = "Set the target level of enchantment (1-30)")
 	public void setTargetLevel(Object tileEntityAutoEnchanter, @Arg(name = "level") int level) {
 		SET_TARGET_LEVEL.call(tileEntityAutoEnchanter, level);
 	}

@@ -3,7 +3,7 @@ package openperipheral.integration.buildcraft;
 import static openmods.conditions.Conditions.all;
 import static openmods.integration.Conditions.classExists;
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.CustomIntegrationModule;
 
 public class ModuleBuildCraftPower extends CustomIntegrationModule {
@@ -15,7 +15,7 @@ public class ModuleBuildCraftPower extends CustomIntegrationModule {
 
 	@Override
 	public void load() {
-		IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
 		adapterRegistry.register(new AdapterPowerReceptor());
 	}
 

@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
-@SuppressWarnings("serial")
 public class EnchantmentMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override

@@ -1,8 +1,8 @@
 package openperipheral.integration.appeng;
 
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IAdapterRegistry;
-import openperipheral.api.ITypeConvertersRegistry;
+import openperipheral.api.adapter.IPeripheralAdapterRegistry;
+import openperipheral.api.converter.IConverterManager;
 import openperipheral.integration.ModIntegrationModule;
 
 public class ModuleAppEng extends ModIntegrationModule {
@@ -10,18 +10,16 @@ public class ModuleAppEng extends ModIntegrationModule {
 
 	@Override
 	public String getModId() {
-		// TODO: This should be openmods.Mods.APPLIEDENERGISTICS, but it
-		// currently contains the wrong modid.
 		return "appliedenergistics2";
 	}
 
 	@Override
 	public void load() {
-		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
 		adapterRegistry.register(new AdapterInterface());
 		adapterRegistry.register(new AdapterNetwork());
 
-		final ITypeConvertersRegistry convertersRegistry = ApiAccess.getApi(ITypeConvertersRegistry.class);
+		final IConverterManager convertersRegistry = ApiAccess.getApi(IConverterManager.class);
 		convertersRegistry.register(new ConverterAEItemStack());
 	}
 

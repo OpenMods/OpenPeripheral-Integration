@@ -7,7 +7,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.ItemDistribution;
 import openmods.reflection.ReflectionHelper;
 import openmods.utils.InventoryUtils;
-import openperipheral.api.*;
+import openperipheral.api.Constants;
+import openperipheral.api.adapter.method.*;
+import openperipheral.api.architecture.IArchitectureAccess;
+import openperipheral.api.converter.IConverter;
 import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
@@ -35,11 +38,11 @@ public class AdapterInterface extends AdapterGridBase {
 		return "me_interface";
 	}
 
-	@LuaCallable(description = "Requests the specified item to get crafted.")
+	@ScriptCallable(description = "Requests the specified item to get crafted.")
 	public void requestCrafting(IActionHost host,
 			@Env(Constants.ARG_ACCESS) IArchitectureAccess access,
-			@Env(Constants.ARG_CONVERTER) ITypeConvertersRegistry converter,
-			@Arg(name = "fingerprint", description = "Details of the item you want to craft. Can be found with .getStackInSlot on inventory and .getAvailableItems on AE network", type = LuaArgType.TABLE) ItemFingerprint needle,
+			@Env(Constants.ARG_CONVERTER) IConverter converter,
+			@Arg(name = "fingerprint", description = "Details of the item you want to craft. Can be found with .getStackInSlot on inventory and .getAvailableItems on AE network", type = ArgType.TABLE) ItemFingerprint needle,
 			@Optionals @Arg(name = "qty", description = "The quantity of items you want to craft") Long quantity,
 			@Arg(name = "cpu", description = "The name of the CPU you want to use") String wantedCpuName) {
 		ICraftingGrid craftingGrid = getCraftingGrid(host);
@@ -70,14 +73,14 @@ public class AdapterInterface extends AdapterGridBase {
 
 	}
 
-	@LuaCallable(description = "Returns true when the interface can export to side.", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Returns true when the interface can export to side.", returnTypes = ReturnType.BOOLEAN)
 	public boolean canExport(IGridHost tileEntityInterface, @Arg(name = "direction", description = "Location of target inventory") ForgeDirection direction) {
 		return getNeighborInventory(tileEntityInterface, direction) != null;
 	}
 
-	@LuaCallable(description = "Exports the specified item into the target inventory.", returnTypes = LuaReturnType.TABLE)
+	@ScriptCallable(description = "Exports the specified item into the target inventory.", returnTypes = ReturnType.TABLE)
 	public IAEItemStack exportItem(Object tileEntityInterface,
-			@Arg(name = "fingerprint", description = "Details of the item you want to export (can be result of .getStackInSlot() or .getAvailableItems())", type = LuaArgType.TABLE) ItemFingerprint needle,
+			@Arg(name = "fingerprint", description = "Details of the item you want to export (can be result of .getStackInSlot() or .getAvailableItems())", type = ArgType.TABLE) ItemFingerprint needle,
 			@Arg(name = "direction", description = "Location of target inventory") ForgeDirection direction,
 			@Optionals @Arg(name = "maxAmount", description = "The maximum amount of items you want to export") Integer maxAmount,
 			@Arg(name = "intoSlot", description = "The slot in the other inventory that you want to export into") Integer intoSlot) {

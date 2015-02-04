@@ -2,8 +2,8 @@ package openperipheral.integration.appeng;
 
 import java.util.List;
 
-import openperipheral.api.IArchitectureAccess;
-import openperipheral.api.ITypeConvertersRegistry;
+import openperipheral.api.architecture.IArchitectureAccess;
+import openperipheral.api.converter.IConverter;
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
 import appeng.api.networking.crafting.*;
@@ -17,7 +17,7 @@ import com.google.common.collect.Lists;
 
 public class CraftingCallback implements ICraftingCallback {
 	private final IArchitectureAccess access;
-	private final ITypeConvertersRegistry converter;
+	private final IConverter converter;
 
 	private final IMEMonitor<IAEItemStack> monitor;
 	private final MachineSource source;
@@ -27,7 +27,7 @@ public class CraftingCallback implements ICraftingCallback {
 
 	private final Object requestedStack;
 
-	public CraftingCallback(IArchitectureAccess access, ITypeConvertersRegistry converter, ICraftingGrid craftingGrid, IMEMonitor<IAEItemStack> monitor, IActionHost actionHost, ICraftingCPU wantedCpu, IAEItemStack requestedStack) {
+	public CraftingCallback(IArchitectureAccess access, IConverter converter, ICraftingGrid craftingGrid, IMEMonitor<IAEItemStack> monitor, IActionHost actionHost, ICraftingCPU wantedCpu, IAEItemStack requestedStack) {
 		this.access = access;
 		this.converter = converter;
 		this.monitor = monitor;

@@ -6,7 +6,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
-import openperipheral.api.*;
+import openperipheral.api.adapter.*;
+import openperipheral.api.adapter.method.*;
 
 import com.google.common.base.Preconditions;
 
@@ -82,7 +83,7 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 	}
 
 	@Alias("pullItemIntoSlot")
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Pull an item from a slot in another inventory into a slot in this one. Returns the amount of items moved")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Pull an item from a slot in another inventory into a slot in this one. Returns the amount of items moved")
 	public int pullItem(IInventory target,
 			@Arg(name = "direction", description = "The direction of the other inventory. (north, south, east, west, up or down)") ForgeDirection direction,
 			@Arg(name = "slot", description = "The slot in the OTHER inventory that you're pulling from") int fromSlot,
@@ -113,7 +114,7 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 	}
 
 	@Alias("pushItemIntoSlot")
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Push an item from the current inventory into slot on the other one. Returns the amount of items moved")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Push an item from the current inventory into slot on the other one. Returns the amount of items moved")
 	public int pushItem(IInventory target,
 			@Arg(name = "direction", description = "The direction of the other inventory. (north, south, east, west, up or down)") ForgeDirection direction,
 			@Arg(name = "slot", description = "The slot in the current inventory that you're pushing from") int fromSlot,

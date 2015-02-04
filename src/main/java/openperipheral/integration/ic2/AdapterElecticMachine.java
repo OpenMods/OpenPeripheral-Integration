@@ -2,7 +2,10 @@ package openperipheral.integration.ic2;
 
 import openmods.reflection.FieldAccess;
 import openmods.reflection.ReflectionHelper;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 @Asynchronous
 public class AdapterElecticMachine implements IPeripheralAdapter {
@@ -21,7 +24,7 @@ public class AdapterElecticMachine implements IPeripheralAdapter {
 		return "ic2_machine";
 	}
 
-	@LuaCallable(description = "Get the current progress as a percentage", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get the current progress as a percentage", returnTypes = ReturnType.NUMBER)
 	public double getProgress(Object massfab) {
 		double energy = ENERGY.get(massfab);
 		int maxEnergy = MAX_ENERGY.get(massfab);

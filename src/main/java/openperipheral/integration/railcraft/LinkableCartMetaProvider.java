@@ -10,7 +10,6 @@ import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class LinkableCartMetaProvider extends EntityMetaProviderSimple<ILinkableCart> {
 
 	@Override

@@ -3,7 +3,7 @@ package openperipheral.integration.vanilla;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import openperipheral.api.IItemStackMetaProvider;
+import openperipheral.api.meta.IItemStackMetaProvider;
 
 public class BurnTimeMetaProvider implements IItemStackMetaProvider<Item> {
 

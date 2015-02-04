@@ -3,7 +3,10 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterChunkLoader implements IPeripheralAdapter {
 
@@ -22,12 +25,12 @@ public class AdapterChunkLoader implements IPeripheralAdapter {
 		return CLASS;
 	}
 
-	@LuaCallable(description = "Get chunk loader radius", returnTypes = LuaReturnType.NUMBER)
+	@ScriptCallable(description = "Get chunk loader radius", returnTypes = ReturnType.NUMBER)
 	public short getRadius(Object tileEntityChunkLoader) {
 		return GET_RADIUS.call(tileEntityChunkLoader);
 	}
 
-	@LuaCallable(description = "Set chunk loader radius")
+	@ScriptCallable(description = "Set chunk loader radius")
 	public void setRadius(Object tileEntityChunkLoader, @Arg(name = "radius") short radius) {
 		SET_RADIUS.call(tileEntityChunkLoader, radius);
 	}

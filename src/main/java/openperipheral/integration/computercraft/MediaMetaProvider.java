@@ -13,7 +13,6 @@ import com.google.common.collect.Maps;
 
 import dan200.computercraft.api.media.IMedia;
 
-@SuppressWarnings("serial")
 public class MediaMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	private final Class<?> API_CLASS = ReflectionHelper.getClass("dan200.computercraft.ComputerCraft");

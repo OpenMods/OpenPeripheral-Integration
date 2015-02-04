@@ -3,9 +3,9 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.ReflectionHelper;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaReturnType;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterAutoJukebox implements IPeripheralAdapter {
 
@@ -28,27 +28,27 @@ public class AdapterAutoJukebox implements IPeripheralAdapter {
 		return "mfr_jukebox";
 	}
 
-	@LuaCallable(description = "Can a disc be copied?", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Can a disc be copied?", returnTypes = ReturnType.BOOLEAN)
 	public boolean getCanCopy(Object tileEntityAutoJukebox) {
 		return GET_CAN_COPY.call(tileEntityAutoJukebox);
 	}
 
-	@LuaCallable(description = "Can a disc be played?", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Can a disc be played?", returnTypes = ReturnType.BOOLEAN)
 	public boolean getCanPlay(Object tileEntityAutoJukebox) {
 		return GET_CAN_PLAY.call(tileEntityAutoJukebox);
 	}
 
-	@LuaCallable(description = "Copy record")
+	@ScriptCallable(description = "Copy record")
 	public void copy(Object tileEntityAutoJukebox) {
 		COPY.call(tileEntityAutoJukebox);
 	}
 
-	@LuaCallable(description = "Play record")
+	@ScriptCallable(description = "Play record")
 	public void play(Object tileEntityAutoJukebox) {
 		PLAY.call(tileEntityAutoJukebox);
 	}
 
-	@LuaCallable(description = "Stop record")
+	@ScriptCallable(description = "Stop record")
 	public void stop(Object tileEntityAutoJukebox) {
 		STOP.call(tileEntityAutoJukebox);
 	}

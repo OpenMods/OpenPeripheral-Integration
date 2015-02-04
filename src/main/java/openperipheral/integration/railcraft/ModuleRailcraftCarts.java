@@ -1,7 +1,7 @@
 package openperipheral.integration.railcraft;
 
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IEntityMetaBuilder;
+import openperipheral.api.meta.IEntityMetaBuilder;
 import openperipheral.integration.ApiIntegrationModule;
 
 public class ModuleRailcraftCarts extends ApiIntegrationModule {

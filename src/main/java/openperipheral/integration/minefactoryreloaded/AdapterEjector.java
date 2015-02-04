@@ -3,7 +3,10 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterEjector implements IPeripheralAdapter {
 
@@ -28,27 +31,27 @@ public class AdapterEjector implements IPeripheralAdapter {
 		return "mfr_ejector";
 	}
 
-	@LuaCallable(description = "Is whitelist enabled?", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Is whitelist enabled?", returnTypes = ReturnType.BOOLEAN)
 	public boolean getIsWhitelist(Object tileEntityEjector) {
 		return GET_IS_WHITELIST.call(tileEntityEjector);
 	}
 
-	@LuaCallable(description = "Set the value of whitelist toggle")
+	@ScriptCallable(description = "Set the value of whitelist toggle")
 	public void setIsWhitelist(Object tileEntityEjector, @Arg(name = "isWhitelist") boolean isWhitelist) {
 		SET_IS_WHITELIST.call(tileEntityEjector, isWhitelist);
 	}
 
-	@LuaCallable(description = "Is NBT Match enabled?", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Is NBT Match enabled?", returnTypes = ReturnType.BOOLEAN)
 	public boolean getMatchNBT(Object tileEntityEjector) {
 		return GET_MATCH_NBT.call(tileEntityEjector);
 	}
 
-	@LuaCallable(description = "Set the value of NBT Match toggle")
+	@ScriptCallable(description = "Set the value of NBT Match toggle")
 	public void setMatchNBT(Object tileEntityEjector, @Arg(name = "matchNBT") boolean matchNBT) {
 		SET_MATCH_NBT.call(tileEntityEjector, matchNBT);
 	}
 
-	@LuaCallable(description = "Is Match Meta enabled?", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Is Match Meta enabled?", returnTypes = ReturnType.BOOLEAN)
 	public boolean getMatchMeta(Object tileEntityEjector) {
 		// getIsIDMatch returns the boolean value of _ignoreDamage, so if it is true then getIsIDMatch returns false.
 		// Odd naming convention handled here to represent GUI button values.
@@ -56,7 +59,7 @@ public class AdapterEjector implements IPeripheralAdapter {
 		return !isIdMatch;
 	}
 
-	@LuaCallable(description = "Set the value of Match Damage toggle")
+	@ScriptCallable(description = "Set the value of Match Damage toggle")
 	public void setMatchMeta(Object tileEntityEjector, @Arg(name = "matchMeta") boolean matchMeta) {
 		SET_MATCH_META.call(tileEntityEjector, !matchMeta);
 	}

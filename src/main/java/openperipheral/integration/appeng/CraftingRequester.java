@@ -1,7 +1,7 @@
 package openperipheral.integration.appeng;
 
 import net.minecraftforge.common.util.ForgeDirection;
-import openperipheral.api.IArchitectureAccess;
+import openperipheral.api.architecture.IArchitectureAccess;
 import appeng.api.config.Actionable;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.crafting.ICraftingLink;

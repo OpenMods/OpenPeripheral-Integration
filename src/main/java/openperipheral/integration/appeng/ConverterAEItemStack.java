@@ -3,8 +3,8 @@ package openperipheral.integration.appeng;
 import java.util.Map;
 
 import net.minecraft.nbt.NBTTagCompound;
-import openperipheral.api.ITypeConverter;
-import openperipheral.api.ITypeConvertersRegistry;
+import openperipheral.api.converter.IConverter;
+import openperipheral.api.converter.ITypeConverter;
 import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.api.storage.data.IAETagCompound;
@@ -14,7 +14,7 @@ import com.google.common.collect.Maps;
 public class ConverterAEItemStack implements ITypeConverter {
 
 	@Override
-	public Object fromLua(ITypeConvertersRegistry registry, Object obj, Class<?> expected) {
+	public Object fromLua(IConverter registry, Object obj, Class<?> expected) {
 		return null;
 	}
 
@@ -24,7 +24,7 @@ public class ConverterAEItemStack implements ITypeConverter {
 	}
 
 	@Override
-	public Object toLua(ITypeConvertersRegistry registry, Object obj) {
+	public Object toLua(IConverter registry, Object obj) {
 		if (obj instanceof IAEItemStack) {
 			IAEItemStack aeStack = (IAEItemStack)obj;
 			ItemFingerprint fingerprint = new ItemFingerprint(aeStack.getItem(), aeStack.getItemDamage(), getTag(aeStack));

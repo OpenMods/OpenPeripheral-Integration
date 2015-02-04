@@ -11,7 +11,6 @@ import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class EntityHorseMetaProvider extends EntityMetaProviderSimple<EntityHorse> {
 
 	private final FieldAccess<IInventory> HORSE_CHEST = FieldAccess.create(EntityHorse.class, "horseChest", "field_110296_bG");

@@ -1,6 +1,9 @@
 package openperipheral.integration.cofh.tileentity;
 
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import cofh.api.tileentity.IRedstoneControl;
 import cofh.api.tileentity.IRedstoneControl.ControlMode;
 
@@ -16,14 +19,14 @@ public class AdapterRedstoneControl implements IPeripheralAdapter {
 		return "cofh_redstone";
 	}
 
-	@LuaCallable()
+	@ScriptCallable()
 	public void setRedstoneControl(IRedstoneControl target,
 			@Arg(name = "control") ControlMode control) {
 		SecurityUtils.checkAccess(target);
 		target.setControl(control);
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.STRING)
+	@ScriptCallable(returnTypes = ReturnType.STRING)
 	public ControlMode getRedstoneControl(IRedstoneControl target) {
 		return target.getControl();
 	}

@@ -1,9 +1,9 @@
 package openperipheral.integration.vanilla;
 
 import net.minecraft.tileentity.TileEntityComparator;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaReturnType;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterComparator implements IPeripheralAdapter {
 
@@ -17,7 +17,7 @@ public class AdapterComparator implements IPeripheralAdapter {
 		return "vanilla_comparator";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get the strength of the output signal")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get the strength of the output signal")
 	public int getOutputSignal(TileEntityComparator comparator) {
 		return comparator.getOutputSignal();
 	}

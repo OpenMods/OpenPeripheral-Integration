@@ -6,7 +6,10 @@ package openperipheral.integration.thaumcraft;
 import net.minecraft.inventory.IInventory;
 import openmods.reflection.FieldAccess;
 import openmods.reflection.ReflectionHelper;
-import openperipheral.api.*;
+import openperipheral.api.adapter.Asynchronous;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import thaumcraft.api.aspects.Aspect;
 
 /**
@@ -29,12 +32,12 @@ public class AdapterDeconstructor implements IPeripheralAdapter {
 		return "thaumcraft_deconstructor";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Does the Table have an aspect in it")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Does the Table have an aspect in it")
 	public boolean hasAspect(Object target) throws Exception {
 		return ASPECT.get(target) != null;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.BOOLEAN, description = "Has the Table any items")
+	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Has the Table any items")
 	public boolean hasItem(Object target) {
 		if (target instanceof IInventory)
 		{
@@ -44,7 +47,7 @@ public class AdapterDeconstructor implements IPeripheralAdapter {
 		return false;
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.STRING, description = "What aspect does the Table contain")
+	@ScriptCallable(returnTypes = ReturnType.STRING, description = "What aspect does the Table contain")
 	public String getAspect(Object target) throws Exception {
 		Aspect aspect = ASPECT.get(target);
 		return aspect != null? aspect.getTag() : "";

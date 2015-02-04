@@ -1,7 +1,7 @@
 package openperipheral.integration.cofh.tileentity;
 
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IAdapterRegistry;
+import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.ApiIntegrationModule;
 
 public class ModuleCofhTileEntity extends ApiIntegrationModule {
@@ -13,7 +13,7 @@ public class ModuleCofhTileEntity extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
 		adapterRegistry.register(new AdapterSecureTile());
 		adapterRegistry.register(new AdapterEnergyInfo());
 		adapterRegistry.register(new AdapterReconfigurableFacing());

@@ -3,7 +3,10 @@ package openperipheral.integration.minefactoryreloaded;
 import openmods.reflection.*;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterAutoDisenchanter implements IPeripheralAdapter {
 
@@ -22,12 +25,12 @@ public class AdapterAutoDisenchanter implements IPeripheralAdapter {
 		return CLASS;
 	}
 
-	@LuaCallable(description = "Get value of repeat disenchant toggle", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Get value of repeat disenchant toggle", returnTypes = ReturnType.BOOLEAN)
 	public boolean getRepeat(Object tileEntityAutoDisenchanter) {
 		return GET_REPEAT.call(tileEntityAutoDisenchanter);
 	}
 
-	@LuaCallable(description = "Set the value of repeat disenchant toggle")
+	@ScriptCallable(description = "Set the value of repeat disenchant toggle")
 	public void setRepeat(Object tileEntityAutoDisenchanter, @Arg(name = "repeat") boolean repeat) {
 		SET_REPEAT.call(tileEntityAutoDisenchanter, repeat);
 	}

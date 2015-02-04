@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import openmods.utils.ItemUtils;
-import openperipheral.api.IItemStackMetaProvider;
+import openperipheral.api.meta.IItemStackMetaProvider;
 
 public class FingerprintMetaProvider implements IItemStackMetaProvider<Item> {
 	private static final String TAG_NBT = "nbt_hash";

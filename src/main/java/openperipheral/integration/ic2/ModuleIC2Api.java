@@ -1,8 +1,8 @@
 package openperipheral.integration.ic2;
 
 import openperipheral.api.ApiAccess;
-import openperipheral.api.IAdapterRegistry;
-import openperipheral.api.IItemStackMetaBuilder;
+import openperipheral.api.adapter.IPeripheralAdapterRegistry;
+import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ApiIntegrationModule;
 
 public class ModuleIC2Api extends ApiIntegrationModule {
@@ -14,7 +14,7 @@ public class ModuleIC2Api extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
 		adapterRegistry.register(new AdapterReactor());
 		adapterRegistry.register(new AdapterReactorChamber());
 		adapterRegistry.register(new AdapterEnergyConductor());

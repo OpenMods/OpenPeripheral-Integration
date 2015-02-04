@@ -2,9 +2,9 @@ package openperipheral.integration.vanilla;
 
 import net.minecraft.block.BlockJukebox.TileEntityJukebox;
 import net.minecraft.item.ItemStack;
-import openperipheral.api.IPeripheralAdapter;
-import openperipheral.api.LuaCallable;
-import openperipheral.api.LuaReturnType;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterRecordPlayer implements IPeripheralAdapter {
 
@@ -18,7 +18,7 @@ public class AdapterRecordPlayer implements IPeripheralAdapter {
 		return "vanilla_player";
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.TABLE, description = "Get the record currently being played")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the record currently being played")
 	public ItemStack getRecord(TileEntityJukebox recordPlayer) {
 		return recordPlayer.func_145856_a();
 	}

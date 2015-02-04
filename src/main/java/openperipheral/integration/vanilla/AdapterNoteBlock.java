@@ -1,7 +1,8 @@
 package openperipheral.integration.vanilla;
 
 import net.minecraft.tileentity.TileEntityNote;
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.*;
 
 import com.google.common.base.Objects;
 
@@ -17,17 +18,17 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 		return "vanilla_note";
 	}
 
-	@LuaCallable(description = "Increment the pitch of the noteblock")
+	@ScriptCallable(description = "Increment the pitch of the noteblock")
 	public void incrementPitch(TileEntityNote noteblock) {
 		noteblock.changePitch();
 	}
 
-	@LuaCallable(description = "Play the current note on the noteblock")
+	@ScriptCallable(description = "Play the current note on the noteblock")
 	public void triggerNote(TileEntityNote noteblock) {
 		noteblock.triggerNote(noteblock.getWorldObj(), noteblock.xCoord, noteblock.yCoord, noteblock.zCoord);
 	}
 
-	@LuaCallable(description = "Set the note on the noteblock")
+	@ScriptCallable(description = "Set the note on the noteblock")
 	public void setPitch(TileEntityNote noteblock,
 			@Arg(name = "note", description = "The note you want. From 0 to 25") int note)
 	{
@@ -35,12 +36,12 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 		noteblock.markDirty();
 	}
 
-	@LuaCallable(returnTypes = LuaReturnType.NUMBER, description = "Get the note currently set on this noteblock")
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get the note currently set on this noteblock")
 	public byte getNote(TileEntityNote noteblock) {
 		return noteblock.note;
 	}
 
-	@LuaCallable(description = "Plays a minecraft sound")
+	@ScriptCallable(description = "Plays a minecraft sound")
 	public void playSound(TileEntityNote noteblock,
 			@Arg(name = "sound", description = "The identifier for the sound") String name,
 			@Arg(name = "pitch", description = "The pitch from 0 to 1") float pitch,

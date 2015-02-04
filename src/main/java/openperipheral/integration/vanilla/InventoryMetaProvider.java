@@ -5,7 +5,6 @@ import net.minecraft.util.Vec3;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 
-@SuppressWarnings("serial")
 public class InventoryMetaProvider extends EntityMetaProviderSimple<IInventory> {
 
 	@Override

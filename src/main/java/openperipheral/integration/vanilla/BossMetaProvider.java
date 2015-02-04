@@ -8,7 +8,6 @@ import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class BossMetaProvider extends EntityMetaProviderSimple<IBossDisplayData> {
 
 	@Override

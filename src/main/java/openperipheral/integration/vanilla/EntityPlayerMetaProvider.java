@@ -9,7 +9,6 @@ import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class EntityPlayerMetaProvider extends EntityMetaProviderSimple<EntityPlayer> {
 
 	@Override

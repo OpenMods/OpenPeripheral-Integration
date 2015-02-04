@@ -1,6 +1,9 @@
 package openperipheral.integration.cofh.tileentity;
 
-import openperipheral.api.*;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import cofh.api.tileentity.ISecurable;
 import cofh.api.tileentity.ISecurable.AccessMode;
 
@@ -16,18 +19,18 @@ public class AdapterSecureTile implements IPeripheralAdapter {
 		return "cofh_secure";
 	}
 
-	@LuaCallable(description = "Gets the owner of the machine.", returnTypes = LuaReturnType.STRING)
+	@ScriptCallable(description = "Gets the owner of the machine.", returnTypes = ReturnType.STRING)
 	public String getOwnerName(ISecurable tile) {
 		return tile.getOwnerName();
 	}
 
-	@LuaCallable(description = "Is this username allowed to access the machine.", returnTypes = LuaReturnType.BOOLEAN)
+	@ScriptCallable(description = "Is this username allowed to access the machine.", returnTypes = ReturnType.BOOLEAN)
 	public boolean canPlayerAccess(ISecurable tile,
 			@Arg(name = "username", description = "The username to check for") String name) {
 		return tile.canPlayerAccess(name);
 	}
 
-	@LuaCallable(description = "Gets the AccessMode of this machine.", returnTypes = LuaReturnType.STRING)
+	@ScriptCallable(description = "Gets the AccessMode of this machine.", returnTypes = ReturnType.STRING)
 	public AccessMode getAccess(ISecurable tile) {
 		return tile.getAccess();
 	}

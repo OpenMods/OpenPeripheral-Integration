@@ -11,7 +11,6 @@ import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-@SuppressWarnings("serial")
 public class BookMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override

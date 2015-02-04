@@ -1,6 +1,9 @@
 package openperipheral.integration.thaumcraft;
 
-import openperipheral.api.*;
+import openperipheral.api.ApiAccess;
+import openperipheral.api.adapter.IPeripheralAdapterRegistry;
+import openperipheral.api.converter.IConverterManager;
+import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ApiIntegrationModule;
 
 public class ModuleThaumcraftApi extends ApiIntegrationModule {
@@ -12,7 +15,7 @@ public class ModuleThaumcraftApi extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		final IAdapterRegistry adapterRegistry = ApiAccess.getApi(IAdapterRegistry.class);
+		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
 		adapterRegistry.register(new AdapterAspectContainer());
 		adapterRegistry.register(new AdapterNode());
 		adapterRegistry.register(new AdapterEssentiaTransport());
@@ -22,7 +25,7 @@ public class ModuleThaumcraftApi extends ApiIntegrationModule {
 		itemMeta.register(new WandFocusMetaProvider());
 		itemMeta.register(new RunicItemMetaProvider());
 
-		final ITypeConvertersRegistry converters = ApiAccess.getApi(ITypeConvertersRegistry.class);
+		final IConverterManager converters = ApiAccess.getApi(IConverterManager.class);
 		converters.register(new ConverterAspectList());
 	}
 }

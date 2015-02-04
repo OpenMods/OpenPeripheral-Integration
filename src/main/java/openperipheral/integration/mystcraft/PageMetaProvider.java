@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
-@SuppressWarnings("serial")
 public class PageMetaProvider extends ItemStackMetaProviderSimple<Item> {
 
 	@Override
