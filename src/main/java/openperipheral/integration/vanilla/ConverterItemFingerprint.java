@@ -15,7 +15,7 @@ public class ConverterItemFingerprint implements ITypeConverter {
 	private static final String TAG_ID = "id";
 
 	@Override
-	public Object fromLua(IConverter registry, Object obj, Class<?> expected) {
+	public Object toJava(IConverter registry, Object obj, Class<?> expected) {
 		if (!(expected == ItemFingerprint.class && obj instanceof Map)) return null;
 
 		Map<?, ?> map = (Map<?, ?>)obj;
@@ -31,7 +31,7 @@ public class ConverterItemFingerprint implements ITypeConverter {
 	}
 
 	@Override
-	public Object toLua(IConverter registry, Object obj) {
+	public Object fromJava(IConverter registry, Object obj) {
 		if (obj instanceof ItemFingerprint) {
 			ItemFingerprint fingerprint = (ItemFingerprint)obj;
 			Map<String, Object> result = Maps.newHashMap();

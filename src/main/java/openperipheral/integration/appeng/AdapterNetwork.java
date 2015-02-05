@@ -40,7 +40,7 @@ public class AdapterNetwork extends AdapterGridBase {
 		List<Object> result = Lists.newArrayList();
 		for (IAEItemStack stack : storageList) {
 			@SuppressWarnings("unchecked")
-			Map<String, Object> map = (Map<String, Object>)converter.toLua(stack);
+			Map<String, Object> map = (Map<String, Object>)converter.fromJava(stack);
 			if (full == Boolean.TRUE) map.put("item", stack.getItemStack());
 			result.add(map);
 		}

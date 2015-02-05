@@ -35,7 +35,7 @@ public class CraftingCallback implements ICraftingCallback {
 		this.actionHost = actionHost;
 		this.craftingGrid = craftingGrid;
 		this.wantedCpu = wantedCpu;
-		this.requestedStack = converter.toLua(requestedStack);
+		this.requestedStack = converter.fromJava(requestedStack);
 	}
 
 	@Override
@@ -95,8 +95,8 @@ public class CraftingCallback implements ICraftingCallback {
 		// But even if it's empty, we need to send event to unblock process
 
 		access.signal(ModuleAppEng.CC_EVENT_STATE_CHANGED,
-				converter.toLua(this.requestedStack),
+				converter.fromJava(this.requestedStack),
 				"missing_items",
-				converter.toLua(missingItems));
+				converter.fromJava(missingItems));
 	}
 }

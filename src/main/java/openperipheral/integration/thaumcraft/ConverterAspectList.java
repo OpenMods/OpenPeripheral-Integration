@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import openperipheral.api.converter.IConverter;
-import openperipheral.api.converter.ITypeConverter;
+import openperipheral.api.helpers.SimpleOutboundConverter;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class ConverterAspectList implements ITypeConverter {
+public class ConverterAspectList extends SimpleOutboundConverter<AspectList> {
 
 	public static void appendAspectEntry(List<Map<String, Object>> result, Aspect aspect, int quantity) {
 		Map<String, Object> aspectDetails = Maps.newHashMap();
@@ -32,15 +32,8 @@ public class ConverterAspectList implements ITypeConverter {
 	}
 
 	@Override
-	public Object fromLua(IConverter registry, Object obj, Class<?> expected) {
-		return null;
-	}
-
-	@Override
-	public Object toLua(IConverter registry, Object obj) {
-		if (obj instanceof AspectList) return aspectsToMap((AspectList)obj);
-
-		return null;
+	public Object convert(IConverter registry, AspectList obj) {
+		return aspectsToMap(obj);
 	}
 
 }

@@ -3,7 +3,7 @@ package openperipheral.integration.forestry;
 import java.util.Map;
 
 import openperipheral.api.converter.IConverter;
-import openperipheral.api.converter.ITypeConverter;
+import openperipheral.api.helpers.SimpleOutboundConverter;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
@@ -14,12 +14,7 @@ import forestry.api.arboriculture.*;
 import forestry.api.genetics.*;
 import forestry.api.lepidopterology.*;
 
-public class ConverterIIndividual implements ITypeConverter {
-
-	@Override
-	public Object fromLua(IConverter registry, Object obj, Class<?> expected) {
-		return null;
-	}
+public class ConverterIIndividual extends SimpleOutboundConverter<IIndividual> {
 
 	private abstract static class GenomeAccess {
 		public IAllele getAllele(IGenome genome, int chromosome) {
@@ -215,13 +210,9 @@ public class ConverterIIndividual implements ITypeConverter {
 	}
 
 	@Override
-	public Object toLua(IConverter registry, Object obj) {
-		if (obj instanceof IIndividual) {
-			IIndividual individual = (IIndividual)obj;
-			Map<String, Object> map = describeIndividual(individual);
-			return registry.toLua(map);
-		}
-		return null;
+	public Object convert(IConverter registry, IIndividual individual) {
+		Map<String, Object> map = describeIndividual(individual);
+		return registry.fromJava(map);
 	}
 
 	public static Map<String, Object> describeIndividual(IIndividual individual) {
