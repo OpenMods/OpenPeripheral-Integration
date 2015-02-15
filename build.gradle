@@ -36,6 +36,22 @@ repositories {
         name 'MinecraftS3'
         url 'http://s3.amazonaws.com/Minecraft.Download/libraries'
     }
+    maven {
+        name = "ic2, forestry"
+        url = "http://maven.ic2.player.to/"
+    }
+    maven {
+        name = "mobius"
+        url = "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        name = "chickenbones"
+        url = "http://chickenbones.net/maven/"
+    }
+    maven {
+        name "FireBall API Depot"
+        url "http://dl.tsr.me/artifactory/libs-release-local"
+    }
 }
 
 apply plugin: 'forge'
@@ -45,6 +61,15 @@ apply plugin: 'forge'
 
 dependencies {
     compile project(":OpenModsLib") // Load OpenModsLib from submodule
+
+    compile ("appeng:appliedenergistics2:rv2-beta-8:dev") {
+        transitive = false
+    }
+
+    compile "com.mod-buildcraft:buildcraft:6.2.6:dev"
+    compile "api:ic2:1"
+    compile "api:railcraft:1"
+    compile "net.sengir.forestry:forestry_1.7.10:3.1.1.4:api"
 }
 
 //================================================
@@ -105,7 +130,7 @@ ext.gitManifest = manifest {
 minecraft {
     version = mc_ver + "-" + forge_ver
     assetDir = 'run/assets'
-    
+
     replaceIn "openperipheral/integration/OpenPeripheralIntegration.java"
     replace '$VERSION$', mod_version
     replace '$LIB-VERSION$', project(':OpenModsLib').mod_version

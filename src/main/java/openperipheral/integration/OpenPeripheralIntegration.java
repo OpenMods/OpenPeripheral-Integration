@@ -5,7 +5,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import openmods.integration.Integration;
 import openperipheral.integration.appeng.ModuleAppEng;
-import openperipheral.integration.buildcraft.*;
+import openperipheral.integration.buildcraft.ModuleBuildCraftFacades;
+import openperipheral.integration.buildcraft.ModuleBuildCraftTile;
+import openperipheral.integration.buildcraft.ModuleBuildCraftTransport;
 import openperipheral.integration.cofh.energy.ModuleCofhEnergy;
 import openperipheral.integration.cofh.inventory.ModuleCofhInventory;
 import openperipheral.integration.cofh.item.ModuleCofhItem;
@@ -84,7 +86,6 @@ public class OpenPeripheralIntegration {
 		if (checkConfig(config, "cofh-api-tileentity")) Integration.addModule(new ModuleCofhTileEntity());
 		if (checkConfig(config, "cofh-api-transport")) Integration.addModule(new ModuleCofhTransport());
 
-		if (checkConfig(config, "buildcraft-api-power")) Integration.addModule(new ModuleBuildCraftPower());
 		if (checkConfig(config, "buildcraft-api-transport")) Integration.addModule(new ModuleBuildCraftTransport());
 		if (checkConfig(config, "buildcraft-api-tilenentity")) Integration.addModule(new ModuleBuildCraftTile());
 		if (checkConfig(config, "buildcraft-api-facades")) Integration.addModule(new ModuleBuildCraftFacades());
