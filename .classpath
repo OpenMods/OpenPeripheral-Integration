@@ -4,6 +4,7 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/api/java"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/boq/.gradle/caches/modules-2/files-2.1/openperipheral/OpenPeripheralCore-API/3.0/52ddb70fadd2bfdb9b683f430246e22843ca4517/OpenPeripheralCore-API-3.0-dev.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/boq/.gradle/caches/modules-2/files-2.1/appeng/appliedenergistics2/rv2-beta-8/5ee047e179185a69583c0d24f906c2abd2e7bff3/appliedenergistics2-rv2-beta-8-dev.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/boq/.gradle/caches/modules-2/files-2.1/com.mod-buildcraft/buildcraft/6.2.6/a6e06c14c3434ff3a6ce190ded65292b85da9fab/buildcraft-6.2.6-dev.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/boq/.gradle/caches/modules-2/files-2.1/api/ic2/1/3fe52b5b3f2b0a170e5cac709adb7ac5d35924db/ic2-1.jar"/>

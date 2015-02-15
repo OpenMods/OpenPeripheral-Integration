@@ -52,6 +52,10 @@ repositories {
         name "FireBall API Depot"
         url "http://dl.tsr.me/artifactory/libs-release-local"
     }
+    maven {
+        name "OpenMods"
+        url "http://xn--oxe.xn--jxe.net/artifactory/openmods"
+    }
 }
 
 apply plugin: 'forge'
@@ -61,6 +65,8 @@ apply plugin: 'forge'
 
 dependencies {
     compile project(":OpenModsLib") // Load OpenModsLib from submodule
+
+    compile "openperipheral:OpenPeripheralCore-API:3.0:dev"
 
     compile ("appeng:appliedenergistics2:rv2-beta-8:dev") {
         transitive = false
