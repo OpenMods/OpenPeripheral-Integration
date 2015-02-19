@@ -29,7 +29,6 @@ public class BookMetaProvider extends ItemStackMetaProviderSimple<Item> {
 			if (tag != null) {
 				Map<String, Object> result = Maps.newHashMap();
 
-				Log.info("%s", tag);
 				result.put("type", isLinkbook? "link" : (isAgebook? "age" : "unknown"));
 				result.put("destination", tag.getString("agename"));
 				result.put("dimension", tag.getInteger("Dimension"));
