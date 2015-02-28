@@ -19,6 +19,7 @@ import openperipheral.integration.forestry.ModuleForestry;
 import openperipheral.integration.ic2.ModuleIC2;
 import openperipheral.integration.ic2.ModuleIC2Api;
 import openperipheral.integration.minefactoryreloaded.ModuleMinefactoryReloaded;
+import openperipheral.integration.minefactoryreloaded.ModuleMinefactoryReloadedStorage;
 import openperipheral.integration.mystcraft.ModuleMystcraft;
 import openperipheral.integration.railcraft.ModuleRailcraft;
 import openperipheral.integration.railcraft.ModuleRailcraftCarts;
@@ -100,13 +101,15 @@ public class OpenPeripheralIntegration {
 		if (checkConfig(config, "thaumcraft-mod")) Integration.addModule(new ModuleThaumcraft());
 		if (checkConfig(config, "thaumcraft-api")) Integration.addModule(new ModuleThaumcraftApi());
 
+		if (checkConfig(config, "mfr-mod")) Integration.addModule(new ModuleMinefactoryReloaded());
+		if (checkConfig(config, "mfr-mod-storage")) Integration.addModule(new ModuleMinefactoryReloadedStorage());
+
 		if (checkConfig(config, "computercraft-mod")) Integration.addModule(new ModuleComputerCraft());
 		if (checkConfig(config, "enderstorage-mod")) Integration.addModule(new ModuleEnderStorage());
 		if (checkConfig(config, "forestry-mod")) Integration.addModule(new ModuleForestry());
 		if (checkConfig(config, "mystcraft-mod")) Integration.addModule(new ModuleMystcraft());
 		if (checkConfig(config, "thaumcraft-mod")) Integration.addModule(new ModuleThaumcraft());
 		if (checkConfig(config, "tmechworks-mod")) Integration.addModule(new ModuleTMechworks());
-		if (checkConfig(config, "mfr-mod")) Integration.addModule(new ModuleMinefactoryReloaded());
 		if (checkConfig(config, "thermalexpansion-mod")) Integration.addModule(new ModuleThermalExpansion());
 		if (checkConfig(config, "ae2-mod")) Integration.addModule(new ModuleAppEng());
 
