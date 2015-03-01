@@ -6,7 +6,6 @@ import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import openmods.Log;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 
 import com.google.common.collect.Maps;
