@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
+import openperipheral.api.ApiAccess;
 import openperipheral.api.Constants;
 import openperipheral.api.adapter.method.*;
 import openperipheral.api.converter.IConverter;
+import openperipheral.api.meta.IItemStackPartialMetaBuilder;
 import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.crafting.ICraftingCPU;
@@ -37,23 +39,29 @@ public class AdapterNetwork extends AdapterGridBase {
 		IStorageGrid storageGrid = getStorageGrid(host);
 		final IItemList<IAEItemStack> storageList = storageGrid.getItemInventory().getStorageList();
 
+		final IItemStackPartialMetaBuilder builder = ApiAccess.getApi(IItemStackPartialMetaBuilder.class);
+
 		List<Object> result = Lists.newArrayList();
 		for (IAEItemStack stack : storageList) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> map = (Map<String, Object>)converter.fromJava(stack);
-			if (full == Boolean.TRUE) map.put("item", stack.getItemStack());
+			if (full == Boolean.TRUE) map.put("item", builder.createProxy(stack.getItemStack()));
 			result.add(map);
 		}
 
 		return result;
 	}
 
-	@ScriptCallable(description = "Retrieves details about the specified item from the ME Network.", returnTypes = ReturnType.TABLE)
-	public ItemStack getItemDetail(IGridHost host,
-			@Arg(name = "item", description = "Details of the item you are looking for: { id, [ dmg, [nbt_hash]] }", type = ArgType.TABLE) ItemFingerprint needle) {
+	@ScriptCallable(description = "Retrieves details about the specified item from the ME Network.", returnTypes = ReturnType.OBJECT)
+	public Object getItemDetail(IGridHost host,
+			@Arg(name = "item", description = "Details of the item you are looking for: { id, [ dmg, [nbt_hash]] }", type = ArgType.TABLE) ItemFingerprint needle,
+			@Optionals @Arg(name = "proxy", description = "If false, method will compute whole table, instead of returning proxy") Boolean proxy)
+	{
 		final IItemList<IAEItemStack> items = getStorageGrid(host).getItemInventory().getStorageList();
 		final IAEItemStack stack = findStack(items, needle);
-		return stack != null? stack.getItemStack() : null;
+		if (stack == null) return null;
+		ItemStack vanillaStack = stack.getItemStack();
+		return proxy != Boolean.FALSE? ApiAccess.getApi(IItemStackPartialMetaBuilder.class).createProxy(vanillaStack) : vanillaStack;
 	}
 
 	@ScriptCallable(description = "Get the average power injection into the network", returnTypes = ReturnType.NUMBER)

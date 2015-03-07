@@ -9,9 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
+import openperipheral.api.ApiAccess;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
+import openperipheral.api.meta.IItemStackPartialMetaBuilder;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
@@ -78,25 +80,28 @@ public class AdapterInventory implements IPeripheralAdapter {
 		inventory.markDirty();
 	}
 
-	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get details of an item in a particular slot")
+	@ScriptCallable(returnTypes = ReturnType.OBJECT, description = "Get details of an item in a particular slot")
 	public Object getStackInSlot(IInventory target,
 			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot,
-			@Optionals @Arg(name = "fingerprintOnly") Boolean fingerprintOnly)
+			@Optionals @Arg(name = "proxy", description = "If true, method will return proxy instead of computing whole table") Boolean proxy)
 	{
 		IInventory inventory = InventoryUtils.getInventory(target);
 		slot -= 1;
 		Preconditions.checkElementIndex(slot, inventory.getSizeInventory(), "slot id");
 		ItemStack stack = inventory.getStackInSlot(slot);
-		return fingerprintOnly == Boolean.TRUE? new ItemFingerprint(stack) : stack;
+		return proxy == Boolean.TRUE? ApiAccess.getApi(IItemStackPartialMetaBuilder.class).createProxy(stack) : stack;
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get a table with all the items of the chest")
-	public Map<Integer, Object> getAllStacks(IInventory target, @Optionals @Arg(name = "fingerprintsOnly") Boolean fingerprintsOnly) {
+	public Map<Integer, Object> getAllStacks(IInventory target,
+			@Optionals @Arg(name = "proxy", description = "If false, method will compute whole table, instead of returning proxy") Boolean proxy) {
 		final IInventory inventory = InventoryUtils.getInventory(target);
 		Map<Integer, Object> result = Maps.newHashMap();
+
+		final IItemStackPartialMetaBuilder builder = ApiAccess.getApi(IItemStackPartialMetaBuilder.class);
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
-			if (stack != null) result.put(i + 1, (fingerprintsOnly == Boolean.TRUE)? new ItemFingerprint(stack) : stack);
+			if (stack != null) result.put(i + 1, (proxy != Boolean.FALSE)? builder.createProxy(stack) : stack);
 		}
 		return result;
 	}

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
-import openmods.utils.InventoryUtils;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
@@ -20,7 +19,7 @@ public class EntityPlayerMetaProvider extends EntityMetaProviderSimple<EntityPla
 	public Object getMeta(EntityPlayer target, Vec3 relativePos) {
 		Map<String, Object> map = Maps.newHashMap();
 
-		map.put("inventory", InventoryUtils.getAllItems(target.inventory));
+		map.put("inventory", InventoryMetaProvider.wrapToProxyTable(target.inventory));
 		map.put("isAirBorne", target.isAirBorne);
 		map.put("isBlocking", target.isBlocking());
 		map.put("profile", target.getGameProfile());

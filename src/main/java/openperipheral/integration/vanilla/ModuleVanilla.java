@@ -67,6 +67,7 @@ public class ModuleVanilla implements IIntegrationModule {
 		entityMeta.register(new EntityWitchMetaProvider());
 		entityMeta.register(new EntityWolfMetaProvider());
 		entityMeta.register(new EntityZombieMetaProvider());
+		entityMeta.register(new InventoryProviderMetaProvider());
 
 		final IConverterManager converters = ApiAccess.getApi(IConverterManager.class);
 		converters.register(new ConverterItemFingerprint());

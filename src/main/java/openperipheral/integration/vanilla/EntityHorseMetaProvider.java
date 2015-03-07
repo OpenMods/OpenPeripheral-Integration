@@ -6,7 +6,6 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.Vec3;
 import openmods.reflection.FieldAccess;
-import openmods.utils.InventoryUtils;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
@@ -37,7 +36,7 @@ public class EntityHorseMetaProvider extends EntityMetaProviderSimple<EntityHors
 		map.put("chestedHorse", chested);
 		if (chested) {
 			IInventory invent = HORSE_CHEST.get(target);
-			map.put("chest", InventoryUtils.getAllItems(invent));
+			map.put("chest", InventoryMetaProvider.wrapToProxyTable(invent));
 		}
 
 		return map;
