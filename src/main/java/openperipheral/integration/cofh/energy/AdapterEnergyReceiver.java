@@ -19,13 +19,13 @@ public class AdapterEnergyReceiver implements IPeripheralAdapter {
 
 	@ScriptCallable(description = "Get the energy stored in the machine.", returnTypes = ReturnType.NUMBER)
 	public int getEnergyStored(IEnergyReceiver tileEntity,
-			@Optionals @Arg(name = "slot", description = "The direction you are interested in. (north, south, east, west, up or down)") ForgeDirection side) {
+			@Optionals @Arg(name = "side", description = "The direction you are interested in. (north, south, east, west, up or down)") ForgeDirection side) {
 		return tileEntity.getEnergyStored(side != null? side : ForgeDirection.UNKNOWN);
 	}
 
 	@ScriptCallable(description = "Get the max energy stored in the machine.", returnTypes = ReturnType.NUMBER)
 	public int getMaxEnergyStored(IEnergyReceiver tileEntity,
-			@Optionals @Arg(name = "slot", description = "The direction you are interested in. (north, south, east, west, up or down)") ForgeDirection side) {
+			@Optionals @Arg(name = "side", description = "The direction you are interested in. (north, south, east, west, up or down)") ForgeDirection side) {
 		return tileEntity.getMaxEnergyStored(side != null? side : ForgeDirection.UNKNOWN);
 	}
 
