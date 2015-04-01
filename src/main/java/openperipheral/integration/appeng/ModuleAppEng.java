@@ -1,5 +1,6 @@
 package openperipheral.integration.appeng;
 
+import openmods.Mods;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.api.converter.IConverterManager;
@@ -11,7 +12,7 @@ public class ModuleAppEng extends ModIntegrationModule {
 
 	@Override
 	public String getModId() {
-		return "appliedenergistics2";
+		return Mods.APPLIEDENERGISTICS2;
 	}
 
 	@Override
