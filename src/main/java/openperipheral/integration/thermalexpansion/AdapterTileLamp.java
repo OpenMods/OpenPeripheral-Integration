@@ -10,7 +10,10 @@ import openperipheral.api.adapter.method.*;
 
 public class AdapterTileLamp implements IPeripheralAdapter {
 
-	private final Class<?> CLAZZ = ReflectionHelper.getClass("thermalexpansion.block.light.TileLight");
+	private final Class<?> CLAZZ = ReflectionHelper.getClass(
+			"cofh.thermalexpansion.block.light.TileLight",
+			"thermalexpansion.block.light.TileLight"
+			);
 
 	private final Function1<Boolean, Integer> SET_COLOR = MethodAccess.create(boolean.class, CLAZZ, int.class, "setColor");
 
