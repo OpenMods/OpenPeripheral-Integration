@@ -1,4 +1,4 @@
-package openperipheral.integration.mystcraft;
+package openperipheral.integration.mystcraft.v1;
 
 import java.util.Collection;
 import java.util.Map;

@@ -3,6 +3,7 @@ package openperipheral.integration;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import openmods.Mods;
 import openmods.integration.Integration;
 import openperipheral.integration.appeng.ModuleAppEng;
 import openperipheral.integration.buildcraft.ModuleBuildCraftFacades;
@@ -20,7 +21,9 @@ import openperipheral.integration.ic2.ModuleIC2;
 import openperipheral.integration.ic2.ModuleIC2Api;
 import openperipheral.integration.minefactoryreloaded.ModuleMinefactoryReloaded;
 import openperipheral.integration.minefactoryreloaded.ModuleMinefactoryReloadedStorage;
-import openperipheral.integration.mystcraft.ModuleMystcraft;
+import openperipheral.integration.mystcraft.v1.ModuleMystcraftV1;
+import openperipheral.integration.mystcraft.v2.ModuleMystcraftV2;
+import openperipheral.integration.mystcraft.v2.MystcraftAccess;
 import openperipheral.integration.railcraft.ModuleRailcraft;
 import openperipheral.integration.railcraft.ModuleRailcraftCarts;
 import openperipheral.integration.railcraft.ModuleRailcraftFuel;
@@ -35,6 +38,8 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.versioning.ArtifactVersion;
+import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 
 @Mod(modid = OpenPeripheralIntegration.MOD_ID,
 		name = OpenPeripheralIntegration.MOD_ID,
@@ -59,6 +64,15 @@ public class OpenPeripheralIntegration {
 		final Property property = config.get(CATEGORY_MODULES, value, true);
 		property.setRequiresMcRestart(true);
 		return property.getBoolean();
+	}
+
+	private static boolean sameOrNewerVersion(String modid, String version) {
+		final ModContainer modContainer = Loader.instance().getIndexedModList().get(modid);
+		if (modContainer == null) return false;
+
+		final ArtifactVersion targetVersion = new DefaultArtifactVersion(version);
+		final ArtifactVersion actualVersion = modContainer.getProcessedVersion();
+		return actualVersion.compareTo(targetVersion) >= 0;
 	}
 
 	@Instance(MOD_ID)
@@ -107,7 +121,14 @@ public class OpenPeripheralIntegration {
 		if (checkConfig(config, "computercraft-mod")) Integration.addModule(new ModuleComputerCraft());
 		if (checkConfig(config, "enderstorage-mod")) Integration.addModule(new ModuleEnderStorage());
 		if (checkConfig(config, "forestry-mod")) Integration.addModule(new ModuleForestry());
-		if (checkConfig(config, "mystcraft-mod")) Integration.addModule(new ModuleMystcraft());
+		if (checkConfig(config, "mystcraft-mod")) {
+			if (sameOrNewerVersion(Mods.MYSTCRAFT, "0.11.1.00")) {
+				MystcraftAccess.init();
+				Integration.addModule(new ModuleMystcraftV2());
+			} else {
+				Integration.addModule(new ModuleMystcraftV1());
+			}
+		}
 		if (checkConfig(config, "thaumcraft-mod")) Integration.addModule(new ModuleThaumcraft());
 		if (checkConfig(config, "tmechworks-mod")) Integration.addModule(new ModuleTMechworks());
 		if (checkConfig(config, "thermalexpansion-mod")) Integration.addModule(new ModuleThermalExpansion());

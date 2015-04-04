@@ -56,6 +56,12 @@ repositories {
         name "OpenMods"
         url "http://repo.openmods.info/artifactory/openmods"
     }
+    
+    // waiting for proper API release
+    ivy {
+        name 'mystcraft'
+        artifactPattern "http://addons-origin.cursecdn.com/files/2231/718/[module]-[revision].[ext]"
+}
 }
 
 apply plugin: 'forge'
@@ -77,6 +83,9 @@ dependencies {
     compile "api:mfr:1"
     compile "api:railcraft:1"
     compile "net.sengir.forestry:forestry_1.7.10:3.1.1.4:api"
+    
+    // hacks
+    compile name: 'mystcraft', version: '1.7.10-0.11.2.01', ext: 'jar'
 }
 
 //================================================
@@ -136,7 +145,7 @@ ext.gitManifest = manifest {
 // Setup Forge plugin
 minecraft {
     version = mc_ver + "-" + forge_ver
-    assetDir = 'run/assets'
+    runDir = 'run'
 
     replaceIn "openperipheral/integration/OpenPeripheralIntegration.java"
     replace '$VERSION$', mod_version

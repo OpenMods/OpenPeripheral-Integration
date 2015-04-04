@@ -1,4 +1,4 @@
-package openperipheral.integration.mystcraft;
+package openperipheral.integration.mystcraft.v1;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

@@ -1,4 +1,4 @@
-package openperipheral.integration.mystcraft;
+package openperipheral.integration.mystcraft.v2;
 
 import openmods.Mods;
 import openperipheral.api.ApiAccess;
@@ -6,7 +6,7 @@ import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ModIntegrationModule;
 
-public class ModuleMystcraft extends ModIntegrationModule {
+public class ModuleMystcraftV2 extends ModIntegrationModule {
 
 	@Override
 	public String getModId() {
@@ -19,7 +19,11 @@ public class ModuleMystcraft extends ModIntegrationModule {
 		adapterRegistry.register(new AdapterWritingDesk());
 
 		final IItemStackMetaBuilder builder = ApiAccess.getApi(IItemStackMetaBuilder.class);
-		builder.register(new BookMetaProvider());
-		builder.register(new PageMetaProvider());
+
+		if (MystcraftAccess.api != null) {
+			builder.register(new BookMetaProvider(MystcraftAccess.api));
+			builder.register(new PageMetaProvider(MystcraftAccess.api));
+		}
+
 	}
 }

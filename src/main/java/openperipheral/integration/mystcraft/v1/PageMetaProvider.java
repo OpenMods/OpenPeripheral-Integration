@@ -1,4 +1,4 @@
-package openperipheral.integration.mystcraft;
+package openperipheral.integration.mystcraft.v1;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
