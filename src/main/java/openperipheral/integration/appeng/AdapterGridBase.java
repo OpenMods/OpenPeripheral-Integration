@@ -46,13 +46,13 @@ public abstract class AdapterGridBase implements IPeripheralAdapter {
 		String id = GameData.getItemRegistry().getNameForObject(hayStack.getItem());
 		UniqueIdentifier stackUuid = new UniqueIdentifier(id);
 		if (!needle.id.equals(stackUuid)) return false;
-		if (hayStack.getItemDamage() != needle.damage) return false;
+		if (needle.damage != -1 && hayStack.getItemDamage() != needle.damage) return false;
 
 		final IAETagCompound aeTag = hayStack.getTagCompound();
 		if (aeTag == null) return needle.nbtHash == null;
 		if (needle.nbtHash == null) return false;
 
-		// Compare by has. Not exact (or quick) check, but good enough
+		// Compare by hash. Not exact (or quick) check, but good enough
 		final String nbtHash = ItemUtils.getNBTHash(aeTag.getNBTTagCompoundCopy());
 		return nbtHash.equals(needle.nbtHash);
 	}
