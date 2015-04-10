@@ -3,7 +3,7 @@ package openperipheral.integration.vanilla;
 import java.util.Collection;
 import java.util.Map;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
@@ -13,7 +13,7 @@ import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
 
-public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLiving> {
+public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLivingBase> {
 
 	@Override
 	public String getKey() {
@@ -21,7 +21,7 @@ public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLiv
 	}
 
 	@Override
-	public Object getMeta(EntityLiving target, Vec3 relativePos) {
+	public Object getMeta(EntityLivingBase target, Vec3 relativePos) {
 		Map<String, Object> map = Maps.newHashMap();
 
 		{

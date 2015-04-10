@@ -5,11 +5,11 @@ import java.util.Set;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import openperipheral.api.helpers.ItemStackMetaProviderSimple;
+import openperipheral.api.meta.IItemStackCustomMetaProvider;
 
 import com.google.common.collect.ImmutableSet;
 
-public class SafariNetMetaProvider extends ItemStackMetaProviderSimple<Item> {
+public class SafariNetMetaProvider implements IItemStackCustomMetaProvider<Item> {
 
 	private final Set<String> safariNets = ImmutableSet.of(
 			"item.mfr.safarinet.reusable",
@@ -17,6 +17,11 @@ public class SafariNetMetaProvider extends ItemStackMetaProviderSimple<Item> {
 			"item.mfr.safarinet.jailer"
 			);
 
+	@Override
+	public Class<? extends Item> getTargetClass() {
+		return Item.class;
+	}
+	
 	@Override
 	public String getKey() {
 		return "captured";
@@ -30,6 +35,14 @@ public class SafariNetMetaProvider extends ItemStackMetaProviderSimple<Item> {
 		}
 
 		return null;
+	}
+
+
+
+	@Override
+	public boolean canApply(Item target, ItemStack stack) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

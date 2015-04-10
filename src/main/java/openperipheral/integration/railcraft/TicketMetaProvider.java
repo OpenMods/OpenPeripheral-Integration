@@ -5,21 +5,11 @@ import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import openperipheral.api.helpers.ItemStackMetaProviderSimple;
+import openperipheral.api.meta.IItemStackCustomMetaProvider;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-
-public class TicketMetaProvider extends ItemStackMetaProviderSimple<Item> {
-
-	private final ItemStack ticketStack;
-
-	public TicketMetaProvider() {
-		ticketStack = GameRegistry.findItemStack("Railcraft", "routing.ticket", 1);
-		Preconditions.checkNotNull(ticketStack, "Can't find ticket item");
-	}
+public class TicketMetaProvider implements IItemStackCustomMetaProvider<Item> {
 
 	@Override
 	public String getKey() {
@@ -27,22 +17,27 @@ public class TicketMetaProvider extends ItemStackMetaProviderSimple<Item> {
 	}
 
 	@Override
+	public Class<? extends Item> getTargetClass() {
+		return Item.class;
+	}
+
+	@Override
+	public boolean canApply(Item target, ItemStack stack) {
+		return (target == TicketItemHolder.ticket) || (target == TicketItemHolder.ticketGold);
+	}
+
+	@Override
 	public Object getMeta(Item target, ItemStack stack) {
-		final boolean isTicket = stack.getItem() == TicketItemHolder.ticket;
-		final boolean isGoldenTicket = stack.getItem() == TicketItemHolder.ticketGold;
-		if (isTicket || isGoldenTicket) {
-			Map<String, Object> map = Maps.newHashMap();
-			map.put("golden", isGoldenTicket);
+		Map<String, Object> map = Maps.newHashMap();
+		map.put("golden", target == TicketItemHolder.ticketGold);
 
-			NBTTagCompound tag = stack.stackTagCompound;
-			if (tag != null) {
+		NBTTagCompound tag = stack.stackTagCompound;
+		if (tag != null) {
 
-				map.put("owner", tag.getString("owner"));
-				map.put("dest", tag.getString("dest"));
-			}
-			return map;
+			map.put("owner", tag.getString("owner"));
+			map.put("dest", tag.getString("dest"));
 		}
-		return null;
+		return map;
 	}
 
 }

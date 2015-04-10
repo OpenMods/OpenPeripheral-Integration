@@ -2,12 +2,17 @@ package openperipheral.integration.forestry;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import openperipheral.api.helpers.ItemStackMetaProviderSimple;
+import openperipheral.api.meta.IItemStackCustomMetaProvider;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IIndividual;
 
-public class IndividualMetaProvider extends ItemStackMetaProviderSimple<Item> {
+public class IndividualMetaProvider implements IItemStackCustomMetaProvider<Item> {
 
+	@Override
+	public Class<? extends Item> getTargetClass() {
+		return Item.class;
+	}
+	
 	@Override
 	public String getKey() {
 		return "individual";
@@ -21,5 +26,14 @@ public class IndividualMetaProvider extends ItemStackMetaProviderSimple<Item> {
 		}
 
 		return null;
+	}
+
+	@Override
+	public boolean canApply(Item target, ItemStack stack) {
+		if (AlleleManager.alleleRegistry != null) {
+			return AlleleManager.alleleRegistry.isIndividual(stack);
+		}
+		
+		return false;
 	}
 }
