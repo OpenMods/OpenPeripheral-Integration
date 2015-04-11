@@ -26,6 +26,12 @@ public class EntityPlayerMetaProvider extends EntityMetaProviderSimple<EntityPla
 		map.put("foodLevel", target.getFoodStats().getFoodLevel());
 		map.put("isCreativeMode", target.capabilities.isCreativeMode);
 
+		Map<String, Object> experience = Maps.newHashMap();
+		experience.put("level", target.experienceLevel);
+		experience.put("levelProgress", target.experience);
+		experience.put("nextLevelXp", target.xpBarCap());
+		map.put("experience", experience);
+
 		return map;
 	}
 
