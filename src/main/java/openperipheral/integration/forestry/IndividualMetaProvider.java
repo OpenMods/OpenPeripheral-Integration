@@ -12,7 +12,7 @@ public class IndividualMetaProvider implements IItemStackCustomMetaProvider<Item
 	public Class<? extends Item> getTargetClass() {
 		return Item.class;
 	}
-	
+
 	@Override
 	public String getKey() {
 		return "individual";
@@ -30,10 +30,8 @@ public class IndividualMetaProvider implements IItemStackCustomMetaProvider<Item
 
 	@Override
 	public boolean canApply(Item target, ItemStack stack) {
-		if (AlleleManager.alleleRegistry != null) {
-			return AlleleManager.alleleRegistry.isIndividual(stack);
-		}
-		
+		if (AlleleManager.alleleRegistry != null) { return AlleleManager.alleleRegistry.isIndividual(stack); }
+
 		return false;
 	}
 }

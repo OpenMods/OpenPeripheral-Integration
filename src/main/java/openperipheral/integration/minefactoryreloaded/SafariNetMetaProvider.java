@@ -21,7 +21,7 @@ public class SafariNetMetaProvider implements IItemStackCustomMetaProvider<Item>
 	public Class<? extends Item> getTargetClass() {
 		return Item.class;
 	}
-	
+
 	@Override
 	public String getKey() {
 		return "captured";
@@ -36,8 +36,6 @@ public class SafariNetMetaProvider implements IItemStackCustomMetaProvider<Item>
 
 		return null;
 	}
-
-
 
 	@Override
 	public boolean canApply(Item target, ItemStack stack) {

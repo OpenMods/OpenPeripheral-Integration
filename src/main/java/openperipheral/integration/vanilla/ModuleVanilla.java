@@ -55,6 +55,10 @@ public class ModuleVanilla implements IIntegrationModule {
 		itemMeta.register(new FingerprintMetaProvider());
 
 		final IEntityMetaBuilder entityMeta = ApiAccess.getApi(IEntityMetaBuilder.class);
+		entityMeta.register(new EntityItemMetaProvider());
+		entityMeta.register(new PaintingMetaProvider());
+		entityMeta.register(new ItemFrameMetaProvider());
+
 		entityMeta.register(new EntityBatMetaProvider());
 		entityMeta.register(new EntityCreeperMetaProvider());
 		entityMeta.register(new EntityHorseMetaProvider());

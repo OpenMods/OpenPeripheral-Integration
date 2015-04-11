@@ -1,6 +1,5 @@
 package openperipheral.integration.vanilla;
 
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -8,13 +7,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 import openperipheral.api.meta.IItemStackCustomMetaProvider;
 
-public class EnchantmentMetaProvider implements IItemStackCustomMetaProvider<Item>  {
+public class EnchantmentMetaProvider implements IItemStackCustomMetaProvider<Item> {
 
 	@Override
 	public Class<? extends Item> getTargetClass() {
 		return Item.class;
 	}
-	
+
 	@Override
 	public String getKey() {
 		return "ench";
