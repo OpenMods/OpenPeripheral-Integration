@@ -4,13 +4,28 @@ import java.util.Map;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import openperipheral.api.helpers.ItemStackMetaProviderSimple;
+import openperipheral.api.meta.IItemStackCustomMetaProvider;
 import appeng.api.AEApi;
 import appeng.api.storage.*;
 
 import com.google.common.collect.Maps;
 
-public class StorageCellMetaProvider extends ItemStackMetaProviderSimple<Item> {
+public class StorageCellMetaProvider implements IItemStackCustomMetaProvider<Item> {
+
+	@Override
+	public String getKey() {
+		return "me_cell";
+	}
+
+	@Override
+	public Class<? extends Item> getTargetClass() {
+		return Item.class;
+	}
+
+	@Override
+	public boolean canApply(Item target, ItemStack stack) {
+		return AEApi.instance().registries().cell().isCellHandled(stack);
+	}
 
 	@Override
 	public Object getMeta(Item target, ItemStack stack) {
@@ -35,11 +50,6 @@ public class StorageCellMetaProvider extends ItemStackMetaProviderSimple<Item> {
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getKey() {
-		return "me_cell";
 	}
 
 }
