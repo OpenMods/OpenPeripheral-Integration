@@ -53,6 +53,10 @@ public class ModuleVanilla implements IIntegrationModule {
 		itemMeta.register(new BurnTimeMetaProvider());
 		itemMeta.register(new OreDictMetaProvider());
 		itemMeta.register(new FingerprintMetaProvider());
+		itemMeta.register(new ItemToolClassMetaProvider());
+		itemMeta.register(new ItemToolMetaProvider());
+		itemMeta.register(new ItemArmorMetaProvider());
+		itemMeta.register(new ItemSwordMetaProvider());
 
 		final IEntityMetaBuilder entityMeta = ApiAccess.getApi(IEntityMetaBuilder.class);
 		entityMeta.register(new EntityItemMetaProvider());
