@@ -78,7 +78,7 @@ dependencies {
         transitive = false
     }
 
-    compile "com.mod-buildcraft:buildcraft:6.2.6:dev"
+    compile "com.mod-buildcraft:buildcraft:6.2.6:api"
     compile "api:ic2:1"
     compile "api:mfr:1"
     compile "api:railcraft:1"
