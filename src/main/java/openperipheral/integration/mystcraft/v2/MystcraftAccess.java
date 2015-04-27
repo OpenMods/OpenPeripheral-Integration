@@ -1,25 +1,44 @@
 package openperipheral.integration.mystcraft.v2;
 
 import openmods.Log;
-import openmods.reflection.MethodAccess;
-import openmods.reflection.MethodAccess.Function1;
-import openmods.reflection.ReflectionHelper;
-import openperipheral.integration.OpenPeripheralIntegration;
 
-import com.xcompwiz.mystcraft.api.MystAPI;
+import com.xcompwiz.mystcraft.api.APIInstanceProvider;
+import com.xcompwiz.mystcraft.api.exception.APIUndefined;
+import com.xcompwiz.mystcraft.api.exception.APIVersionRemoved;
+import com.xcompwiz.mystcraft.api.exception.APIVersionUndefined;
+import com.xcompwiz.mystcraft.api.hook.*;
 
 public class MystcraftAccess {
 
-	static MystAPI api;
+	static LinkingAPI linkingApi;
 
-	public static boolean init() {
+	static LinkPropertyAPI linkPropertiesApi;
+
+	static PageAPI pageApi;
+
+	public static SymbolAPI symbolApi;
+
+	@SuppressWarnings("unchecked")
+	public static <T> T getApi(APIInstanceProvider provider, String api) {
 		try {
-			Class<?> cls = ReflectionHelper.getClass("com.xcompwiz.mystcraft.core.InternalAPI");
-			Function1<MystAPI, String> getApi = MethodAccess.create(MystAPI.class, cls, String.class, "getAPIInstance");
-			api = getApi.call(null, OpenPeripheralIntegration.MOD_ID);
-		} catch (Throwable t) {
-			Log.warn(t, "Failed to get API");
+			return (T)provider.getAPIInstance(api);
+		} catch (APIUndefined e) {
+			Log.warn(e, "Mystraft API %s is not provided. Some functionality may be disabled.");
+		} catch (APIVersionUndefined e) {
+			Log.warn(e, "Mystraft API %s version is unavalable. Some functionality may be disabled.");
+		} catch (APIVersionRemoved e) {
+			Log.warn(e, "Mystraft API %s version is unsupported. Some functionality may be disabled.");
+		} catch (Exception e) {
+			Log.warn(e, "Unknown exception why trying to get Mystcraft API %s", api);
 		}
-		return false;
+
+		return null;
+	}
+
+	public static void init(APIInstanceProvider provider) {
+		linkingApi = getApi(provider, "linking-1");
+		linkPropertiesApi = getApi(provider, "linkingprop-1");
+		pageApi = getApi(provider, "page-1");
+		symbolApi = getApi(provider, "symbol-1");
 	}
 }

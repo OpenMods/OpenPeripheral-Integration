@@ -30,9 +30,6 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 	private final Function1<ItemStack, Byte> GET_NOTEBOOK = MethodAccess.create(ItemStack.class, CLASS, byte.class, "getTabItem");
 	private final Function2<Void, EntityPlayer, String> WRITE_SYMBOL = MethodAccess.create(void.class, CLASS, EntityPlayer.class, String.class, "writeSymbol");
 
-	private final Class<?> HELPER_CLS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.page.Page");
-	private final Function1<String, ItemStack> GET_SYMBOL = MethodAccess.create(String.class, HELPER_CLS, ItemStack.class, "getSymbol");
-
 	@Override
 	public Class<?> getTargetClass() {
 		return CLASS;
@@ -112,9 +109,11 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 	public void writeSymbol(final TileEntity desk,
 			@Arg(name = "deskSlot") int deskSlot,
 			@Arg(name = "notebookSlot", description = "The source symbol to copy") int notebookSlot) {
+		Preconditions.checkNotNull(MystcraftAccess.pageApi, "Functionality not available");
+
 		final NotebookWrapper wrapper = createInventoryWrapper(desk, deskSlot);
 		ItemStack page = wrapper.getPageFromSlot(notebookSlot - 1);
-		final String symbol = GET_SYMBOL.call(null, page);
+		final String symbol = MystcraftAccess.pageApi.getPageSymbol(page);
 		if (symbol != null) {
 			FakePlayerPool.instance.executeOnPlayer((WorldServer)desk.getWorldObj(), new PlayerUser() {
 				@Override

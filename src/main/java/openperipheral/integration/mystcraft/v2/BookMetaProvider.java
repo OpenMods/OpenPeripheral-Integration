@@ -1,59 +1,48 @@
 package openperipheral.integration.mystcraft.v2;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
-import openmods.reflection.ReflectionHelper;
-import openperipheral.api.meta.IItemStackMetaProvider;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
+import openperipheral.api.meta.IItemStackCustomMetaProvider;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.xcompwiz.mystcraft.api.MystAPI;
+import com.google.common.collect.Sets;
+import com.xcompwiz.mystcraft.api.hook.LinkPropertyAPI;
+import com.xcompwiz.mystcraft.api.item.IItemPortalActivator;
 import com.xcompwiz.mystcraft.api.linking.ILinkInfo;
 
-public class BookMetaProvider implements IItemStackMetaProvider<Item> {
-
-	private static Class<?> CLS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.item.ItemLinking");
-
-	private final MystAPI api;
-
-	private static final Set<String> FLAGS = ImmutableSet.of(
-			"Relative",
-			"Maintain Momentum",
-			"Intra Linking",
-			"Generate Platform",
-			"Disarm",
-			"Following"
-			);
-
-	public BookMetaProvider(MystAPI api) {
-		this.api = api;
-	}
+public class BookMetaProvider extends ItemStackMetaProviderSimple<IItemPortalActivator> implements IItemStackCustomMetaProvider<IItemPortalActivator> {
 
 	@Override
 	public String getKey() {
 		return "myst_book";
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public Class<? extends Item> getTargetClass() {
-		return (Class<? extends Item>)CLS;
-	}
-
-	@Override
-	public Object getMeta(Item target, ItemStack stack) {
+	private static ILinkInfo getLinkInfo(ItemStack stack) {
+		if (MystcraftAccess.linkingApi == null) return null;
 		final NBTTagCompound tag = stack.getTagCompound();
 		if (tag == null) return null;
 
-		final ILinkInfo linkInfo = api.getLinkingAPI().createLinkInfo(stack.stackTagCompound);
+		return MystcraftAccess.linkingApi.createLinkInfo(tag);
+	}
 
-		final String unlocalizedName = target.getUnlocalizedName();
+	@Override
+	public boolean canApply(IItemPortalActivator target, ItemStack stack) {
+		return getLinkInfo(stack) != null;
+	}
+
+	@Override
+	public Object getMeta(IItemPortalActivator target, ItemStack stack) {
+		final ILinkInfo linkInfo = getLinkInfo(stack);
+		if (linkInfo == null) return null;
+
+		final String unlocalizedName = stack.getUnlocalizedName();
 		final boolean isLinkbook = "item.myst.linkbook".equals(unlocalizedName);
 		final boolean isAgebook = "item.myst.agebook".equals(unlocalizedName);
 
@@ -63,10 +52,14 @@ public class BookMetaProvider implements IItemStackMetaProvider<Item> {
 		result.put("destination", linkInfo.getDisplayName());
 		result.put("dimension", linkInfo.getDimensionUID());
 
-		{
-			Map<String, Boolean> flags = Maps.newHashMap();
-			for (String flag : FLAGS)
-				flags.put(flag, linkInfo.getFlag(flag));
+		final LinkPropertyAPI linkPropertiesApi = MystcraftAccess.linkPropertiesApi;
+		if (linkPropertiesApi != null) {
+			final Collection<String> allProperties = linkPropertiesApi.getLinkProperties();
+
+			Set<String> flags = Sets.newHashSet();
+			for (String flag : allProperties)
+				if (linkInfo.getFlag(flag)) flags.add(flag);
+
 			result.put("flags", flags);
 		}
 

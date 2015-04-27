@@ -4,33 +4,23 @@ import java.util.Map;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import openmods.reflection.MethodAccess;
-import openmods.reflection.MethodAccess.Function1;
-import openmods.reflection.ReflectionHelper;
-import openperipheral.api.meta.IItemStackMetaProvider;
+import openperipheral.api.meta.IItemStackCustomMetaProvider;
 
 import com.google.common.collect.Maps;
-import com.xcompwiz.mystcraft.api.MystAPI;
+import com.xcompwiz.mystcraft.api.hook.PageAPI;
 import com.xcompwiz.mystcraft.api.symbol.IAgeSymbol;
 
-public class PageMetaProvider implements IItemStackMetaProvider<Item> {
+public class PageMetaProvider implements IItemStackCustomMetaProvider<Item> {
 
-	private final MystAPI api;
-
-	private final Class<?> CLS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.item.ItemPage");
-
-	private final Class<?> HELPER_CLS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.page.Page");
-
-	private final Function1<String, ItemStack> GET_SYMBOL = MethodAccess.create(String.class, HELPER_CLS, ItemStack.class, "getSymbol");
-
-	public PageMetaProvider(MystAPI api) {
-		this.api = api;
+	@Override
+	public Class<? extends Item> getTargetClass() {
+		return Item.class;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public Class<? extends Item> getTargetClass() {
-		return (Class<? extends Item>)CLS;
+	public boolean canApply(Item target, ItemStack stack) {
+		final PageAPI pageApi = MystcraftAccess.pageApi;
+		return pageApi != null && pageApi.getPageSymbol(stack) != null;
 	}
 
 	@Override
@@ -40,14 +30,20 @@ public class PageMetaProvider implements IItemStackMetaProvider<Item> {
 
 	@Override
 	public Object getMeta(Item target, ItemStack stack) {
+		if (MystcraftAccess.pageApi == null) return null;
+
 		Map<String, Object> result = Maps.newHashMap();
-		String id = GET_SYMBOL.call(null, stack);
+		String id = MystcraftAccess.pageApi.getPageSymbol(stack);
+		if (id == null) return null;
+
 		result.put("id", id);
 
-		final IAgeSymbol symbol = api.getSymbolAPI().getSymbol(id);
-		if (symbol != null) {
-			result.put("name", symbol.displayName());
-			result.put("poem", symbol.getPoem());
+		if (MystcraftAccess.symbolApi != null) {
+			final IAgeSymbol symbol = MystcraftAccess.symbolApi.getSymbol(id);
+			if (symbol != null) {
+				result.put("name", symbol.displayName());
+				result.put("poem", symbol.getPoem());
+			}
 		}
 
 		return result;

@@ -3,6 +3,7 @@ package openperipheral.integration;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import openmods.Log;
 import openmods.Mods;
 import openmods.integration.Integration;
 import openperipheral.integration.appeng.ModuleAppEng;
@@ -23,7 +24,6 @@ import openperipheral.integration.minefactoryreloaded.ModuleMinefactoryReloaded;
 import openperipheral.integration.minefactoryreloaded.ModuleMinefactoryReloadedStorage;
 import openperipheral.integration.mystcraft.v1.ModuleMystcraftV1;
 import openperipheral.integration.mystcraft.v2.ModuleMystcraftV2;
-import openperipheral.integration.mystcraft.v2.MystcraftAccess;
 import openperipheral.integration.railcraft.ModuleRailcraft;
 import openperipheral.integration.railcraft.ModuleRailcraftCarts;
 import openperipheral.integration.railcraft.ModuleRailcraftFuel;
@@ -36,6 +36,7 @@ import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
@@ -123,9 +124,14 @@ public class OpenPeripheralIntegration {
 		if (checkConfig(config, "forestry-mod")) Integration.addModule(new ModuleForestry());
 		if (checkConfig(config, "mystcraft-mod")) {
 			if (sameOrNewerVersion(Mods.MYSTCRAFT, "0.11.1.00")) {
-				MystcraftAccess.init();
-				Integration.addModule(new ModuleMystcraftV2());
+				if (sameOrNewerVersion(Mods.MYSTCRAFT, "0.11.6.02")) {
+					FMLInterModComms.sendMessage(Mods.MYSTCRAFT, "API", "openperipheral.integration.mystcraft.v2.MystcraftAccess.init");
+					Integration.addModule(new ModuleMystcraftV2());
+				} else {
+					Log.warn("Unsupported Mystcraft version!");
+				}
 			} else {
+				Log.warn("Using old Mystcraft integration, things may explode");
 				Integration.addModule(new ModuleMystcraftV1());
 			}
 		}

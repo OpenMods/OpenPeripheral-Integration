@@ -60,7 +60,7 @@ repositories {
     // waiting for proper API release
     ivy {
         name 'mystcraft'
-        artifactPattern "http://addons-origin.cursecdn.com/files/2231/718/[module]-[revision].[ext]"
+        artifactPattern "http://addons-origin.cursecdn.com/files/2235/470/[module]-[revision].[ext]"
 }
 }
 
@@ -85,7 +85,7 @@ dependencies {
     compile "net.sengir.forestry:forestry_1.7.10:3.1.1.4:api"
     
     // hacks
-    compile name: 'mystcraft', version: '1.7.10-0.11.2.01', ext: 'jar'
+    compile name: 'mystcraft', version: '1.7.10-0.11.6.01-dev', ext: 'jar'
 }
 
 //================================================

@@ -20,10 +20,8 @@ public class ModuleMystcraftV2 extends ModIntegrationModule {
 
 		final IItemStackMetaBuilder builder = ApiAccess.getApi(IItemStackMetaBuilder.class);
 
-		if (MystcraftAccess.api != null) {
-			builder.register(new BookMetaProvider(MystcraftAccess.api));
-			builder.register(new PageMetaProvider(MystcraftAccess.api));
-		}
-
+		builder.register(new BookMetaProvider());
+		builder.register(new PageMetaProvider());
+		builder.register(new LinkingPanelMetaProvider());
 	}
 }
