@@ -32,6 +32,8 @@ import openperipheral.integration.thaumcraft.ModuleThaumcraftApi;
 import openperipheral.integration.thermalexpansion.ModuleThermalExpansion;
 import openperipheral.integration.tmechworks.ModuleTMechworks;
 import openperipheral.integration.vanilla.ModuleVanilla;
+import openperipheral.integration.vanilla.ModuleVanillaInventory;
+import openperipheral.integration.vanilla.ModuleVanillaInventoryManipulation;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -95,6 +97,8 @@ public class OpenPeripheralIntegration {
 		}
 
 		if (checkConfig(config, "vanilla")) Integration.addModule(new ModuleVanilla());
+		if (checkConfig(config, "vanilla-inventory")) Integration.addModule(new ModuleVanillaInventory());
+		if (checkConfig(config, "vanilla-inventory-manipulation")) Integration.addModule(new ModuleVanillaInventoryManipulation());
 
 		if (checkConfig(config, "cofh-api-energy")) Integration.addModule(new ModuleCofhEnergy());
 		if (checkConfig(config, "cofh-api-inventory")) Integration.addModule(new ModuleCofhInventory());

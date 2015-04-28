@@ -32,8 +32,6 @@ public class ModuleVanilla implements IIntegrationModule {
 	@Override
 	public void load() {
 		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterInventory());
-		adapterRegistry.register(new AdapterWorldInventory());
 		adapterRegistry.register(new AdapterNoteBlock());
 		adapterRegistry.register(new AdapterComparator());
 		adapterRegistry.register(new AdapterBeacon());
