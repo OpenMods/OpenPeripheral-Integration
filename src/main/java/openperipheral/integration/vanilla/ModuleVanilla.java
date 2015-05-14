@@ -43,6 +43,8 @@ public class ModuleVanilla implements IIntegrationModule {
 		adapterRegistry.register(new AdapterRecordPlayer());
 		adapterRegistry.register(new AdapterSign());
 		adapterRegistry.register(new AdapterDaylightSensor());
+		adapterRegistry.register(new AdapterSkull());
+		adapterRegistry.register(new AdapterFlowerPot());
 
 		final IItemStackMetaBuilder itemMeta = ApiAccess.getApi(IItemStackMetaBuilder.class);
 		itemMeta.register(new EnchantedBookMetaProvider());
