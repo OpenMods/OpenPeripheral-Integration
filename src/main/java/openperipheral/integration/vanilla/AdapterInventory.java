@@ -47,6 +47,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return inventory != null? inventory.getSizeInventory() : 0;
 	}
 
+	@Asynchronous(false)
 	@ScriptCallable(description = "Condense and tidy the stacks in an inventory")
 	public void condenseItems(IInventory target) {
 		IInventory inventory = InventoryUtils.getInventory(target);
@@ -63,6 +64,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		target.markDirty();
 	}
 
+	@Asynchronous(false)
 	@ScriptCallable(description = "Swap two slots in the inventory")
 	public void swapStacks(IInventory target,
 			@Arg(name = "from", description = "The first slot") int fromSlot,
@@ -106,6 +108,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		return result;
 	}
 
+	@Asynchronous(false)
 	@ScriptCallable(description = "Destroy a stack")
 	public void destroyStack(IInventory target,
 			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)

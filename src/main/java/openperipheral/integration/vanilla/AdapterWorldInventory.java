@@ -6,12 +6,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
-import openperipheral.api.adapter.*;
+import openperipheral.api.adapter.IAdapterWithConstraints;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.api.adapter.IWorldPosProvider;
 import openperipheral.api.adapter.method.*;
 
 import com.google.common.base.Preconditions;
 
-@Asynchronous
 public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithConstraints {
 
 	private static final int ANY_SLOT = -1;

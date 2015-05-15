@@ -112,7 +112,9 @@ public class AdapterInterface extends AdapterGridBase {
 		ItemStack toInsert = extracted.getItemStack().copy();
 
 		// Put the item in the neighbor inventory
-		ItemDistribution.insertItemIntoInventory(neighbor, toInsert, direction.getOpposite(), intoSlot);
+		if (ItemDistribution.insertItemIntoInventory(neighbor, toInsert, direction.getOpposite(), intoSlot)) {
+			neighbor.markDirty();
+		}
 
 		// If we've moved some items, but others are still remaining.
 		// Insert them back into the ME system.
