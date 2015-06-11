@@ -20,7 +20,8 @@ public class ConverterItemFingerprint implements ITypeConverter {
 
 		Map<?, ?> map = (Map<?, ?>)obj;
 		Object tmp = map.get(TAG_ID);
-		if (!(tmp instanceof String)) return null;
+		if (tmp == null) throw new IllegalArgumentException("Missing mandatory field 'id'");
+		if (!(tmp instanceof String)) throw new IllegalArgumentException(String.format("id '%s' is not string", tmp));
 		String id = (String)tmp;
 
 		tmp = map.get(TAG_DMG);
