@@ -32,10 +32,14 @@ public class AdapterNetwork extends AdapterGridBase {
 		return "me_network";
 	}
 
+	public static enum ItemDetails {
+		NONE, PROXY, ALL
+	}
+
 	@ScriptCallable(description = "Get a list of the stored and craftable items in the network.", returnTypes = ReturnType.TABLE)
 	public List<?> getAvailableItems(IGridHost host,
 			@Env(Constants.ARG_CONVERTER) IConverter converter,
-			@Optionals @Arg(name = "full", description = "Whether to provide full item information") Boolean full) {
+			@Optionals @Arg(name = "details", description = "Format of stored items details (defalt: none)") ItemDetails format) {
 		IStorageGrid storageGrid = getStorageGrid(host);
 		final IItemList<IAEItemStack> storageList = storageGrid.getItemInventory().getStorageList();
 
@@ -45,7 +49,11 @@ public class AdapterNetwork extends AdapterGridBase {
 		for (IAEItemStack stack : storageList) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> map = (Map<String, Object>)converter.fromJava(stack);
-			if (full == Boolean.TRUE) map.put("item", builder.createProxy(stack.getItemStack()));
+			if (format != null && format != ItemDetails.NONE) {
+				final ItemStack itemStack = stack.getItemStack();
+				if (format == ItemDetails.PROXY) map.put("item", builder.createProxy(itemStack));
+				else if (format == ItemDetails.ALL) map.put("item", itemStack);
+			}
 			result.add(map);
 		}
 
