@@ -10,8 +10,8 @@ import openmods.fakeplayer.OpenModsFakePlayer;
 import openperipheral.api.adapter.AdapterSourceName;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.method.*;
+import openperipheral.api.helpers.Index;
 
-import com.google.common.base.Preconditions;
 import com.xcompwiz.mystcraft.api.item.IItemPageCollection;
 
 @ScriptObject
@@ -57,10 +57,10 @@ public class NotebookWrapper {
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE)
-	public ItemStack getPageFromSlot(@Arg(name = "slot") int slot) {
+	public ItemStack getPageFromSlot(@Arg(name = "slot") Index slot) {
 		List<ItemStack> pages = getPages();
-		Preconditions.checkElementIndex(slot, pages.size(), "slot");
-		return pages.get(slot);
+		slot.checkElementIndex("slot", pages.size());
+		return pages.get(slot.value);
 	}
 
 	public ItemStack removePage(final ItemStack page) {

@@ -2,6 +2,7 @@ package openperipheral.integration.appeng;
 
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
+import openperipheral.api.helpers.Index;
 import openperipheral.api.helpers.MultiReturn;
 import appeng.api.implementations.tiles.IChestOrDrive;
 
@@ -38,9 +39,9 @@ public class AdapterStorage implements IPeripheralAdapter {
 	}
 
 	@ScriptCallable(returnTypes = { ReturnType.NUMBER, ReturnType.STRING })
-	public IMultiReturn getCellStatus(IChestOrDrive target, @Arg(name = "slot") int slot) {
+	public IMultiReturn getCellStatus(IChestOrDrive target, @Arg(name = "slot") Index slot) {
 		try {
-			int status = target.getCellStatus(slot - 1);
+			int status = target.getCellStatus(slot.value);
 			return MultiReturn.wrap(status, intToState(status));
 		} catch (IndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Invalid cell index: " + slot);

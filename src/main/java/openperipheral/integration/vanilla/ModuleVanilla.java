@@ -9,6 +9,8 @@ import net.minecraft.nbt.NBTTagList;
 import openmods.integration.IIntegrationModule;
 import openperipheral.api.ApiAccess;
 import openperipheral.api.adapter.IPeripheralAdapterRegistry;
+import openperipheral.api.adapter.IScriptType;
+import openperipheral.api.adapter.ITypeClassifier;
 import openperipheral.api.converter.IConverterManager;
 import openperipheral.api.meta.IEntityMetaBuilder;
 import openperipheral.api.meta.IItemStackMetaBuilder;
@@ -28,6 +30,13 @@ public class ModuleVanilla implements IIntegrationModule {
 	public boolean canLoad() {
 		return true;
 	}
+
+	private static final IScriptType FINGERPRINT_TYPE = new IScriptType() {
+		@Override
+		public String describe() {
+			return "{id:string,dmg:number?,nbt_hash:string?}";
+		}
+	};
 
 	@Override
 	public void load() {
@@ -79,6 +88,9 @@ public class ModuleVanilla implements IIntegrationModule {
 
 		final IConverterManager converters = ApiAccess.getApi(IConverterManager.class);
 		converters.register(new ConverterItemFingerprint());
+
+		final ITypeClassifier classifier = ApiAccess.getApi(ITypeClassifier.class);
+		classifier.registerType(ItemFingerprint.class, FINGERPRINT_TYPE);
 	}
 
 	public static Object listEnchantments(NBTTagList ench) {

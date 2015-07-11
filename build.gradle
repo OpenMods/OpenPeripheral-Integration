@@ -72,9 +72,9 @@ apply plugin: 'forge'
 dependencies {
     compile project(":OpenModsLib") // Load OpenModsLib from submodule
 
-    compile "openperipheral:OpenPeripheralCore-API:3.2"
+    compile "openperipheral:OpenPeripheralCore-API:3.3"
 
-    compile ("appeng:appliedenergistics2:rv2-beta-8:dev") {
+    compile ("appeng:appliedenergistics2:rv2-stable-10:dev") {
         transitive = false
     }
 

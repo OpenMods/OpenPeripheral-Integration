@@ -28,25 +28,12 @@ public class AdapterReconfigurableFacing implements IPeripheralAdapter {
 		return target.allowYAxisFacing();
 	}
 
-	/**
-	 *
-	 *
-	 * @, false otherwise.
-	 */
-
 	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Attempt to rotate the block. Arbitrary based on implementation. Returns true if rotation was successful")
 	public boolean rotateBlock(IReconfigurableFacing target) {
 		SecurityUtils.checkAccess(target);
 		return target.rotateBlock();
 	}
 
-	/**
-	 *
-	 *
-	 * @param side
-	 *            The side to set the facing to.
-	 * @return True if the facing was set, false otherwise.
-	 */
 	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Set the facing of the block. Returns true if rotation was successful")
 	public boolean setFacing(IReconfigurableFacing target,
 			@Arg(name = "side") int side) {

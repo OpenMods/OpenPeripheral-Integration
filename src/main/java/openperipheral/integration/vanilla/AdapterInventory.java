@@ -13,6 +13,7 @@ import openperipheral.api.ApiAccess;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
+import openperipheral.api.helpers.Index;
 import openperipheral.api.meta.IItemStackPartialMetaBuilder;
 
 import com.google.common.base.Objects;
@@ -67,43 +68,45 @@ public class AdapterInventory implements IPeripheralAdapter {
 	@Asynchronous(false)
 	@ScriptCallable(description = "Swap two slots in the inventory")
 	public void swapStacks(IInventory target,
-			@Arg(name = "from", description = "The first slot") int fromSlot,
-			@Arg(name = "to", description = "The other slot") int intoSlot,
+			@Arg(name = "from", description = "The first slot") Index fromSlot,
+			@Arg(name = "to", description = "The other slot") Index intoSlot,
 			@Optionals @Arg(name = "fromDirection") ForgeDirection fromDirection,
 			@Arg(name = "fromDirection") ForgeDirection toDirection) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		Preconditions.checkNotNull(inventory, "Invalid target!");
+		final int size = inventory.getSizeInventory();
+		fromSlot.checkElementIndex("first slot id", size);
+		intoSlot.checkElementIndex("second slot id", size);
 		if (inventory instanceof ISidedInventory) {
 			InventoryUtils.swapStacks((ISidedInventory)inventory,
-					fromSlot - 1, Objects.firstNonNull(fromDirection, ForgeDirection.UNKNOWN),
-					intoSlot - 1, Objects.firstNonNull(toDirection, ForgeDirection.UNKNOWN));
-		} else InventoryUtils.swapStacks(inventory, fromSlot - 1, intoSlot - 1);
+					fromSlot.value, Objects.firstNonNull(fromDirection, ForgeDirection.UNKNOWN),
+					intoSlot.value, Objects.firstNonNull(toDirection, ForgeDirection.UNKNOWN));
+		} else InventoryUtils.swapStacks(inventory, fromSlot.value, intoSlot.value);
 
 		inventory.markDirty();
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.OBJECT, description = "Get details of an item in a particular slot")
 	public Object getStackInSlot(IInventory target,
-			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot,
+			@Arg(name = "slotNumber", description = "Slot number") Index slot,
 			@Optionals @Arg(name = "proxy", description = "If true, method will return proxy instead of computing whole table") Boolean proxy)
 	{
 		IInventory inventory = InventoryUtils.getInventory(target);
-		slot -= 1;
-		Preconditions.checkElementIndex(slot, inventory.getSizeInventory(), "slot id");
-		ItemStack stack = inventory.getStackInSlot(slot);
+		slot.checkElementIndex("slot id", inventory.getSizeInventory());
+		ItemStack stack = inventory.getStackInSlot(slot.value);
 		return proxy == Boolean.TRUE? ApiAccess.getApi(IItemStackPartialMetaBuilder.class).createProxy(stack) : stack;
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get a table with all the items of the chest")
-	public Map<Integer, Object> getAllStacks(IInventory target,
+	public Map<Index, Object> getAllStacks(IInventory target,
 			@Optionals @Arg(name = "proxy", description = "If false, method will compute whole table, instead of returning proxy") Boolean proxy) {
 		final IInventory inventory = InventoryUtils.getInventory(target);
-		Map<Integer, Object> result = Maps.newHashMap();
+		Map<Index, Object> result = Maps.newHashMap();
 
 		final IItemStackPartialMetaBuilder builder = ApiAccess.getApi(IItemStackPartialMetaBuilder.class);
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
-			if (stack != null) result.put(i + 1, (proxy != Boolean.FALSE)? builder.createProxy(stack) : stack);
+			if (stack != null) result.put(new Index(i), (proxy != Boolean.FALSE)? builder.createProxy(stack) : stack);
 		}
 		return result;
 	}
@@ -111,17 +114,16 @@ public class AdapterInventory implements IPeripheralAdapter {
 	@Asynchronous(false)
 	@ScriptCallable(description = "Destroy a stack")
 	public void destroyStack(IInventory target,
-			@Arg(name = "slotNumber", description = "The slot number, from 1 to the max amount of slots") int slot)
+			@Arg(name = "slotNumber", description = "The slot number") Index slot)
 	{
 		IInventory inventory = InventoryUtils.getInventory(target);
-		slot -= 1;
-		Preconditions.checkElementIndex(slot, inventory.getSizeInventory(), "slot id");
-		inventory.setInventorySlotContents(slot, null);
+		slot.checkElementIndex("slot id", inventory.getSizeInventory());
+		inventory.setInventorySlotContents(slot.value, null);
 		inventory.markDirty();
 	}
 
-	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get full stack information from stub one {id=..., [qty=...], [dmg=...]}")
-	public ItemStack expandStack(IInventory target, @Arg(name = "stack", type = ArgType.TABLE) ItemStack itemStack) {
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get full stack information from id and/or damage")
+	public ItemStack expandStack(IInventory target, @Arg(name = "stack") ItemStack itemStack) {
 		return itemStack;
 	}
 }

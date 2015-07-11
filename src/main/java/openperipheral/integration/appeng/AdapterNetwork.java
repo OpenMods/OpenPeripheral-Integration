@@ -62,7 +62,7 @@ public class AdapterNetwork extends AdapterGridBase {
 
 	@ScriptCallable(description = "Retrieves details about the specified item from the ME Network.", returnTypes = ReturnType.OBJECT)
 	public Object getItemDetail(IGridHost host,
-			@Arg(name = "item", description = "Details of the item you are looking for: { id, [ dmg, [nbt_hash]] }", type = ArgType.TABLE) ItemFingerprint needle,
+			@Arg(name = "item", description = "Details of the item you are looking for") ItemFingerprint needle,
 			@Optionals @Arg(name = "proxy", description = "If false, method will compute whole table, instead of returning proxy") Boolean proxy)
 	{
 		final IItemList<IAEItemStack> items = getStorageGrid(host).getItemInventory().getStorageList();

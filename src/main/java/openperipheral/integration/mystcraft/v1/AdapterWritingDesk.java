@@ -20,8 +20,8 @@ import openmods.utils.BlockUtils;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
+import openperipheral.api.helpers.Index;
 
-import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 
 public class AdapterWritingDesk implements IPeripheralAdapter {
@@ -47,28 +47,28 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 	}
 
 	@ScriptCallable(description = "Get the name of a notebook", returnTypes = ReturnType.STRING)
-	public String getNotebookName(Object desk, @Arg(name = "slot", description = "The writing desk slot you are interested in") int deskSlot) {
+	public String getNotebookName(Object desk, @Arg(name = "slot", description = "The writing desk slot you are interested in") Index deskSlot) {
 		return createInventoryWrapper(desk, deskSlot).getInventoryName();
 	}
 
 	@ScriptCallable(description = "Get the number of pages in a notebook", returnTypes = ReturnType.NUMBER)
-	public Integer getNotebookSize(Object desk, @Arg(name = "deskSlot") int deskSlot) {
+	public Integer getNotebookSize(Object desk, @Arg(name = "deskSlot") Index deskSlot) {
 		return createInventoryWrapper(desk, deskSlot).getItemCount();
 	}
 
 	@ScriptCallable(description = "Get the contents of a slot in a notebook", returnTypes = ReturnType.NUMBER)
-	public ItemStack getNotebookStackInSlot(Object desk, @Arg(name = "deskSlot") int deskSlot, @Arg(name = "notebookSlot") int notebookSlot) {
-		return createInventoryWrapper(desk, deskSlot).getStackInSlot(notebookSlot - 1);
+	public ItemStack getNotebookStackInSlot(Object desk, @Arg(name = "deskSlot") Index deskSlot, @Arg(name = "notebookSlot") Index notebookSlot) {
+		return createInventoryWrapper(desk, deskSlot).getStackInSlot(notebookSlot.value);
 	}
 
 	@ScriptCallable(description = "Get the last slot index in a notebook", returnTypes = ReturnType.NUMBER)
-	public Integer getLastNotebookSlot(Object desk, @Arg(name = "deskSlot") int deskSlot) {
+	public Integer getLastNotebookSlot(Object desk, @Arg(name = "deskSlot") Index deskSlot) {
 		return createInventoryWrapper(desk, deskSlot).getSizeInventory() - 1;
 	}
 
 	@ScriptCallable(description = "Swap notebook slots")
-	public void swapNotebookPages(Object desk, @Arg(name = "deskSlot") int deskSlot, @Arg(name = "from") int from, @Arg(name = "to") int to) {
-		InventoryUtils.swapStacks(createInventoryWrapper(desk, deskSlot), from - 1, to - 1);
+	public void swapNotebookPages(Object desk, @Arg(name = "deskSlot") Index deskSlot, @Arg(name = "from") Index from, @Arg(name = "to") Index to) {
+		InventoryUtils.swapStacks(createInventoryWrapper(desk, deskSlot), from.value, to.value);
 	}
 
 	@ScriptCallable(
@@ -76,21 +76,23 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 			description = "Push a page from the notebook into a specific slot in external inventory. Returns the amount of items moved")
 	public int pushNotebookPage(
 			TileEntity desk,
-			@Arg(name = "deskSlot") int deskSlot,
+			@Arg(name = "deskSlot") Index deskSlot,
 			@Arg(name = "direction", description = "The direction of the other inventory. (north, south, east, west, up or down)") ForgeDirection direction,
-			@Arg(name = "fromSlot", description = "The page slot in inventory that you're pushing from") int fromSlot,
-			@Optionals @Arg(name = "intoSlot", description = "The slot in the other inventory that you want to push into") Integer intoSlot) {
+			@Arg(name = "fromSlot", description = "The page slot in inventory that you're pushing from") Index fromSlot,
+			@Optionals @Arg(name = "intoSlot", description = "The slot in the other inventory that you want to push into") Index intoSlot) {
 		IInventory source = createInventoryWrapper(desk, deskSlot);
 		IInventory target = getTargetTile(desk, direction);
 
-		final int amount = ItemDistribution.moveItemInto(source, fromSlot - 1, target, Objects.firstNonNull(intoSlot, 0) - 1, 64, direction.getOpposite(), true);
+		if (intoSlot == null) intoSlot = new Index(-1);
+
+		final int amount = ItemDistribution.moveItemInto(source, fromSlot.value, target, intoSlot.value, 64, direction.getOpposite(), true);
 		if (amount > 0) target.markDirty();
 		return amount;
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Pull an item from the target inventory into any slot in the current one. Returns the amount of items moved")
 	public int pullNotebookPage(TileEntity desk,
-			@Arg(name = "deskSlot") int deskSlot,
+			@Arg(name = "deskSlot") Index deskSlot,
 			@Arg(name = "direction", description = "The direction of the other inventory)") ForgeDirection direction,
 			@Arg(name = "fromSlot", description = "The slot in the other inventory that you're pulling from") int notebookSlot) {
 		IInventory source = getTargetTile(desk, direction);
@@ -102,8 +104,8 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 
 	@ScriptCallable(description = "Create a symbol page from the target symbol")
 	public void writeSymbol(final TileEntity desk,
-			@Arg(name = "deskSlot") int deskSlot,
-			@Arg(name = "notebookSlot", description = "The source symbol to copy") int notebookSlot) {
+			@Arg(name = "deskSlot") Index deskSlot,
+			@Arg(name = "notebookSlot", description = "The source symbol to copy") Index notebookSlot) {
 		final String symbol = getSymbolFromPage(getNotebookStackInSlot(desk, deskSlot, notebookSlot));
 		if (symbol != null) {
 			FakePlayerPool.instance.executeOnPlayer((WorldServer)desk.getWorldObj(), new PlayerUser() {
@@ -133,8 +135,8 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 		return (IInventory)targetTile;
 	}
 
-	private NotebookIInventoryWrapper createInventoryWrapper(Object tile, int number) {
-		ItemStack notebook = GET_NOTEBOOK.call(tile, (byte)(number - 1));
+	private NotebookIInventoryWrapper createInventoryWrapper(Object tile, Index slot) {
+		ItemStack notebook = GET_NOTEBOOK.call(tile, slot.byteValue());
 		return new NotebookIInventoryWrapper(notebook);
 	}
 }
