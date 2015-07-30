@@ -10,9 +10,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.ApiAccess;
+import openperipheral.api.Constants;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
+import openperipheral.api.architecture.IArchitecture;
 import openperipheral.api.helpers.Index;
 import openperipheral.api.meta.IItemStackPartialMetaBuilder;
 
@@ -99,6 +101,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get a table with all the items of the chest")
 	public Map<Index, Object> getAllStacks(IInventory target,
+			@Env(Constants.ARG_ARCHITECTURE) IArchitecture access,
 			@Optionals @Arg(name = "proxy", description = "If false, method will compute whole table, instead of returning proxy") Boolean proxy) {
 		final IInventory inventory = InventoryUtils.getInventory(target);
 		Map<Index, Object> result = Maps.newHashMap();
@@ -106,7 +109,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		final IItemStackPartialMetaBuilder builder = ApiAccess.getApi(IItemStackPartialMetaBuilder.class);
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
-			if (stack != null) result.put(new Index(i), (proxy != Boolean.FALSE)? builder.createProxy(stack) : stack);
+			if (stack != null) result.put(access.createIndex(i), (proxy != Boolean.FALSE)? builder.createProxy(stack) : stack);
 		}
 		return result;
 	}

@@ -17,6 +17,7 @@ import com.google.common.base.Preconditions;
 public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithConstraints {
 
 	private static final int ANY_SLOT = -1;
+	private static final Index ANY_SLOT_INDEX = new Index(ANY_SLOT, 0);
 
 	@Override
 	public boolean canApply(Class<?> target) {
@@ -98,7 +99,7 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 
 		if (otherInventory == target) return 0;
 		if (maxAmount == null) maxAmount = 64;
-		if (intoSlot == null) intoSlot = new Index(ANY_SLOT);
+		if (intoSlot == null) intoSlot = ANY_SLOT_INDEX;
 
 		checkSlotId(otherInventory, fromSlot, "input");
 		checkSlotId(thisInventory, intoSlot, "output");
@@ -125,7 +126,7 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 
 		if (otherInventory == target) return 0;
 		if (maxAmount == null) maxAmount = 64;
-		if (intoSlot == null) intoSlot = new Index(ANY_SLOT);
+		if (intoSlot == null) intoSlot = ANY_SLOT_INDEX;
 
 		checkSlotId(thisInventory, fromSlot, "input");
 		checkSlotId(otherInventory, intoSlot, "output");
