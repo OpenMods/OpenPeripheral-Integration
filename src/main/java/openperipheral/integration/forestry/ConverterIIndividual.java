@@ -223,12 +223,14 @@ public class ConverterIIndividual extends SimpleOutboundConverter<IIndividual> {
 		final boolean isAnalyzed = individual.isAnalyzed();
 		map.put("isAnalyzed", isAnalyzed);
 		map.put("isSecret", individual.isSecret());
+		map.put("hasEffect", individual.hasEffect());
 		GenomeReader<?, ?> genomeReader = null;
 
 		if (individual instanceof IIndividualLiving) {
 			IIndividualLiving living = (IIndividualLiving)individual;
 			map.put("health", living.getHealth());
 			map.put("maxHealth", living.getMaxHealth());
+			map.put("isAlive", living.isAlive());
 		}
 
 		if (individual instanceof IBee) {
@@ -236,9 +238,6 @@ public class ConverterIIndividual extends SimpleOutboundConverter<IIndividual> {
 			map.put("type", "bee");
 			map.put("canSpawn", bee.canSpawn());
 			map.put("generation", bee.getGeneration());
-			map.put("hasEffect", bee.hasEffect());
-			map.put("isAlive", bee.isAlive());
-			map.put("isIrregularMating", bee.isIrregularMating());
 			map.put("isNatural", bee.isNatural());
 
 			if (isAnalyzed) genomeReader = new BeeGenomeReader(bee.getGenome());

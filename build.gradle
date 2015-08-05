@@ -82,7 +82,7 @@ dependencies {
     compile "api:ic2:1"
     compile "api:mfr:1"
     compile "api:railcraft:1"
-    compile "net.sengir.forestry:forestry_1.7.10:3.1.1.4:api"
+    compile "net.sengir.forestry:forestry_1.7.10:3.6.0.17:api"
     
     // hacks
     compile name: 'mystcraft', version: '1.7.10-0.11.6.01-dev', ext: 'jar'
