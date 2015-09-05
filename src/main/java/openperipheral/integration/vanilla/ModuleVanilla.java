@@ -66,6 +66,7 @@ public class ModuleVanilla implements IIntegrationModule {
 		itemMeta.register(new ItemToolMetaProvider());
 		itemMeta.register(new ItemArmorMetaProvider());
 		itemMeta.register(new ItemSwordMetaProvider());
+		itemMeta.register(new ItemPotionMetaProvider());
 
 		final IEntityMetaBuilder entityMeta = ApiAccess.getApi(IEntityMetaBuilder.class);
 		entityMeta.register(new EntityItemMetaProvider());

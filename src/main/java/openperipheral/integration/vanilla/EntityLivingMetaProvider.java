@@ -1,6 +1,7 @@
 package openperipheral.integration.vanilla;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -11,6 +12,7 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLivingBase> {
@@ -96,7 +98,30 @@ public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLiv
 			}
 		}
 
+		map.put("potion_effects", getPotionEffects(target));
+
 		return map;
+	}
+
+	private static Object getPotionEffects(EntityLivingBase target) {
+		@SuppressWarnings("unchecked")
+		final Collection<PotionEffect> effects = target.getActivePotionEffects();
+
+		final List<Map<String, Object>> effectsInfo = Lists.newArrayList();
+
+		for (PotionEffect effect : effects) {
+			final Map<String, Object> entry = Maps.newHashMap();
+
+			entry.put("duration", effect.getDuration() / 20); // ticks!
+			entry.put("amplifier", effect.getAmplifier());
+			entry.put("is_ambient", effect.getIsAmbient());
+
+			entry.put("effect", ItemPotionMetaProvider.getPotionInfo(effect.getPotionID()));
+
+			effectsInfo.add(entry);
+		}
+
+		return effectsInfo;
 	}
 
 }
