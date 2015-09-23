@@ -1,6 +1,5 @@
 package openperipheral.integration.forestry;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +17,12 @@ import forestry.api.apiculture.IBeeHousing;
 import forestry.api.genetics.*;
 
 public class AdapterBeeHousing implements IPeripheralAdapter {
+
+	private static final String MUTATION_RESULT = "result";
+	private static final String MUTATION_CONDITIONS = "specialConditions";
+	private static final String MUTATION_CHANCE = "chance";
+	private static final String ALLELE_2 = "allele2";
+	private static final String ALLELE_1 = "allele1";
 
 	@Override
 	public Class<?> getTargetClass() {
@@ -48,39 +53,35 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		return null;
 	}
 
-	/**
-	 * Experimental method. Adding it aganist beehousing for now as we need some
-	 * kind of block to run it against
-	 * Trying to get the full breeding tree for all bees
-	 *
-	 * @param computer
-	 * @param housing
-	 * @return
-	 */
 	@Asynchronous
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the full breeding list thingy. Experimental!")
-	public Map<Integer, Map<String, Object>> getBeeBreedingData(IBeeHousing housing) {
+	public List<Map<String, Object>> getBeeBreedingData(IBeeHousing housing) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
-		if (beeRoot == null) { return null; }
-		Map<Integer, Map<String, Object>> result = Maps.newHashMap();
-		int j = 1;
+		if (beeRoot == null) return null;
+
+		List<Map<String, Object>> result = Lists.newArrayList();
+
 		for (IMutation mutation : beeRoot.getMutations(false)) {
-			HashMap<String, Object> mutationMap = new HashMap<String, Object>();
-			IAllele allele1 = mutation.getAllele0();
-			if (allele1 != null) {
-				mutationMap.put("allele1", allele1.getName());
+			final Map<String, Object> mutationMap = Maps.newHashMap();
+			try {
+				IAllele allele1 = mutation.getAllele0();
+				if (allele1 != null) mutationMap.put(ALLELE_1, allele1.getName());
+				IAllele allele2 = mutation.getAllele1();
+				if (allele2 != null) mutationMap.put(ALLELE_2, allele2.getName());
+
+				final IAllele[] template = mutation.getTemplate();
+				// first allele is usually species
+				if (template != null && template.length > 0) {
+					mutationMap.put(MUTATION_RESULT, template[0].getName());
+				}
+
+				mutationMap.put(MUTATION_CHANCE, mutation.getBaseChance());
+				mutationMap.put(MUTATION_CONDITIONS, mutation.getSpecialConditions());
+
+				result.add(mutationMap);
+			} catch (Exception e) {
+				throw new RuntimeException(String.format("Failed to get bee breeding information from %s, collected data: %s", mutation, mutationMap), e);
 			}
-			IAllele allele2 = mutation.getAllele1();
-			if (allele2 != null) {
-				mutationMap.put("allele2", allele2.getName());
-			}
-			mutationMap.put("chance", mutation.getBaseChance());
-			mutationMap.put("specialConditions", mutation.getSpecialConditions().toArray());
-			IAllele[] template = mutation.getTemplate();
-			if (template != null && template.length > 0) {
-				mutationMap.put("result", template[0].getName());
-			}
-			result.put(j++, mutationMap);
 		}
 		return result;
 	}
@@ -141,13 +142,13 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		Map<String, Object> parentMap = Maps.newHashMap();
 
 		IAllele allele1 = mutation.getAllele0();
-		if (allele1 instanceof IAlleleSpecies) parentMap.put("allele1", serializeSpecies((IAlleleSpecies)allele1));
+		if (allele1 instanceof IAlleleSpecies) parentMap.put(ALLELE_1, serializeSpecies((IAlleleSpecies)allele1));
 
 		IAllele allele2 = mutation.getAllele1();
-		if (allele2 instanceof IAlleleSpecies) parentMap.put("allele2", serializeSpecies((IAlleleSpecies)allele2));
+		if (allele2 instanceof IAlleleSpecies) parentMap.put(ALLELE_2, serializeSpecies((IAlleleSpecies)allele2));
 
-		parentMap.put("chance", mutation.getBaseChance());
-		parentMap.put("specialConditions", mutation.getSpecialConditions());
+		parentMap.put(MUTATION_CHANCE, mutation.getBaseChance());
+		parentMap.put(MUTATION_CONDITIONS, mutation.getSpecialConditions());
 		return parentMap;
 	}
 
