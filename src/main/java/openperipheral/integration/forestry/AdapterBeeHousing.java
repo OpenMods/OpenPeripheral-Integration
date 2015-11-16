@@ -1,6 +1,7 @@
 package openperipheral.integration.forestry;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
@@ -109,7 +110,7 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
 		if (beeRoot == null) return null;
 		List<Map<String, Object>> result = Lists.newArrayList();
-		childType = childType.toLowerCase();
+		childType = childType.toLowerCase(Locale.ENGLISH);
 
 		for (IMutation mutation : beeRoot.getMutations(false)) {
 			IAllele[] template = mutation.getTemplate();
@@ -120,8 +121,8 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 			if (!(allele instanceof IAlleleSpecies)) continue;
 
 			IAlleleSpecies species = (IAlleleSpecies)allele;
-			final String uid = species.getUID().toLowerCase();
-			final String localizedName = species.getName().toLowerCase();
+			final String uid = species.getUID().toLowerCase(Locale.ENGLISH);
+			final String localizedName = species.getName().toLowerCase(Locale.ENGLISH);
 
 			if (localizedName.equals(childType) || uid.equals(childType)) {
 				Map<String, Object> parentMap = serializeMutation(mutation);

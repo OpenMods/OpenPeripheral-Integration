@@ -1,5 +1,6 @@
 package openperipheral.integration.thaumcraft;
 
+import java.util.Locale;
 import java.util.Map;
 
 import openperipheral.api.adapter.Asynchronous;
@@ -51,7 +52,7 @@ public class AdapterAspectContainer implements IPeripheralAdapter {
 	public int getAspectCount(IAspectContainer container,
 			@Arg(name = "aspect", description = "Aspect to be checked") String aspectName) {
 
-		Aspect aspect = Aspect.getAspect(aspectName.toLowerCase());
+		Aspect aspect = Aspect.getAspect(aspectName.toLowerCase(Locale.ENGLISH));
 		Preconditions.checkNotNull(aspect, "Invalid aspect name");
 		AspectList list = container.getAspects();
 		if (list == null) return 0;
