@@ -71,7 +71,7 @@ public class OpenPeripheralIntegration {
 
 	private static boolean sameOrNewerVersion(String modid, String version) {
 		final ModContainer modContainer = Loader.instance().getIndexedModList().get(modid);
-		if (modContainer == null) return false;
+		if (modContainer == null) return true;
 
 		final ArtifactVersion targetVersion = new DefaultArtifactVersion(version);
 		final ArtifactVersion actualVersion = modContainer.getProcessedVersion();
