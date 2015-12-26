@@ -1,9 +1,8 @@
 package openperipheral.integration.thaumcraft;
 
 import openmods.Mods;
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.ModIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleThaumcraft extends ModIntegrationModule {
 
@@ -14,11 +13,10 @@ public class ModuleThaumcraft extends ModIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterJar());
-		adapterRegistry.register(new AdapterBrainJar());
-		adapterRegistry.register(new AdapterArcaneBore());
-		adapterRegistry.register(new AdapterArcaneEar());
-		adapterRegistry.register(new AdapterDeconstructor());
+		OpcAccess.adapterRegistry.register(new AdapterJar());
+		OpcAccess.adapterRegistry.register(new AdapterBrainJar());
+		OpcAccess.adapterRegistry.register(new AdapterArcaneBore());
+		OpcAccess.adapterRegistry.register(new AdapterArcaneEar());
+		OpcAccess.adapterRegistry.register(new AdapterDeconstructor());
 	}
 }

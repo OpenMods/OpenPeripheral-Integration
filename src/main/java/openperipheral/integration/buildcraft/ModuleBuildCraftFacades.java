@@ -1,8 +1,7 @@
 package openperipheral.integration.buildcraft;
 
-import openperipheral.api.ApiAccess;
-import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ApiIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleBuildCraftFacades extends ApiIntegrationModule {
 
@@ -13,7 +12,6 @@ public class ModuleBuildCraftFacades extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		IItemStackMetaBuilder metaBuilder = ApiAccess.getApi(IItemStackMetaBuilder.class);
-		metaBuilder.register(new FacadeMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new FacadeMetaProvider());
 	}
 }

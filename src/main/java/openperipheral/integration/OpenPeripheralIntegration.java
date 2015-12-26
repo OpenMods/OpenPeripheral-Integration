@@ -38,6 +38,7 @@ import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -49,7 +50,7 @@ import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 		version = "$VERSION$",
 		guiFactory = "openperipheral.integration.ConfigGuiFactory",
 		acceptableRemoteVersions = "*",
-		dependencies = "required-after:OpenMods@[$LIB-VERSION$,$NEXT-LIB-VERSION$);required-after:OpenPeripheralApi@[3.3.1,3.4);after:ComputerCraft@[1.70,];after:appliedEnergistics-2;after:IC2;after:EnderStorage;after:BuildCraft|Core;after:Forestry;after:Mystcraft;after:Railcraft;after:Thaumcraft;after:ThermalExpansion;")
+		dependencies = "required-after:OpenMods@[$LIB-VERSION$,$NEXT-LIB-VERSION$);required-after:OpenPeripheralApi@$OP-API-VERSION$;after:ComputerCraft@[1.70,];after:appliedEnergistics-2;after:IC2;after:EnderStorage;after:BuildCraft|Core;after:Forestry;after:Mystcraft;after:Railcraft;after:Thaumcraft;after:ThermalExpansion;")
 public class OpenPeripheralIntegration {
 
 	public class ConfigChangeListener {
@@ -147,6 +148,11 @@ public class OpenPeripheralIntegration {
 		FMLCommonHandler.instance().bus().register(new ConfigChangeListener());
 
 		if (config.hasChanged()) config.save();
+	}
+
+	@EventHandler
+	public void init(FMLInitializationEvent evt) {
+		OpcAccess.checkApiPresent();
 	}
 
 }

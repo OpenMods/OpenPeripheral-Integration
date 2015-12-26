@@ -1,11 +1,8 @@
 package openperipheral.integration.appeng;
 
 import openmods.Mods;
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
-import openperipheral.api.converter.IConverterManager;
-import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ModIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleAppEng extends ModIntegrationModule {
 	public static final String CC_EVENT_STATE_CHANGED = "crafting_state";
@@ -17,16 +14,13 @@ public class ModuleAppEng extends ModIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterStorage());
-		adapterRegistry.register(new AdapterInterface());
-		adapterRegistry.register(new AdapterNetwork());
+		OpcAccess.adapterRegistry.register(new AdapterStorage());
+		OpcAccess.adapterRegistry.register(new AdapterInterface());
+		OpcAccess.adapterRegistry.register(new AdapterNetwork());
 
-		final IConverterManager convertersRegistry = ApiAccess.getApi(IConverterManager.class);
-		convertersRegistry.register(new ConverterAEItemStack());
+		OpcAccess.converterManager.register(new ConverterAEItemStack());
 
-		final IItemStackMetaBuilder stackBuilders = ApiAccess.getApi(IItemStackMetaBuilder.class);
-		stackBuilders.register(new StorageCellMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new StorageCellMetaProvider());
 	}
 
 }

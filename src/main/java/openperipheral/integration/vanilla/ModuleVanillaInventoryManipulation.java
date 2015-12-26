@@ -1,8 +1,7 @@
 package openperipheral.integration.vanilla;
 
 import openmods.integration.IIntegrationModule;
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleVanillaInventoryManipulation implements IIntegrationModule {
 	public static String DUMMY_VANILLA_MODID = "vanilla";
@@ -19,7 +18,6 @@ public class ModuleVanillaInventoryManipulation implements IIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterWorldInventory());
+		OpcAccess.adapterRegistry.register(new AdapterWorldInventory());
 	}
 }

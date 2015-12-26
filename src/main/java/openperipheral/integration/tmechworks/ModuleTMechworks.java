@@ -1,9 +1,9 @@
 package openperipheral.integration.tmechworks;
 
 import openmods.Mods;
-import openperipheral.api.ApiAccess;
 import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.ModIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleTMechworks extends ModIntegrationModule {
 
@@ -14,7 +14,7 @@ public class ModuleTMechworks extends ModIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
+		final IPeripheralAdapterRegistry adapterRegistry = OpcAccess.adapterRegistry;
 		adapterRegistry.register(new AdapterDrawbridgeLogicBase());
 	}
 }

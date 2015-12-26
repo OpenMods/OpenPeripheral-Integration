@@ -1,9 +1,8 @@
 package openperipheral.integration.thermalexpansion;
 
 import openmods.Mods;
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.ModIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleThermalExpansion extends ModIntegrationModule {
 
@@ -14,7 +13,6 @@ public class ModuleThermalExpansion extends ModIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterTileLamp());
+		OpcAccess.adapterRegistry.register(new AdapterTileLamp());
 	}
 }

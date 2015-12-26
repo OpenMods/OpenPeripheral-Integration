@@ -2,9 +2,8 @@ package openperipheral.integration.minefactoryreloaded;
 
 import openmods.Mods;
 import openmods.integration.Conditions;
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.CustomIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleMinefactoryReloadedStorage extends CustomIntegrationModule {
 
@@ -19,7 +18,6 @@ public class ModuleMinefactoryReloadedStorage extends CustomIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterDeepStorage());
+		OpcAccess.adapterRegistry.register(new AdapterDeepStorage());
 	}
 }

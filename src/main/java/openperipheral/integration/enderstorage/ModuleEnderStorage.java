@@ -1,9 +1,8 @@
 package openperipheral.integration.enderstorage;
 
 import openmods.Mods;
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.ModIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleEnderStorage extends ModIntegrationModule {
 
@@ -14,7 +13,6 @@ public class ModuleEnderStorage extends ModIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry api = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		api.register(new AdapterFrequencyOwner());
+		OpcAccess.adapterRegistry.register(new AdapterFrequencyOwner());
 	}
 }

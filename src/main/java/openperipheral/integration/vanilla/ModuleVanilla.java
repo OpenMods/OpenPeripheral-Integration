@@ -7,13 +7,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import openmods.integration.IIntegrationModule;
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.api.adapter.IScriptType;
-import openperipheral.api.adapter.ITypeClassifier;
-import openperipheral.api.converter.IConverterManager;
-import openperipheral.api.meta.IEntityMetaBuilder;
-import openperipheral.api.meta.IItemStackMetaBuilder;
+import openperipheral.integration.OpcAccess;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -40,58 +35,53 @@ public class ModuleVanilla implements IIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterNoteBlock());
-		adapterRegistry.register(new AdapterComparator());
-		adapterRegistry.register(new AdapterBeacon());
-		adapterRegistry.register(new AdapterBrewingStand());
-		adapterRegistry.register(new AdapterFluidHandler());
-		adapterRegistry.register(new AdapterFluidTank());
-		adapterRegistry.register(new AdapterFurnace());
-		adapterRegistry.register(new AdapterMobSpawner());
-		adapterRegistry.register(new AdapterRecordPlayer());
-		adapterRegistry.register(new AdapterSign());
-		adapterRegistry.register(new AdapterDaylightSensor());
-		adapterRegistry.register(new AdapterSkull());
-		adapterRegistry.register(new AdapterFlowerPot());
+		OpcAccess.adapterRegistry.register(new AdapterNoteBlock());
+		OpcAccess.adapterRegistry.register(new AdapterComparator());
+		OpcAccess.adapterRegistry.register(new AdapterBeacon());
+		OpcAccess.adapterRegistry.register(new AdapterBrewingStand());
+		OpcAccess.adapterRegistry.register(new AdapterFluidHandler());
+		OpcAccess.adapterRegistry.register(new AdapterFluidTank());
+		OpcAccess.adapterRegistry.register(new AdapterFurnace());
+		OpcAccess.adapterRegistry.register(new AdapterMobSpawner());
+		OpcAccess.adapterRegistry.register(new AdapterRecordPlayer());
+		OpcAccess.adapterRegistry.register(new AdapterSign());
+		OpcAccess.adapterRegistry.register(new AdapterDaylightSensor());
+		OpcAccess.adapterRegistry.register(new AdapterSkull());
+		OpcAccess.adapterRegistry.register(new AdapterFlowerPot());
 
-		final IItemStackMetaBuilder itemMeta = ApiAccess.getApi(IItemStackMetaBuilder.class);
-		itemMeta.register(new EnchantedBookMetaProvider());
-		itemMeta.register(new EnchantmentMetaProvider());
-		itemMeta.register(new FluidContainerMetaProvider());
-		itemMeta.register(new BurnTimeMetaProvider());
-		itemMeta.register(new OreDictMetaProvider());
-		itemMeta.register(new FingerprintMetaProvider());
-		itemMeta.register(new ItemToolClassMetaProvider());
-		itemMeta.register(new ItemToolMetaProvider());
-		itemMeta.register(new ItemArmorMetaProvider());
-		itemMeta.register(new ItemSwordMetaProvider());
-		itemMeta.register(new ItemPotionMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new EnchantedBookMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new EnchantmentMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new FluidContainerMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new BurnTimeMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new OreDictMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new FingerprintMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new ItemToolClassMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new ItemToolMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new ItemArmorMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new ItemSwordMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new ItemPotionMetaProvider());
 
-		final IEntityMetaBuilder entityMeta = ApiAccess.getApi(IEntityMetaBuilder.class);
-		entityMeta.register(new EntityItemMetaProvider());
-		entityMeta.register(new PaintingMetaProvider());
-		entityMeta.register(new ItemFrameMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityItemMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new PaintingMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new ItemFrameMetaProvider());
 
-		entityMeta.register(new EntityBatMetaProvider());
-		entityMeta.register(new EntityCreeperMetaProvider());
-		entityMeta.register(new EntityHorseMetaProvider());
-		entityMeta.register(new EntityLivingMetaProvider());
-		entityMeta.register(new EntityPigMetaProvider());
-		entityMeta.register(new EntityPlayerMetaProvider());
-		entityMeta.register(new EntitySheepMetaProvider());
-		entityMeta.register(new EntityTameableMetaProvider());
-		entityMeta.register(new EntityVillagerMetaProvider());
-		entityMeta.register(new EntityWitchMetaProvider());
-		entityMeta.register(new EntityWolfMetaProvider());
-		entityMeta.register(new EntityZombieMetaProvider());
-		entityMeta.register(new InventoryProviderMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityBatMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityCreeperMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityHorseMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityLivingMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityPigMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityPlayerMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntitySheepMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityTameableMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityVillagerMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityWitchMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityWolfMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EntityZombieMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new InventoryProviderMetaProvider());
 
-		final IConverterManager converters = ApiAccess.getApi(IConverterManager.class);
-		converters.register(new ConverterItemFingerprint());
+		OpcAccess.converterManager.register(new ConverterItemFingerprint());
 
-		final ITypeClassifier classifier = ApiAccess.getApi(ITypeClassifier.class);
-		classifier.registerType(ItemFingerprint.class, FINGERPRINT_TYPE);
+		OpcAccess.typeClassifier.registerType(ItemFingerprint.class, FINGERPRINT_TYPE);
 	}
 
 	public static Object listEnchantments(NBTTagList ench) {

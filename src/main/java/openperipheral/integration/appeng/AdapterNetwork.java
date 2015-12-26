@@ -4,11 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import openperipheral.api.ApiAccess;
 import openperipheral.api.Constants;
 import openperipheral.api.adapter.method.*;
 import openperipheral.api.converter.IConverter;
-import openperipheral.api.meta.IItemStackPartialMetaBuilder;
+import openperipheral.integration.OpcAccess;
 import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.crafting.ICraftingCPU;
@@ -43,15 +42,13 @@ public class AdapterNetwork extends AdapterGridBase {
 		IStorageGrid storageGrid = getStorageGrid(host);
 		final IItemList<IAEItemStack> storageList = storageGrid.getItemInventory().getStorageList();
 
-		final IItemStackPartialMetaBuilder builder = ApiAccess.getApi(IItemStackPartialMetaBuilder.class);
-
 		List<Object> result = Lists.newArrayList();
 		for (IAEItemStack stack : storageList) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> map = (Map<String, Object>)converter.fromJava(stack);
 			if (format != null && format != ItemDetails.NONE) {
 				final ItemStack itemStack = stack.getItemStack();
-				if (format == ItemDetails.PROXY) map.put("item", builder.createProxy(itemStack));
+				if (format == ItemDetails.PROXY) map.put("item", OpcAccess.itemStackMetaBuilder.createProxy(itemStack));
 				else if (format == ItemDetails.ALL) map.put("item", itemStack);
 			}
 			result.add(map);
@@ -69,7 +66,7 @@ public class AdapterNetwork extends AdapterGridBase {
 		final IAEItemStack stack = findStack(items, needle);
 		if (stack == null) return null;
 		ItemStack vanillaStack = stack.getItemStack();
-		return proxy != Boolean.FALSE? ApiAccess.getApi(IItemStackPartialMetaBuilder.class).createProxy(vanillaStack) : vanillaStack;
+		return proxy != Boolean.FALSE? OpcAccess.itemStackMetaBuilder.createProxy(vanillaStack) : vanillaStack;
 	}
 
 	@ScriptCallable(description = "Get the average power injection into the network", returnTypes = ReturnType.NUMBER)

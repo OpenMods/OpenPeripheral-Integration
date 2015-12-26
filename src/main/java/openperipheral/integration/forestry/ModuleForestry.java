@@ -1,10 +1,7 @@
 package openperipheral.integration.forestry;
 
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
-import openperipheral.api.converter.IConverterManager;
-import openperipheral.api.meta.IItemStackMetaBuilder;
 import openperipheral.integration.ApiIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleForestry extends ApiIntegrationModule {
 	@Override
@@ -14,12 +11,10 @@ public class ModuleForestry extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry peripheralRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		peripheralRegistry.register(new AdapterBeeHousing());
+		OpcAccess.adapterRegistry.register(new AdapterBeeHousing());
 
-		final IConverterManager typeRegistry = ApiAccess.getApi(IConverterManager.class);
-		typeRegistry.register(new ConverterIIndividual());
+		OpcAccess.converterManager.register(new ConverterIIndividual());
 
-		ApiAccess.getApi(IItemStackMetaBuilder.class).register(new IndividualMetaProvider());
+		OpcAccess.itemStackMetaBuilder.register(new IndividualMetaProvider());
 	}
 }

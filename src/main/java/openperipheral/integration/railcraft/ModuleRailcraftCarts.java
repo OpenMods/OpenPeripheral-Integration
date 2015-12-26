@@ -1,8 +1,7 @@
 package openperipheral.integration.railcraft;
 
-import openperipheral.api.ApiAccess;
-import openperipheral.api.meta.IEntityMetaBuilder;
 import openperipheral.integration.ApiIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleRailcraftCarts extends ApiIntegrationModule {
 
@@ -13,13 +12,12 @@ public class ModuleRailcraftCarts extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		final IEntityMetaBuilder entityMeta = ApiAccess.getApi(IEntityMetaBuilder.class);
-		entityMeta.register(new ExplosiveCartMetaProvider());
-		entityMeta.register(new EnergyCartMetaProvider());
-		entityMeta.register(new LinkableCartMetaProvider());
-		entityMeta.register(new LiquidCartMetaProvider());
-		entityMeta.register(new PaintedCartMetaProvider());
-		entityMeta.register(new RefuealableCartMetaProvider());
-		entityMeta.register(new RoutableCartMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new ExplosiveCartMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new EnergyCartMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new LinkableCartMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new LiquidCartMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new PaintedCartMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new RefuealableCartMetaProvider());
+		OpcAccess.entityMetaBuilder.register(new RoutableCartMetaProvider());
 	}
 }

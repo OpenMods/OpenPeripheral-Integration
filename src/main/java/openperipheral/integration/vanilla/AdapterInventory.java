@@ -9,14 +9,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
-import openperipheral.api.ApiAccess;
 import openperipheral.api.Constants;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
 import openperipheral.api.architecture.IArchitecture;
 import openperipheral.api.helpers.Index;
-import openperipheral.api.meta.IItemStackPartialMetaBuilder;
+import openperipheral.integration.OpcAccess;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
@@ -96,7 +95,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		slot.checkElementIndex("slot id", inventory.getSizeInventory());
 		ItemStack stack = inventory.getStackInSlot(slot.value);
-		return proxy == Boolean.TRUE? ApiAccess.getApi(IItemStackPartialMetaBuilder.class).createProxy(stack) : stack;
+		return proxy == Boolean.TRUE? OpcAccess.itemStackMetaBuilder.createProxy(stack) : stack;
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get a table with all the items of the chest")
@@ -106,10 +105,9 @@ public class AdapterInventory implements IPeripheralAdapter {
 		final IInventory inventory = InventoryUtils.getInventory(target);
 		Map<Index, Object> result = Maps.newHashMap();
 
-		final IItemStackPartialMetaBuilder builder = ApiAccess.getApi(IItemStackPartialMetaBuilder.class);
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
-			if (stack != null) result.put(access.createIndex(i), (proxy != Boolean.FALSE)? builder.createProxy(stack) : stack);
+			if (stack != null) result.put(access.createIndex(i), (proxy != Boolean.FALSE)? OpcAccess.itemStackMetaBuilder.createProxy(stack) : stack);
 		}
 		return result;
 	}

@@ -1,8 +1,7 @@
 package openperipheral.integration.cofh.inventory;
 
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.ApiIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleCofhInventory extends ApiIntegrationModule {
 
@@ -13,7 +12,6 @@ public class ModuleCofhInventory extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterInventoryHandler());
+		OpcAccess.adapterRegistry.register(new AdapterInventoryHandler());
 	}
 }

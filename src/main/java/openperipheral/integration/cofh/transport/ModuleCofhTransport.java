@@ -1,8 +1,7 @@
 package openperipheral.integration.cofh.transport;
 
-import openperipheral.api.ApiAccess;
-import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.integration.ApiIntegrationModule;
+import openperipheral.integration.OpcAccess;
 
 public class ModuleCofhTransport extends ApiIntegrationModule {
 
@@ -13,9 +12,8 @@ public class ModuleCofhTransport extends ApiIntegrationModule {
 
 	@Override
 	public void load() {
-		final IPeripheralAdapterRegistry adapterRegistry = ApiAccess.getApi(IPeripheralAdapterRegistry.class);
-		adapterRegistry.register(new AdapterEnderEnergyAttuned());
-		adapterRegistry.register(new AdapterEnderItemAttuned());
-		adapterRegistry.register(new AdapterEnderFluidAttuned());
+		OpcAccess.adapterRegistry.register(new AdapterEnderEnergyAttuned());
+		OpcAccess.adapterRegistry.register(new AdapterEnderItemAttuned());
+		OpcAccess.adapterRegistry.register(new AdapterEnderFluidAttuned());
 	}
 }
