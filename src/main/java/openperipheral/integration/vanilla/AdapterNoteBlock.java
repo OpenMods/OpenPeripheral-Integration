@@ -1,6 +1,7 @@
 package openperipheral.integration.vanilla;
 
 import net.minecraft.tileentity.TileEntityNote;
+import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
 
@@ -28,19 +29,24 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 		noteblock.triggerNote(noteblock.getWorldObj(), noteblock.xCoord, noteblock.yCoord, noteblock.zCoord);
 	}
 
-	@ScriptCallable(description = "Set the note on the noteblock")
-	public void setPitch(TileEntityNote noteblock,
-			@Arg(name = "note", description = "The note you want. From 0 to 25") int note)
+	@ScriptCallable(description = "Set the note on the noteblock", returnTypes = { ReturnType.BOOLEAN })
+	public boolean setPitch(TileEntityNote noteblock,
+			@Arg(name = "note", description = "The note you want. From 0 to 25") int newNote)
 	{
-		noteblock.note = (byte)(note % 25);
+		final byte oldNote = noteblock.note;
+		noteblock.note = (byte)(newNote % 25);
+		if (!net.minecraftforge.common.ForgeHooks.onNoteChange(noteblock, oldNote)) return false;
 		noteblock.markDirty();
+		return true;
 	}
 
+	@Asynchronous
 	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get the note currently set on this noteblock")
 	public byte getNote(TileEntityNote noteblock) {
 		return noteblock.note;
 	}
 
+	@Asynchronous
 	@ScriptCallable(description = "Plays a minecraft sound")
 	public void playSound(TileEntityNote noteblock,
 			@Arg(name = "sound", description = "The identifier for the sound") String name,
