@@ -14,7 +14,7 @@ public class EnchantedBookMetaProvider extends ItemStackMetaProviderSimple<ItemE
 
 	@Override
 	public Object getMeta(ItemEnchantedBook target, ItemStack stack) {
-		NBTTagList ench = target.func_92110_g(stack);
+		NBTTagList ench = target.getEnchantments(stack);
 		return ench != null? ModuleVanilla.listEnchantments(ench) : null;
 	}
 

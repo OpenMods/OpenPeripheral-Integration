@@ -25,12 +25,12 @@ public class EntityHorseMetaProvider extends EntityMetaProviderSimple<EntityHors
 
 		map.put("eatingHaystack", target.isEatingHaystack());
 		map.put("hasReproduced", target.getHasReproduced());
-		map.put("bred", target.func_110205_ce());
+		map.put("bred", target.isBreeding());
 		map.put("horseType", target.getHorseType());
 		map.put("horseVariant", target.getHorseVariant());
 		map.put("horseTemper", target.getTemper());
 		map.put("horseTame", target.isTame());
-		map.put("ownerUUID", target.func_152119_ch());
+		map.put("ownerUUID", target.getOwnerId());
 
 		final boolean chested = target.isChested();
 		map.put("chestedHorse", chested);

@@ -2,11 +2,11 @@ package openperipheral.integration.vanilla;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import openmods.inventory.legacy.CustomSinks;
 import openmods.inventory.legacy.ItemDistribution;
-import openmods.utils.InventoryUtils;
 import openperipheral.api.adapter.IAdapterWithConstraints;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.IWorldPosProvider;
@@ -56,22 +56,12 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 
 				@Override
 				public World getWorld() {
-					return te.getWorldObj();
+					return te.getWorld();
 				}
 
 				@Override
-				public int getX() {
-					return te.xCoord;
-				}
-
-				@Override
-				public int getY() {
-					return te.yCoord;
-				}
-
-				@Override
-				public int getZ() {
-					return te.zCoord;
+				public BlockPos getPos() {
+					return te.getPos();
 				}
 			};
 		}
@@ -79,19 +69,19 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 		throw new IllegalArgumentException("Invalid target object " + String.valueOf(target));
 	}
 
-	private static TileEntity getNeighborTarget(IInventory target, ForgeDirection direction) {
+	private static TileEntity getNeighborTarget(IInventory target, EnumFacing direction) {
 		Preconditions.checkNotNull(direction, "Invalid direction");
-		Preconditions.checkArgument(direction != ForgeDirection.UNKNOWN, "Invalid direction");
 		final IWorldPosProvider provider = getProvider(target);
 
 		final World world = provider.getWorld();
-		return world.getTileEntity(provider.getX() + direction.offsetX, provider.getY() + direction.offsetY, provider.getZ() + direction.offsetZ);
+		final BlockPos pos = provider.getPos().offset(direction);
+		return world.getTileEntity(pos);
 	}
 
 	@Alias("pullItemIntoSlot")
 	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Pull an item from a slot in another inventory into a slot in this one. Returns the amount of items moved")
 	public int pullItem(IInventory target,
-			@Arg(name = "direction", description = "The direction of the other inventory") ForgeDirection direction,
+			@Arg(name = "direction", description = "The direction of the other inventory") EnumFacing direction,
 			@Arg(name = "slot", description = "The slot in the OTHER inventory that you're pulling from") Index fromSlot,
 			@Optionals @Arg(name = "maxAmount", description = "The maximum amount of items you want to pull") Integer maxAmount,
 			@Arg(name = "intoSlot", description = "The slot in the current inventory that you want to pull into") Index intoSlot) {
@@ -100,19 +90,17 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 		if (otherTarget == null) throw new IllegalArgumentException("Other block not found");
 		if (!(otherTarget instanceof IInventory)) throw new IllegalArgumentException("Other block is not inventory");
 
-		final IInventory otherInventory = InventoryUtils.getInventory((IInventory)otherTarget);
-		final IInventory thisInventory = InventoryUtils.getInventory(target);
-
+		final IInventory otherInventory = (IInventory)otherTarget;
 		if (otherTarget == target) return 0;
 		if (maxAmount == null) maxAmount = 64;
 		if (intoSlot == null) intoSlot = ANY_SLOT_INDEX;
 
 		checkSlotId(otherInventory, fromSlot, "input");
-		checkSlotId(thisInventory, intoSlot, "output");
+		checkSlotId(target, intoSlot, "output");
 
-		final int amount = ItemDistribution.moveItemInto(otherInventory, fromSlot.value, thisInventory, intoSlot.value, maxAmount, direction.getOpposite(), true);
+		final int amount = ItemDistribution.moveItemInto(otherInventory, fromSlot.value, target, intoSlot.value, maxAmount, direction.getOpposite(), true);
 		if (amount > 0) {
-			thisInventory.markDirty();
+			target.markDirty();
 			otherInventory.markDirty();
 		}
 		return amount;
@@ -122,14 +110,14 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 	@Alias("pushItemIntoSlot")
 	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Push an item from the current inventory into pipe or slot on the other inventory. Returns the amount of items moved")
 	public int pushItem(IInventory target,
-			@Arg(name = "direction", description = "The direction of the other inventory") ForgeDirection direction,
+			@Arg(name = "direction", description = "The direction of the other inventory") EnumFacing direction,
 			@Arg(name = "slot", description = "The slot in the current inventory that you're pushing from") Index fromSlot,
 			@Optionals @Arg(name = "maxAmount", description = "The maximum amount of items you want to push") Integer maxAmount,
 			@Arg(name = "intoSlot", description = "The slot in the other inventory that you want to push into (ignored when target is pipe") Index intoSlot) {
 
 		final TileEntity otherTarget = getNeighborTarget(target, direction);
 		Preconditions.checkNotNull(otherTarget, "Other target not found");
-		final IInventory thisInventory = InventoryUtils.getInventory(target);
+		final IInventory thisInventory = target;
 
 		if (maxAmount == null) maxAmount = 64;
 		if (intoSlot == null) intoSlot = ANY_SLOT_INDEX;
@@ -138,7 +126,7 @@ public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithCo
 
 		final int amount;
 		if (otherTarget instanceof IInventory) {
-			final IInventory otherInventory = InventoryUtils.getInventory((IInventory)otherTarget);
+			final IInventory otherInventory = (IInventory)otherTarget;
 			checkSlotId(otherInventory, intoSlot, "output");
 			amount = ItemDistribution.moveItemInto(thisInventory, fromSlot.value, otherInventory, intoSlot.value, maxAmount, direction, true);
 			if (amount > 0) otherInventory.markDirty();

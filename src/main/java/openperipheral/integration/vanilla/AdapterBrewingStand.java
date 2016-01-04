@@ -19,7 +19,7 @@ public class AdapterBrewingStand implements IPeripheralAdapter {
 
 	@ScriptCallable(returnTypes = ReturnType.NUMBER)
 	public int getBrewTime(TileEntityBrewingStand brewingStand) {
-		return brewingStand.getBrewTime();
+		return brewingStand.getField(0);
 	}
 
 }

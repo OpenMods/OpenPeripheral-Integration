@@ -20,7 +20,7 @@ public class AdapterRecordPlayer implements IPeripheralAdapter {
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the record currently being played")
 	public ItemStack getRecord(TileEntityJukebox recordPlayer) {
-		return recordPlayer.func_145856_a();
+		return recordPlayer.getRecord();
 	}
 
 }

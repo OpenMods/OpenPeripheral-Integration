@@ -1,6 +1,10 @@
 package openperipheral.integration.vanilla;
 
+import java.util.List;
+
 import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.Arg;
@@ -12,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 public class AdapterSign implements IPeripheralAdapter {
 	@Override
@@ -34,11 +39,11 @@ public class AdapterSign implements IPeripheralAdapter {
 	}
 
 	private static void updateSign(TileEntitySign sign) {
-		sign.getWorldObj().markBlockForUpdate(sign.xCoord, sign.yCoord, sign.zCoord);
+		sign.getWorld().markBlockForUpdate(sign.getPos());
 	}
 
 	private static void setLine(TileEntitySign sign, final int index, String text) {
-		sign.signText[index] = text.length() < 15? text : text.substring(0, 15);
+		sign.signText[index] = new ChatComponentText(text.length() < 15? text : text.substring(0, 15));
 	}
 
 	@Asynchronous
@@ -47,23 +52,45 @@ public class AdapterSign implements IPeripheralAdapter {
 			@Arg(name = "line", description = "The line number to get from the sign") Index line)
 	{
 		line.checkElementIndex("line", sign.signText.length);
-		return sign.signText[line.value];
+		final IChatComponent cc = sign.signText[line.value];
+		return cc != null? cc.getUnformattedText() : null;
+	}
+
+	@Asynchronous
+	@ScriptCallable(returnTypes = ReturnType.STRING, description = "Gets the text from the supplied line of the sign")
+	public String getFormattedLine(TileEntitySign sign,
+			@Arg(name = "line", description = "The line number to get from the sign") Index line)
+	{
+		line.checkElementIndex("line", sign.signText.length);
+		final IChatComponent cc = sign.signText[line.value];
+		return cc != null? cc.getFormattedText() : null;
 	}
 
 	@ScriptCallable(description = "Sets all text from table")
 	public void setLines(TileEntitySign sign, @Arg(name = "lines") String[] lines) {
-		final String[] signText = sign.signText;
+		final IChatComponent[] signText = sign.signText;
 		for (int i = 0; i < signText.length; i++) {
 			final String line = (i < lines.length? Strings.nullToEmpty(lines[i]) : "");
-			signText[i] = line;
+			signText[i] = new ChatComponentText(line);
 		}
 
 		updateSign(sign);
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Gets all text as table")
-	public String[] getLines(TileEntitySign sign) {
-		return sign.signText;
+	public List<String> getLines(TileEntitySign sign) {
+		List<String> result = Lists.newArrayList();
+		for (IChatComponent cc : sign.signText)
+			result.add(cc != null? cc.getUnformattedText() : "");
+		return result;
+	}
+
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Gets all text as table")
+	public List<String> getFormattedLines(TileEntitySign sign) {
+		List<String> result = Lists.newArrayList();
+		for (IChatComponent cc : sign.signText)
+			result.add(cc != null? cc.getFormattedText() : "");
+		return result;
 	}
 
 	@ScriptCallable(description = "Sets the text on the sign")

@@ -23,7 +23,7 @@ public class EntityTameableMetaProvider extends EntityMetaProviderSimple<EntityT
 		map.put("isTamed", isTamed);
 		if (isTamed) {
 			map.put("isSitting", target.isSitting());
-			map.put("ownerUUID", target.func_152113_b());
+			map.put("ownerUUID", target.getOwnerId());
 		}
 
 		return map;

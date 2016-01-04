@@ -91,7 +91,7 @@ public class ModuleVanilla implements IIntegrationModule {
 			short id = enchTag.getShort("id");
 			short lvl = enchTag.getShort("lvl");
 
-			final Enchantment enchantment = Enchantment.enchantmentsList[id];
+			final Enchantment enchantment = Enchantment.getEnchantmentById(id);
 			if (enchantment != null) {
 				Map<String, Object> entry = Maps.newHashMap();
 				entry.put("name", enchantment.getName());

@@ -20,8 +20,9 @@ public class EntityItemMetaProvider extends EntityMetaProviderSimple<EntityItem>
 		Map<String, Object> result = Maps.newHashMap();
 
 		result.put("stack", target.getEntityItem());
-		result.put("age", target.age);
+		result.put("age", target.getAge());
 		result.put("lifespan", target.lifespan);
+		result.put("thrower", target.getThrower());
 
 		return result;
 	}

@@ -23,26 +23,26 @@ public class AdapterDaylightSensor implements IPeripheralAdapter {
 
 	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Get true if age has normal sky")
 	public boolean hasSky(TileEntityDaylightDetector target) {
-		World world = target.getWorldObj();
-		return !world.provider.hasNoSky;
+		World world = target.getWorld();
+		return !world.provider.getHasNoSky();
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get level of natural light (sky)")
 	public int getSkyLight(TileEntityDaylightDetector target) {
-		World world = target.getWorldObj();
-		Preconditions.checkArgument(!world.provider.hasNoSky, "World has no sky");
-		return world.getSavedLightValue(EnumSkyBlock.Sky, target.xCoord, target.yCoord, target.zCoord) - world.skylightSubtracted;
+		World world = target.getWorld();
+		Preconditions.checkArgument(!world.provider.getHasNoSky(), "World has no sky");
+		return world.getLightFor(EnumSkyBlock.SKY, target.getPos()) - world.getSkylightSubtracted();
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get level of block light")
 	public int getBlockLight(TileEntityDaylightDetector target) {
-		World world = target.getWorldObj();
-		return world.getSavedLightValue(EnumSkyBlock.Block, target.xCoord, target.yCoord, target.zCoord);
+		World world = target.getWorld();
+		return world.getLightFor(EnumSkyBlock.BLOCK, target.getPos());
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get angle of sun (in degrees, 0 is zenith)")
 	public float getCelestialAngle(TileEntityDaylightDetector target) {
-		World world = target.getWorldObj();
+		World world = target.getWorld();
 		return world.getCelestialAngle(1) * 360;
 	}
 }

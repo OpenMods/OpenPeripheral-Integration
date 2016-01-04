@@ -6,7 +6,7 @@ import java.util.Map;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
 import openmods.inventory.legacy.ItemDistribution;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.Constants;
@@ -25,8 +25,6 @@ import com.google.common.collect.Maps;
 @Asynchronous
 public class AdapterInventory implements IPeripheralAdapter {
 
-	private static final int ANY_SLOT = -1;
-
 	@Override
 	public Class<?> getTargetClass() {
 		return IInventory.class;
@@ -39,29 +37,27 @@ public class AdapterInventory implements IPeripheralAdapter {
 
 	@ScriptCallable(returnTypes = ReturnType.STRING, description = "Get the name of this inventory")
 	public String getInventoryName(IInventory target) {
-		IInventory inventory = InventoryUtils.getInventory(target);
-		return inventory != null? inventory.getInventoryName() : null;
+		return target.getName();
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Get the size of this inventory")
 	public int getInventorySize(IInventory target) {
-		IInventory inventory = InventoryUtils.getInventory(target);
-		return inventory != null? inventory.getSizeInventory() : 0;
+		return target.getSizeInventory();
 	}
 
 	@Asynchronous(false)
 	@ScriptCallable(description = "Condense and tidy the stacks in an inventory")
 	public void condenseItems(IInventory target) {
-		IInventory inventory = InventoryUtils.getInventory(target);
 		List<ItemStack> stacks = Lists.newArrayList();
-		for (int i = 0; i < inventory.getSizeInventory(); i++) {
-			ItemStack sta = inventory.getStackInSlot(i);
+
+		for (int i = 0; i < target.getSizeInventory(); i++) {
+			ItemStack sta = target.getStackInSlot(i);
 			if (sta != null) stacks.add(sta.copy());
-			inventory.setInventorySlotContents(i, null);
+			target.setInventorySlotContents(i, null);
 		}
 
 		for (ItemStack stack : stacks)
-			ItemDistribution.insertItemIntoInventory(inventory, stack, ForgeDirection.UNKNOWN, ANY_SLOT);
+			ItemDistribution.insertItemIntoInventory(target, stack);
 
 		target.markDirty();
 	}
@@ -71,20 +67,19 @@ public class AdapterInventory implements IPeripheralAdapter {
 	public void swapStacks(IInventory target,
 			@Arg(name = "from", description = "The first slot") Index fromSlot,
 			@Arg(name = "to", description = "The other slot") Index intoSlot,
-			@Optionals @Arg(name = "fromDirection") ForgeDirection fromDirection,
-			@Arg(name = "fromDirection") ForgeDirection toDirection) {
-		IInventory inventory = InventoryUtils.getInventory(target);
-		Preconditions.checkNotNull(inventory, "Invalid target!");
-		final int size = inventory.getSizeInventory();
+			@Optionals @Arg(name = "fromDirection") EnumFacing fromDirection,
+			@Arg(name = "fromDirection") EnumFacing toDirection) {
+		final int size = target.getSizeInventory();
 		fromSlot.checkElementIndex("first slot id", size);
 		intoSlot.checkElementIndex("second slot id", size);
-		if (inventory instanceof ISidedInventory) {
-			InventoryUtils.swapStacks((ISidedInventory)inventory,
-					fromSlot.value, Objects.firstNonNull(fromDirection, ForgeDirection.UNKNOWN),
-					intoSlot.value, Objects.firstNonNull(toDirection, ForgeDirection.UNKNOWN));
-		} else InventoryUtils.swapStacks(inventory, fromSlot.value, intoSlot.value);
+		if (target instanceof ISidedInventory) {
+			Preconditions.checkNotNull(fromDirection, "Inventory is sided, but no source direction given");
+			InventoryUtils.swapStacks((ISidedInventory)target,
+					fromSlot.value, fromDirection,
+					intoSlot.value, Objects.firstNonNull(toDirection, fromDirection));
+		} else InventoryUtils.swapStacks(target, fromSlot.value, intoSlot.value);
 
-		inventory.markDirty();
+		target.markDirty();
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.OBJECT, description = "Get details of an item in a particular slot")
@@ -92,9 +87,8 @@ public class AdapterInventory implements IPeripheralAdapter {
 			@Arg(name = "slotNumber", description = "Slot number") Index slot,
 			@Optionals @Arg(name = "proxy", description = "If true, method will return proxy instead of computing whole table") Boolean proxy)
 	{
-		IInventory inventory = InventoryUtils.getInventory(target);
-		slot.checkElementIndex("slot id", inventory.getSizeInventory());
-		ItemStack stack = inventory.getStackInSlot(slot.value);
+		slot.checkElementIndex("slot id", target.getSizeInventory());
+		ItemStack stack = target.getStackInSlot(slot.value);
 		return proxy == Boolean.TRUE? OpcAccess.itemStackMetaBuilder.createProxy(stack) : stack;
 	}
 
@@ -102,11 +96,10 @@ public class AdapterInventory implements IPeripheralAdapter {
 	public Map<Index, Object> getAllStacks(IInventory target,
 			@Env(Constants.ARG_ARCHITECTURE) IArchitecture access,
 			@Optionals @Arg(name = "proxy", description = "If false, method will compute whole table, instead of returning proxy") Boolean proxy) {
-		final IInventory inventory = InventoryUtils.getInventory(target);
 		Map<Index, Object> result = Maps.newHashMap();
 
-		for (int i = 0; i < inventory.getSizeInventory(); i++) {
-			ItemStack stack = inventory.getStackInSlot(i);
+		for (int i = 0; i < target.getSizeInventory(); i++) {
+			ItemStack stack = target.getStackInSlot(i);
 			if (stack != null) result.put(access.createIndex(i), (proxy != Boolean.FALSE)? OpcAccess.itemStackMetaBuilder.createProxy(stack) : stack);
 		}
 		return result;
@@ -117,10 +110,9 @@ public class AdapterInventory implements IPeripheralAdapter {
 	public void destroyStack(IInventory target,
 			@Arg(name = "slotNumber", description = "The slot number") Index slot)
 	{
-		IInventory inventory = InventoryUtils.getInventory(target);
-		slot.checkElementIndex("slot id", inventory.getSizeInventory());
-		inventory.setInventorySlotContents(slot.value, null);
-		inventory.markDirty();
+		slot.checkElementIndex("slot id", target.getSizeInventory());
+		target.setInventorySlotContents(slot.value, null);
+		target.markDirty();
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get full stack information from id and/or damage")

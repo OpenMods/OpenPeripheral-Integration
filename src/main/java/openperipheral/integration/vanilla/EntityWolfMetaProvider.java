@@ -4,7 +4,7 @@ import java.util.Map;
 
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.Vec3;
-import openmods.utils.ColorUtils;
+import openmods.colors.ColorMeta;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Maps;
@@ -20,9 +20,8 @@ public class EntityWolfMetaProvider extends EntityMetaProviderSimple<EntityWolf>
 	public Object getMeta(EntityWolf target, Vec3 relativePos) {
 		Map<String, Object> map = Maps.newHashMap();
 
-		map.put("isShaking", target.getWolfShaking());
 		map.put("isAngry", target.isAngry());
-		map.put("collarColor", ColorUtils.vanillaBlockToColor(target.getCollarColor()).bitmask);
+		map.put("collarColor", ColorMeta.fromVanillaEnum(target.getCollarColor()).bitmask);
 
 		return map;
 	}

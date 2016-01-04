@@ -22,7 +22,7 @@ public class AdapterSkull implements IPeripheralAdapter {
 
 	@ScriptCallable(returnTypes = ReturnType.STRING)
 	public String getType(TileEntitySkull skull) {
-		int skullType = skull.func_145904_a();
+		int skullType = skull.getSkullType();
 
 		switch (skullType) {
 			case 0:
@@ -43,9 +43,9 @@ public class AdapterSkull implements IPeripheralAdapter {
 	@MultipleReturn
 	@ScriptCallable(returnTypes = { ReturnType.STRING, ReturnType.STRING })
 	public Object[] getPlayer(TileEntitySkull skull) {
-		if (skull.func_145904_a() != 3) return new Object[] { null, null };
+		if (skull.getSkullType() != 3) return new Object[] { null, null };
 
-		GameProfile profile = skull.func_152108_a();
+		GameProfile profile = skull.getPlayerProfile();
 		if (profile == null) return new Object[] { null, null };
 
 		return new Object[] { profile.getId(), profile.getName() };

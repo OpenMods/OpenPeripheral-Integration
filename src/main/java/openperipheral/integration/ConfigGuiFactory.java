@@ -7,14 +7,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
+import net.minecraftforge.fml.client.IModGuiFactory;
+import net.minecraftforge.fml.client.config.GuiConfig;
+import net.minecraftforge.fml.client.config.IConfigElement;
 
 import com.google.common.collect.ImmutableSet;
 
-import cpw.mods.fml.client.IModGuiFactory;
-import cpw.mods.fml.client.config.GuiConfig;
-import cpw.mods.fml.client.config.IConfigElement;
-
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({ })
 public class ConfigGuiFactory implements IModGuiFactory {
 
 	public static class ConfigScreen extends GuiConfig {

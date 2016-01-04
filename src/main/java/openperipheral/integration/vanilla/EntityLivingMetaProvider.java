@@ -7,9 +7,8 @@ import java.util.Map;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
-import net.minecraft.util.Vec3;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 
 import com.google.common.collect.Lists;
@@ -39,7 +38,6 @@ public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLiv
 
 		{
 			Map<Object, String> potionEffects = Maps.newHashMap();
-			@SuppressWarnings("unchecked")
 			Collection<PotionEffect> effects = target.getActivePotionEffects();
 
 			int count = 1;
@@ -68,7 +66,7 @@ public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLiv
 		map.put("yawHead", target.rotationYawHead);
 
 		{
-			Vec3 posVec = Vec3.createVectorHelper(target.posX, target.posY + 1.62F, target.posZ);
+			Vec3 posVec = new Vec3(target.posX, target.posY + 1.62F, target.posZ);
 			Vec3 lookVec = target.getLook(1.0f);
 			Vec3 targetVec = posVec.addVector(lookVec.xCoord * 10f, lookVec.yCoord * 10f, lookVec.zCoord * 10f);
 
@@ -79,14 +77,15 @@ public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLiv
 				if (mop.typeOfHit == MovingObjectType.BLOCK) {
 					hit.put("type", "block");
 					Map<String, Object> lookingAt = Maps.newHashMap();
+					final BlockPos blockPos = mop.getBlockPos();
 					if (relativePos != null) {
-						lookingAt.put("x", mop.blockX - relativePos.xCoord);
-						lookingAt.put("y", mop.blockY - relativePos.yCoord);
-						lookingAt.put("z", mop.blockZ - relativePos.zCoord);
+						lookingAt.put("x", blockPos.getX() - relativePos.xCoord);
+						lookingAt.put("y", blockPos.getY() - relativePos.yCoord);
+						lookingAt.put("z", blockPos.getZ() - relativePos.zCoord);
 					} else {
-						lookingAt.put("x", mop.blockX);
-						lookingAt.put("y", mop.blockY);
-						lookingAt.put("z", mop.blockZ);
+						lookingAt.put("x", blockPos.getX());
+						lookingAt.put("y", blockPos.getX());
+						lookingAt.put("z", blockPos.getZ());
 					}
 					hit.put("position", lookingAt);
 				} else if (mop.typeOfHit == MovingObjectType.ENTITY) {
@@ -104,7 +103,6 @@ public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLiv
 	}
 
 	private static Object getPotionEffects(EntityLivingBase target) {
-		@SuppressWarnings("unchecked")
 		final Collection<PotionEffect> effects = target.getActivePotionEffects();
 
 		final List<Map<String, Object>> effectsInfo = Lists.newArrayList();

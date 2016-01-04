@@ -1,7 +1,7 @@
 package openperipheral.integration;
 
+import net.minecraftforge.fml.common.Loader;
 import openmods.integration.IIntegrationModule;
-import cpw.mods.fml.common.Loader;
 
 public abstract class ModIntegrationModule implements IIntegrationModule {
 

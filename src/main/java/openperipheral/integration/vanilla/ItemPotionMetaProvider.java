@@ -21,7 +21,6 @@ public class ItemPotionMetaProvider extends ItemStackMetaProviderSimple<ItemPoti
 
 	@Override
 	public Object getMeta(ItemPotion target, ItemStack stack) {
-		@SuppressWarnings("unchecked")
 		final List<PotionEffect> effects = target.getEffects(stack);
 
 		final Map<String, Object> results = Maps.newHashMap();

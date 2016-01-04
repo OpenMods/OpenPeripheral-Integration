@@ -1,6 +1,7 @@
 package openperipheral.integration.vanilla;
 
 import net.minecraft.tileentity.TileEntityNote;
+import net.minecraft.util.BlockPos;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
@@ -26,7 +27,7 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 
 	@ScriptCallable(description = "Play the current note on the noteblock")
 	public void triggerNote(TileEntityNote noteblock) {
-		noteblock.triggerNote(noteblock.getWorldObj(), noteblock.xCoord, noteblock.yCoord, noteblock.zCoord);
+		noteblock.triggerNote(noteblock.getWorld(), noteblock.getPos());
 	}
 
 	@ScriptCallable(description = "Set the note on the noteblock", returnTypes = { ReturnType.BOOLEAN })
@@ -55,10 +56,11 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 			@Optionals @Arg(name = "x", description = "X coordinate od sound (relative to block)") Double dx,
 			@Arg(name = "y", description = "Y coordinate of sound (relative to block)") Double dy,
 			@Arg(name = "z", description = "Z coordinate of sound (relative to block)") Double dz) {
-		noteblock.getWorldObj().playSoundEffect(
-				noteblock.xCoord + 0.5 + Objects.firstNonNull(dx, 0.0),
-				noteblock.yCoord + 0.5 + Objects.firstNonNull(dy, 0.0),
-				noteblock.zCoord + 0.5 + Objects.firstNonNull(dz, 0.0),
+		final BlockPos pos = noteblock.getPos();
+		noteblock.getWorld().playSoundEffect(
+				pos.getX() + 0.5 + Objects.firstNonNull(dx, 0.0),
+				pos.getY() + 0.5 + Objects.firstNonNull(dy, 0.0),
+				pos.getZ() + 0.5 + Objects.firstNonNull(dz, 0.0),
 				name, volume, pitch);
 	}
 }
