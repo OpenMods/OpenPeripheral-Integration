@@ -57,7 +57,7 @@ repositories {
     ivy {
         name 'mystcraft'
         artifactPattern "http://addons-origin.cursecdn.com/files/2235/470/[module]-[revision].[ext]"
-}
+    }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
