@@ -21,22 +21,23 @@ public class ItemPotionMetaProvider extends ItemStackMetaProviderSimple<ItemPoti
 
 	@Override
 	public Object getMeta(ItemPotion target, ItemStack stack) {
-		final List<PotionEffect> effects = target.getEffects(stack);
-
 		final Map<String, Object> results = Maps.newHashMap();
 
 		results.put("splash", ItemPotion.isSplash(stack.getItemDamage()));
 
 		final List<Map<String, Object>> effectsInfo = Lists.newArrayList();
 
-		for (PotionEffect effect : effects) {
-			final Map<String, Object> entry = Maps.newHashMap();
+		final List<PotionEffect> effects = target.getEffects(stack);
+		if (effects != null) {
+			for (PotionEffect effect : effects) {
+				final Map<String, Object> entry = Maps.newHashMap();
 
-			entry.put("duration", effect.getDuration() / 20); // ticks!
-			entry.put("amplifier", effect.getAmplifier());
-			entry.put("effect", getPotionInfo(effect.getPotionID()));
+				entry.put("duration", effect.getDuration() / 20); // ticks!
+				entry.put("amplifier", effect.getAmplifier());
+				entry.put("effect", getPotionInfo(effect.getPotionID()));
 
-			effectsInfo.add(entry);
+				effectsInfo.add(entry);
+			}
 		}
 
 		results.put("effects", effectsInfo);
