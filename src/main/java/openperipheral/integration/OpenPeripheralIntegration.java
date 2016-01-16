@@ -24,7 +24,7 @@ import openperipheral.integration.vanilla.ModuleVanillaInventoryManipulation;
 		version = "$VERSION$",
 		guiFactory = "openperipheral.integration.ConfigGuiFactory",
 		acceptableRemoteVersions = "*",
-		dependencies = "required-after:OpenMods@[$LIB-VERSION$,$NEXT-LIB-VERSION$);required-after:OpenPeripheralApi@$OP-API-VERSION$;after:ComputerCraft@[1.70,];after:appliedEnergistics-2;after:IC2;after:EnderStorage;after:BuildCraft|Core;after:Forestry;after:Mystcraft;after:Railcraft;after:Thaumcraft;after:ThermalExpansion;")
+		dependencies = "required-after:OpenMods@[$LIB-VERSION$,$NEXT-LIB-VERSION$);required-after:OpenPeripheralApi@$OP-API-VERSION$;after:ComputerCraft@[1.77,];after:appliedEnergistics-2;after:IC2;after:EnderStorage;after:BuildCraft|Core;after:Forestry;after:Mystcraft;after:Railcraft;after:Thaumcraft;after:ThermalExpansion;")
 public class OpenPeripheralIntegration {
 
 	public class ConfigChangeListener {
