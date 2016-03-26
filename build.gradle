@@ -29,14 +29,6 @@ buildscript {
 
 repositories {
     maven {
-        name 'Forge'
-        url 'http://files.minecraftforge.net/maven'
-    }
-    maven {
-        name 'MinecraftS3'
-        url 'http://s3.amazonaws.com/Minecraft.Download/libraries'
-    }
-    maven {
         name = "ic2, forestry"
         url = "http://maven.ic2.player.to/"
     }
@@ -48,20 +40,20 @@ repositories {
         name = "chickenbones"
         url = "http://chickenbones.net/maven/"
     }
+    // mirror for next repo (can be quite slow sometimes)
     maven {
-        name "FireBall API Depot"
-        url "http://dl.tsr.me/artifactory/libs-release-local"
+        name "OpenMods Extras"
+        url 'http://repo.openmods.info/artifactory/fireball-cache'
     }
-    maven {
-        name "OpenMods"
-        url "http://repo.openmods.info/artifactory/openmods"
-    }
-    
-    // waiting for proper API release
+    //maven {
+    //    name "FireBall API Depot"
+    //    url "http://dl.tsr.me/artifactory/libs-release-local"
+    //}
     ivy {
         name 'mystcraft'
-        artifactPattern "http://addons-origin.cursecdn.com/files/2235/470/[module]-[revision].[ext]"
-}
+        artifactPattern "http://addons-origin.cursecdn.com/files/2266/246/[module]-[revision]-[classifier].[ext]"
+    }
+    // BuildCraft repo provided by OpenModsLib
 }
 
 apply plugin: 'forge'
@@ -78,14 +70,13 @@ dependencies {
         transitive = false
     }
 
-    compile "com.mod-buildcraft:buildcraft:6.2.6:api"
-    compile "api:ic2:1"
+    compile "net.industrial-craft:industrialcraft-2:2.2.817-experimental:api"
     compile "api:mfr:1"
     compile "api:railcraft:1"
-    compile "net.sengir.forestry:forestry_1.7.10:3.6.0.17:api"
+    compile "net.sengir.forestry:forestry_1.7.10:4.2.10.58:api"
     
-    // hacks
-    compile name: 'mystcraft', version: '1.7.10-0.11.6.01-dev', ext: 'jar'
+    compile name: 'mystcraft', version: '1.7.10-0.12.3.01', classifier: 'api', ext: 'jar'
+    compile name: 'buildcraft', version: '7.1.16', classifier: 'api', ext: 'jar'
 }
 
 //================================================

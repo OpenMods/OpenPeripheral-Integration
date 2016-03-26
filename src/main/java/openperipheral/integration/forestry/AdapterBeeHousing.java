@@ -37,21 +37,24 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 
 	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Can the bees breed?")
 	public boolean canBreed(IBeeHousing beeHousing) {
-		return beeHousing.canBreed();
+		return beeHousing.getBeekeepingLogic().canWork();
+	}
+
+	@ScriptCallable(returnTypes = ReturnType.NUMBER, description = "Breeding progress (in %)")
+	public int breedingProgress(IBeeHousing beeHousing) {
+		return beeHousing.getBeekeepingLogic().getBeeProgressPercent();
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the drone")
 	public IIndividual getDrone(IBeeHousing beeHousing) {
-		ItemStack drone = beeHousing.getDrone();
-		if (drone != null) { return AlleleManager.alleleRegistry.getIndividual(drone); }
-		return null;
+		ItemStack drone = beeHousing.getBeeInventory().getDrone();
+		return (drone != null)? AlleleManager.alleleRegistry.getIndividual(drone) : null;
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the queen")
 	public IIndividual getQueen(IBeeHousing beeHousing) {
-		ItemStack queen = beeHousing.getQueen();
-		if (queen != null) { return AlleleManager.alleleRegistry.getIndividual(queen); }
-		return null;
+		ItemStack queen = beeHousing.getBeeInventory().getQueen();
+		return (queen != null)? AlleleManager.alleleRegistry.getIndividual(queen) : null;
 	}
 
 	@Asynchronous
@@ -65,9 +68,9 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		for (IMutation mutation : beeRoot.getMutations(false)) {
 			final Map<String, Object> mutationMap = Maps.newHashMap();
 			try {
-				IAllele allele1 = mutation.getAllele0();
+				IAlleleSpecies allele1 = mutation.getAllele0();
 				if (allele1 != null) mutationMap.put(ALLELE_1, allele1.getName());
-				IAllele allele2 = mutation.getAllele1();
+				IAlleleSpecies allele2 = mutation.getAllele1();
 				if (allele2 != null) mutationMap.put(ALLELE_2, allele2.getName());
 
 				final IAllele[] template = mutation.getTemplate();

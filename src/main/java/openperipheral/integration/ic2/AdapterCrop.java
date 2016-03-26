@@ -1,5 +1,6 @@
 package openperipheral.integration.ic2;
 
+import ic2.api.crops.CropCard;
 import ic2.api.crops.ICropTile;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.ReturnType;
@@ -17,9 +18,10 @@ public class AdapterCrop implements IPeripheralAdapter {
 		return "ic2_crop";
 	}
 
-	@ScriptCallable(returnTypes = ReturnType.NUMBER)
-	public short getID(ICropTile target) {
-		return target.getID();
+	@ScriptCallable(returnTypes = ReturnType.STRING)
+	public String getID(ICropTile target) {
+		final CropCard crop = target.getCrop();
+		return crop != null? crop.name() : "";
 	}
 
 	@ScriptCallable(returnTypes = ReturnType.NUMBER)
