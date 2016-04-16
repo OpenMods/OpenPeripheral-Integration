@@ -11,11 +11,13 @@ import openperipheral.api.adapter.IAdapterWithConstraints;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.IWorldPosProvider;
 import openperipheral.api.adapter.method.*;
+import openperipheral.api.architecture.FeatureGroup;
 import openperipheral.api.helpers.Index;
 
 import com.google.common.base.Preconditions;
 
 // this is ugly. But all inventory handling functions need rewrite...
+@FeatureGroup({ "vanilla-inventory", "vanilla-inventory-manipulation" })
 public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithConstraints {
 
 	private static final int ANY_SLOT = -1;

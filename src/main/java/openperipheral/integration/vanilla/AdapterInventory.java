@@ -13,6 +13,7 @@ import openperipheral.api.Constants;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.*;
+import openperipheral.api.architecture.FeatureGroup;
 import openperipheral.api.architecture.IArchitecture;
 import openperipheral.api.helpers.Index;
 import openperipheral.integration.OpcAccess;
@@ -23,6 +24,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 @Asynchronous
+@FeatureGroup("vanilla-inventory")
 public class AdapterInventory implements IPeripheralAdapter {
 
 	private static final int ANY_SLOT = -1;
