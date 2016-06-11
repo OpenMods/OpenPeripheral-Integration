@@ -76,8 +76,7 @@ public class NotebookIInventoryWrapper implements IInventory {
 
 	@Override
 	public int getInventoryStackLimit() {
-		return Integer.MAX_VALUE; // I don't believe there is any limit to the
-									// storage of a notebook
+		return Integer.MAX_VALUE; // I don't believe there is any limit to the storage of a notebook
 	}
 
 	@Override

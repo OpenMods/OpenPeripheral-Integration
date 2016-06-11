@@ -94,8 +94,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 	@ScriptCallable(returnTypes = ReturnType.OBJECT, description = "Get details of an item in a particular slot")
 	public Object getStackInSlot(IInventory target,
 			@Arg(name = "slotNumber", description = "Slot number") Index slot,
-			@Optionals @Arg(name = "proxy", description = "If true, method will return proxy instead of computing whole table") Boolean proxy)
-	{
+			@Optionals @Arg(name = "proxy", description = "If true, method will return proxy instead of computing whole table") Boolean proxy) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		slot.checkElementIndex("slot id", inventory.getSizeInventory());
 		ItemStack stack = inventory.getStackInSlot(slot.value);
@@ -119,8 +118,7 @@ public class AdapterInventory implements IPeripheralAdapter {
 	@Asynchronous(false)
 	@ScriptCallable(description = "Destroy a stack")
 	public void destroyStack(IInventory target,
-			@Arg(name = "slotNumber", description = "The slot number") Index slot)
-	{
+			@Arg(name = "slotNumber", description = "The slot number") Index slot) {
 		IInventory inventory = InventoryUtils.getInventory(target);
 		slot.checkElementIndex("slot id", inventory.getSizeInventory());
 		inventory.setInventorySlotContents(slot.value, null);

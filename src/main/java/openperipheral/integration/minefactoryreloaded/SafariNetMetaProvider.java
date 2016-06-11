@@ -18,8 +18,7 @@ public class SafariNetMetaProvider implements IItemStackMetaProvider<Item> {
 	private final Map<String, String> safariNets = ImmutableMap.of(
 			"item.mfr.safarinet.reusable", "reusable",
 			"item.mfr.safarinet.singleuse", "single_use",
-			"item.mfr.safarinet.jailer", "jailer"
-			);
+			"item.mfr.safarinet.jailer", "jailer");
 
 	@Override
 	@SuppressWarnings("unchecked")

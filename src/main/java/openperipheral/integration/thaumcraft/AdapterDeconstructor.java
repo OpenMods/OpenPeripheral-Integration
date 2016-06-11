@@ -39,8 +39,7 @@ public class AdapterDeconstructor implements IPeripheralAdapter {
 
 	@ScriptCallable(returnTypes = ReturnType.BOOLEAN, description = "Has the Table any items")
 	public boolean hasItem(Object target) {
-		if (target instanceof IInventory)
-		{
+		if (target instanceof IInventory) {
 			IInventory inv = (IInventory)target;
 			return inv.getStackInSlot(0) != null;
 		}

@@ -42,8 +42,7 @@ public class AdapterSign implements IPeripheralAdapter {
 	@Asynchronous
 	@ScriptCallable(returnTypes = ReturnType.STRING, description = "Gets the text from the supplied line of the sign")
 	public String getLine(TileEntitySign sign,
-			@Arg(name = "line", description = "The line number to get from the sign") Index line)
-	{
+			@Arg(name = "line", description = "The line number to get from the sign") Index line) {
 		line.checkElementIndex("line", sign.signText.length);
 		return sign.signText[line.value];
 	}
@@ -66,8 +65,7 @@ public class AdapterSign implements IPeripheralAdapter {
 
 	@ScriptCallable(description = "Sets the text on the sign")
 	public void setText(TileEntitySign sign,
-			@Arg(name = "text", description = "The text to display on the sign") String text)
-	{
+			@Arg(name = "text", description = "The text to display on the sign") String text) {
 		String[] lines = text.split("\n");
 
 		final int newLength = lines.length;

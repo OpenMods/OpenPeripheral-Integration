@@ -33,8 +33,7 @@ public class AdapterNoteBlock implements IPeripheralAdapter {
 
 	@ScriptCallable(description = "Set the note on the noteblock", returnTypes = { ReturnType.BOOLEAN })
 	public boolean setPitch(TileEntityNote noteblock,
-			@Arg(name = "note", description = "The note you want. From 0 to 25") int newNote)
-	{
+			@Arg(name = "note", description = "The note you want. From 0 to 25") int newNote) {
 		final byte oldNote = noteblock.note;
 		noteblock.note = (byte)(newNote % 25);
 		if (!net.minecraftforge.common.ForgeHooks.onNoteChange(noteblock, oldNote)) return false;
