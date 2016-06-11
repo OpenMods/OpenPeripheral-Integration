@@ -1,12 +1,10 @@
 package openperipheral.integration.vanilla;
 
-import java.util.Map;
-
-import openperipheral.api.converter.IConverter;
-import openperipheral.api.converter.ITypeConverter;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
+import java.util.Map;
+import openperipheral.api.converter.IConverter;
+import openperipheral.api.converter.ITypeConverter;
 
 public class ConverterItemFingerprint implements ITypeConverter {
 

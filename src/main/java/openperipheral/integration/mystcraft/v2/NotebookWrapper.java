@@ -1,7 +1,7 @@
 package openperipheral.integration.mystcraft.v2;
 
+import com.xcompwiz.mystcraft.api.item.IItemPageCollection;
 import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.WorldServer;
 import openmods.fakeplayer.FakePlayerPool;
@@ -9,10 +9,11 @@ import openmods.fakeplayer.FakePlayerPool.PlayerUserReturning;
 import openmods.fakeplayer.OpenModsFakePlayer;
 import openperipheral.api.adapter.AdapterSourceName;
 import openperipheral.api.adapter.Asynchronous;
-import openperipheral.api.adapter.method.*;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
+import openperipheral.api.adapter.method.ScriptObject;
 import openperipheral.api.helpers.Index;
-
-import com.xcompwiz.mystcraft.api.item.IItemPageCollection;
 
 @ScriptObject
 @Asynchronous

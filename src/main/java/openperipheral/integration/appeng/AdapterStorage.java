@@ -1,10 +1,13 @@
 package openperipheral.integration.appeng;
 
+import appeng.api.implementations.tiles.IChestOrDrive;
 import openperipheral.api.adapter.IPeripheralAdapter;
-import openperipheral.api.adapter.method.*;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.IMultiReturn;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import openperipheral.api.helpers.Index;
 import openperipheral.api.helpers.MultiReturn;
-import appeng.api.implementations.tiles.IChestOrDrive;
 
 public class AdapterStorage implements IPeripheralAdapter {
 

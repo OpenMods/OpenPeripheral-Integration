@@ -1,12 +1,10 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class ItemSwordMetaProvider extends ItemStackMetaProviderSimple<ItemSword> {
 

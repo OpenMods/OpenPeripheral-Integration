@@ -1,23 +1,25 @@
 package openperipheral.integration.appeng;
 
-import java.util.List;
-import java.util.Map;
-
-import net.minecraft.item.ItemStack;
-import openperipheral.api.Constants;
-import openperipheral.api.adapter.method.*;
-import openperipheral.api.converter.IConverter;
-import openperipheral.integration.OpcAccess;
-import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.networking.IGridHost;
 import appeng.api.networking.crafting.ICraftingCPU;
 import appeng.api.networking.crafting.ICraftingGrid;
 import appeng.api.networking.storage.IStorageGrid;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.api.storage.data.IItemList;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import java.util.List;
+import java.util.Map;
+import net.minecraft.item.ItemStack;
+import openperipheral.api.Constants;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.Env;
+import openperipheral.api.adapter.method.Optionals;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
+import openperipheral.api.converter.IConverter;
+import openperipheral.integration.OpcAccess;
+import openperipheral.integration.vanilla.ItemFingerprint;
 
 public class AdapterNetwork extends AdapterGridBase {
 

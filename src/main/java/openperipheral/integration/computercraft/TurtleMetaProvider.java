@@ -1,17 +1,15 @@
 package openperipheral.integration.computercraft;
 
-import java.util.Map;
-
-import net.minecraft.item.ItemStack;
-import openmods.reflection.*;
-import openmods.reflection.MethodAccess.Function1;
-import openmods.reflection.MethodAccess.Function2;
-import openperipheral.api.meta.IItemStackMetaProvider;
-
 import com.google.common.collect.Maps;
-
 import dan200.computercraft.api.turtle.ITurtleUpgrade;
 import dan200.computercraft.api.turtle.TurtleSide;
+import java.util.Map;
+import net.minecraft.item.ItemStack;
+import openmods.reflection.MethodAccess;
+import openmods.reflection.MethodAccess.Function1;
+import openmods.reflection.MethodAccess.Function2;
+import openmods.reflection.ReflectionHelper;
+import openperipheral.api.meta.IItemStackMetaProvider;
 
 public class TurtleMetaProvider implements IItemStackMetaProvider<Object> {
 

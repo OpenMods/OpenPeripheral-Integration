@@ -1,17 +1,14 @@
 package openperipheral.integration.computercraft;
 
+import com.google.common.collect.Maps;
+import dan200.computercraft.api.media.IMedia;
 import java.util.Map;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.ReflectionHelper;
 import openperipheral.api.meta.IItemStackCustomMetaProvider;
-
-import com.google.common.collect.Maps;
-
-import dan200.computercraft.api.media.IMedia;
 
 public class MediaMetaProvider implements IItemStackCustomMetaProvider<Item> {
 

@@ -1,12 +1,10 @@
 package openperipheral.integration.railcraft;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import mods.railcraft.api.carts.IExplosiveCart;
 import net.minecraft.util.Vec3;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class ExplosiveCartMetaProvider extends EntityMetaProviderSimple<IExplosiveCart> {
 

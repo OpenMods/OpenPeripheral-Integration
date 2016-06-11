@@ -1,14 +1,11 @@
 package openperipheral.integration.ic2;
 
+import com.google.common.collect.Maps;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
-
 import java.util.Map;
-
 import net.minecraft.item.ItemStack;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 class ElectricItemMetaProvider extends ItemStackMetaProviderSimple<IElectricItem> {
 

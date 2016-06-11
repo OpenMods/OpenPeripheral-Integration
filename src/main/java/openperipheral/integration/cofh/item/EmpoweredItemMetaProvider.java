@@ -1,8 +1,8 @@
 package openperipheral.integration.cofh.item;
 
+import cofh.api.item.IEmpowerableItem;
 import net.minecraft.item.ItemStack;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-import cofh.api.item.IEmpowerableItem;
 
 public class EmpoweredItemMetaProvider extends ItemStackMetaProviderSimple<IEmpowerableItem> {
 

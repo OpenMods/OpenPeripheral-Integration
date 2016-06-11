@@ -1,13 +1,12 @@
 package openperipheral.integration.ic2;
 
+import com.google.common.base.Preconditions;
 import ic2.api.reactor.IReactor;
 import ic2.api.reactor.IReactorChamber;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
-
-import com.google.common.base.Preconditions;
 
 @Asynchronous
 public class AdapterReactorChamber implements IPeripheralAdapter {

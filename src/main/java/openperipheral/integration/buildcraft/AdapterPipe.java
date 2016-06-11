@@ -1,14 +1,15 @@
 package openperipheral.integration.buildcraft;
 
+import buildcraft.api.transport.IPipe;
+import buildcraft.api.transport.IPipeTile;
+import buildcraft.api.transport.IPipeTile.PipeType;
+import buildcraft.api.transport.PipeWire;
+import com.google.common.base.Preconditions;
 import net.minecraftforge.common.util.ForgeDirection;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.Arg;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
-import buildcraft.api.transport.*;
-import buildcraft.api.transport.IPipeTile.PipeType;
-
-import com.google.common.base.Preconditions;
 
 public class AdapterPipe implements IPeripheralAdapter {
 

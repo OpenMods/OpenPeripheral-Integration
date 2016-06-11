@@ -1,14 +1,12 @@
 package openperipheral.integration.railcraft;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import mods.railcraft.api.carts.CartTools;
 import mods.railcraft.api.carts.ILinkableCart;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.Vec3;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class LinkableCartMetaProvider extends EntityMetaProviderSimple<ILinkableCart> {
 

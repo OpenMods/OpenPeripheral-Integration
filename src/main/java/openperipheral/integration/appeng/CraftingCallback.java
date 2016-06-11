@@ -1,19 +1,20 @@
 package openperipheral.integration.appeng;
 
-import java.util.List;
-
-import openperipheral.api.architecture.IArchitectureAccess;
-import openperipheral.api.converter.IConverter;
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
-import appeng.api.networking.crafting.*;
+import appeng.api.networking.crafting.ICraftingCPU;
+import appeng.api.networking.crafting.ICraftingCallback;
+import appeng.api.networking.crafting.ICraftingGrid;
+import appeng.api.networking.crafting.ICraftingJob;
 import appeng.api.networking.security.IActionHost;
 import appeng.api.networking.security.MachineSource;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.api.storage.data.IItemList;
-
 import com.google.common.collect.Lists;
+import java.util.List;
+import openperipheral.api.architecture.IArchitectureAccess;
+import openperipheral.api.converter.IConverter;
 
 public class CraftingCallback implements ICraftingCallback {
 	private final IArchitectureAccess access;

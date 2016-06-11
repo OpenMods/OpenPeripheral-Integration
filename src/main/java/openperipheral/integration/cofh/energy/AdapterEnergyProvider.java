@@ -1,9 +1,12 @@
 package openperipheral.integration.cofh.energy;
 
+import cofh.api.energy.IEnergyProvider;
 import net.minecraftforge.common.util.ForgeDirection;
 import openperipheral.api.adapter.IPeripheralAdapter;
-import openperipheral.api.adapter.method.*;
-import cofh.api.energy.IEnergyProvider;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.Optionals;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterEnergyProvider implements IPeripheralAdapter {
 

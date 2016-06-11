@@ -1,11 +1,13 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.base.Objects;
 import net.minecraft.tileentity.TileEntityNote;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
-import openperipheral.api.adapter.method.*;
-
-import com.google.common.base.Objects;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.Optionals;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterNoteBlock implements IPeripheralAdapter {
 

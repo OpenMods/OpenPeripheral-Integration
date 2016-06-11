@@ -1,13 +1,11 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import openperipheral.api.meta.IItemStackMetaProvider;
-
-import com.google.common.collect.Maps;
 
 public class OreDictMetaProvider implements IItemStackMetaProvider<Item> {
 

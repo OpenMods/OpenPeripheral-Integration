@@ -1,7 +1,6 @@
 package openperipheral.integration.cofh.tileentity;
 
 import cofh.api.tileentity.ISecurable;
-
 import com.google.common.base.Preconditions;
 
 public class SecurityUtils {

@@ -1,12 +1,14 @@
 package openperipheral.integration.mystcraft.v2;
 
-import openmods.Log;
-
 import com.xcompwiz.mystcraft.api.APIInstanceProvider;
 import com.xcompwiz.mystcraft.api.exception.APIUndefined;
 import com.xcompwiz.mystcraft.api.exception.APIVersionRemoved;
 import com.xcompwiz.mystcraft.api.exception.APIVersionUndefined;
-import com.xcompwiz.mystcraft.api.hook.*;
+import com.xcompwiz.mystcraft.api.hook.LinkPropertyAPI;
+import com.xcompwiz.mystcraft.api.hook.LinkingAPI;
+import com.xcompwiz.mystcraft.api.hook.PageAPI;
+import com.xcompwiz.mystcraft.api.hook.SymbolAPI;
+import openmods.Log;
 
 public class MystcraftAccess {
 

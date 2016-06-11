@@ -1,7 +1,7 @@
 package openperipheral.integration;
 
-import openmods.integration.IIntegrationModule;
 import cpw.mods.fml.common.ModAPIManager;
+import openmods.integration.IIntegrationModule;
 
 public abstract class ApiIntegrationModule implements IIntegrationModule {
 

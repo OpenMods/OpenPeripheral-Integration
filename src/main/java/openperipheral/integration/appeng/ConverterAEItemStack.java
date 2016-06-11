@@ -1,15 +1,13 @@
 package openperipheral.integration.appeng;
 
+import appeng.api.storage.data.IAEItemStack;
+import appeng.api.storage.data.IAETagCompound;
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.nbt.NBTTagCompound;
 import openperipheral.api.converter.IConverter;
 import openperipheral.api.helpers.SimpleOutboundConverter;
 import openperipheral.integration.vanilla.ItemFingerprint;
-import appeng.api.storage.data.IAEItemStack;
-import appeng.api.storage.data.IAETagCompound;
-
-import com.google.common.collect.Maps;
 
 public class ConverterAEItemStack extends SimpleOutboundConverter<IAEItemStack> {
 

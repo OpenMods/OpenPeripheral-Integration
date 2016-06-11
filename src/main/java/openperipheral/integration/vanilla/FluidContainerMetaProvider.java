@@ -1,12 +1,10 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class FluidContainerMetaProvider extends ItemStackMetaProviderSimple<IFluidContainerItem> {
 

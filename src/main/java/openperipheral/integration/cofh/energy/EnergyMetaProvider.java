@@ -1,12 +1,10 @@
 package openperipheral.integration.cofh.energy;
 
+import cofh.api.energy.IEnergyContainerItem;
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.ItemStack;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-import cofh.api.energy.IEnergyContainerItem;
-
-import com.google.common.collect.Maps;
 
 public class EnergyMetaProvider extends ItemStackMetaProviderSimple<IEnergyContainerItem> {
 

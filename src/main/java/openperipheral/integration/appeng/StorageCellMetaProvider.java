@@ -1,14 +1,15 @@
 package openperipheral.integration.appeng;
 
+import appeng.api.AEApi;
+import appeng.api.storage.ICellInventory;
+import appeng.api.storage.ICellInventoryHandler;
+import appeng.api.storage.IMEInventoryHandler;
+import appeng.api.storage.StorageChannel;
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openperipheral.api.meta.IItemStackCustomMetaProvider;
-import appeng.api.AEApi;
-import appeng.api.storage.*;
-
-import com.google.common.collect.Maps;
 
 public class StorageCellMetaProvider implements IItemStackCustomMetaProvider<Item> {
 

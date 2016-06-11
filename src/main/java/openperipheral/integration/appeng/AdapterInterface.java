@@ -1,18 +1,5 @@
 package openperipheral.integration.appeng;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import openmods.inventory.legacy.ItemDistribution;
-import openmods.reflection.ReflectionHelper;
-import openmods.utils.InventoryUtils;
-import openperipheral.api.Constants;
-import openperipheral.api.adapter.method.*;
-import openperipheral.api.architecture.IArchitectureAccess;
-import openperipheral.api.converter.IConverter;
-import openperipheral.api.helpers.Index;
-import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.AEApi;
 import appeng.api.config.Actionable;
 import appeng.api.networking.IGridHost;
@@ -23,8 +10,24 @@ import appeng.api.networking.security.MachineSource;
 import appeng.api.networking.storage.IStorageGrid;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEItemStack;
-
 import com.google.common.base.Preconditions;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import openmods.inventory.legacy.ItemDistribution;
+import openmods.reflection.ReflectionHelper;
+import openmods.utils.InventoryUtils;
+import openperipheral.api.Constants;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.Env;
+import openperipheral.api.adapter.method.Optionals;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
+import openperipheral.api.architecture.IArchitectureAccess;
+import openperipheral.api.converter.IConverter;
+import openperipheral.api.helpers.Index;
+import openperipheral.integration.vanilla.ItemFingerprint;
 
 public class AdapterInterface extends AdapterGridBase {
 	private final Class<?> CLASS = ReflectionHelper.getClass("appeng.tile.misc.TileInterface");

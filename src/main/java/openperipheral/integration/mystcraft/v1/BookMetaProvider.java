@@ -1,14 +1,12 @@
 package openperipheral.integration.mystcraft.v1;
 
+import com.google.common.collect.Maps;
 import java.util.Collection;
 import java.util.Map;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class BookMetaProvider extends ItemStackMetaProviderSimple<Item> {
 

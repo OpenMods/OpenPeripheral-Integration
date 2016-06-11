@@ -1,9 +1,9 @@
 package openperipheral.integration.buildcraft;
 
+import buildcraft.api.tiles.IHasWork;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
-import buildcraft.api.tiles.IHasWork;
 
 public class AdapterMachine implements IPeripheralAdapter {
 

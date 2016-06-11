@@ -1,17 +1,15 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
-
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import openmods.integration.IIntegrationModule;
 import openperipheral.api.adapter.IScriptType;
 import openperipheral.integration.OpcAccess;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class ModuleVanilla implements IIntegrationModule {
 	public static String DUMMY_VANILLA_MODID = "vanilla";

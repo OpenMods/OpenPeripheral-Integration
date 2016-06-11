@@ -1,14 +1,14 @@
 package openperipheral.integration.mystcraft.v1;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import openmods.reflection.*;
+import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.MethodAccess.Function2;
 import openmods.reflection.MethodAccess.Function3;
-
-import com.google.common.base.Preconditions;
+import openmods.reflection.ReflectionHelper;
 
 public class NotebookIInventoryWrapper implements IInventory {
 

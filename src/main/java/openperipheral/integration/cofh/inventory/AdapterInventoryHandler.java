@@ -1,14 +1,13 @@
 package openperipheral.integration.cofh.inventory;
 
+import cofh.api.inventory.IInventoryHandler;
 import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.Arg;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
-import cofh.api.inventory.IInventoryHandler;
 
 public class AdapterInventoryHandler implements IPeripheralAdapter {
 

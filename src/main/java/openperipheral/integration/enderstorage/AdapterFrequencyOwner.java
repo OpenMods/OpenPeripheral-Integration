@@ -1,15 +1,20 @@
 package openperipheral.integration.enderstorage;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.tileentity.TileEntity;
-import openmods.reflection.*;
+import openmods.reflection.FieldAccess;
+import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function1;
+import openmods.reflection.ReflectionHelper;
 import openmods.utils.ColorUtils;
 import openmods.utils.ColorUtils.ColorMeta;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
-import openperipheral.api.adapter.method.*;
-
-import com.google.common.base.Preconditions;
+import openperipheral.api.adapter.method.Alias;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.MultipleReturn;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterFrequencyOwner implements IPeripheralAdapter {
 	private final Class<?> CLASS = ReflectionHelper.getClass("codechicken.enderstorage.common.TileFrequencyOwner");

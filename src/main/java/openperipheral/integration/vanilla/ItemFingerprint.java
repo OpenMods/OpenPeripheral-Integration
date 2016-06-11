@@ -1,11 +1,11 @@
 package openperipheral.integration.vanilla;
 
+import cpw.mods.fml.common.registry.GameData;
+import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import openmods.utils.ItemUtils;
-import cpw.mods.fml.common.registry.GameData;
-import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
 
 /**
  * SearchNeedle is a helper class meant to allow easier communication between

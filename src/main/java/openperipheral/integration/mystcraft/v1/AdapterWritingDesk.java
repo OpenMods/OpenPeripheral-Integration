@@ -1,5 +1,6 @@
 package openperipheral.integration.mystcraft.v1;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -12,17 +13,19 @@ import openmods.fakeplayer.FakePlayerPool;
 import openmods.fakeplayer.FakePlayerPool.PlayerUser;
 import openmods.fakeplayer.OpenModsFakePlayer;
 import openmods.inventory.legacy.ItemDistribution;
-import openmods.reflection.*;
+import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.MethodAccess.Function2;
+import openmods.reflection.ReflectionHelper;
 import openmods.utils.BlockUtils;
 import openmods.utils.InventoryUtils;
 import openperipheral.api.adapter.IPeripheralAdapter;
-import openperipheral.api.adapter.method.*;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.Optionals;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import openperipheral.api.helpers.Index;
-
-import com.google.common.base.Preconditions;
 
 public class AdapterWritingDesk implements IPeripheralAdapter {
 	private final Class<?> CLASS = ReflectionHelper.getClass("com.xcompwiz.mystcraft.tileentity.TileEntityDesk");

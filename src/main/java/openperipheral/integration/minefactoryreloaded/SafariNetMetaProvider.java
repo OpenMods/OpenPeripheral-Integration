@@ -1,17 +1,15 @@
 package openperipheral.integration.minefactoryreloaded;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants;
 import openmods.reflection.ReflectionHelper;
 import openperipheral.api.meta.IItemStackMetaProvider;
-
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 
 public class SafariNetMetaProvider implements IItemStackMetaProvider<Item> {
 

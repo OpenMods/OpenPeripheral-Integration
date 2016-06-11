@@ -1,12 +1,10 @@
 package openperipheral.integration.thaumcraft;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.ItemStack;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
 import thaumcraft.api.IRunicArmor;
-
-import com.google.common.collect.Maps;
 
 public class RunicItemMetaProvider extends ItemStackMetaProviderSimple<IRunicArmor> {
 

@@ -1,5 +1,6 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -10,11 +11,13 @@ import openmods.utils.InventoryUtils;
 import openperipheral.api.adapter.IAdapterWithConstraints;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.IWorldPosProvider;
-import openperipheral.api.adapter.method.*;
+import openperipheral.api.adapter.method.Alias;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.Optionals;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 import openperipheral.api.architecture.FeatureGroup;
 import openperipheral.api.helpers.Index;
-
-import com.google.common.base.Preconditions;
 
 // this is ugly. But all inventory handling functions need rewrite...
 @FeatureGroup({ "vanilla-inventory", "vanilla-inventory-manipulation" })

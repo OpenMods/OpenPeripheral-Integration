@@ -1,5 +1,7 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import net.minecraft.tileentity.TileEntitySign;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
@@ -7,11 +9,7 @@ import openperipheral.api.adapter.method.Arg;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
 import openperipheral.api.helpers.Index;
-
 import org.apache.commons.lang3.StringUtils;
-
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 
 public class AdapterSign implements IPeripheralAdapter {
 	@Override

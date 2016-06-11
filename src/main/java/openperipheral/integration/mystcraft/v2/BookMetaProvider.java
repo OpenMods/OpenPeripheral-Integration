@@ -1,21 +1,19 @@
 package openperipheral.integration.mystcraft.v2;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
-import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-import openperipheral.api.meta.IItemStackCustomMetaProvider;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.xcompwiz.mystcraft.api.hook.LinkPropertyAPI;
 import com.xcompwiz.mystcraft.api.item.IItemPortalActivator;
 import com.xcompwiz.mystcraft.api.linking.ILinkInfo;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChunkCoordinates;
+import openperipheral.api.helpers.ItemStackMetaProviderSimple;
+import openperipheral.api.meta.IItemStackCustomMetaProvider;
 
 public class BookMetaProvider extends ItemStackMetaProviderSimple<IItemPortalActivator> implements IItemStackCustomMetaProvider<IItemPortalActivator> {
 

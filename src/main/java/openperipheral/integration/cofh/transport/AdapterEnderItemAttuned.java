@@ -1,11 +1,11 @@
 package openperipheral.integration.cofh.transport;
 
+import cofh.api.transport.IEnderItemHandler;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.Arg;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
 import openperipheral.integration.cofh.tileentity.SecurityUtils;
-import cofh.api.transport.IEnderItemHandler;
 
 public class AdapterEnderItemAttuned implements IPeripheralAdapter {
 

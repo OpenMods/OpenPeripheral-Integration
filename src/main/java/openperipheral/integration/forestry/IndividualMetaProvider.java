@@ -1,10 +1,10 @@
 package openperipheral.integration.forestry;
 
+import forestry.api.genetics.AlleleManager;
+import forestry.api.genetics.IIndividual;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openperipheral.api.meta.IItemStackCustomMetaProvider;
-import forestry.api.genetics.AlleleManager;
-import forestry.api.genetics.IIndividual;
 
 public class IndividualMetaProvider implements IItemStackCustomMetaProvider<Item> {
 

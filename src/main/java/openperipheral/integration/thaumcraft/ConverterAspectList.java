@@ -1,15 +1,13 @@
 package openperipheral.integration.thaumcraft;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
-
 import openperipheral.api.converter.IConverter;
 import openperipheral.api.helpers.SimpleOutboundConverter;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class ConverterAspectList extends SimpleOutboundConverter<AspectList> {
 

@@ -1,13 +1,11 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.Vec3;
 import openmods.utils.ColorUtils;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class EntityWolfMetaProvider extends EntityMetaProviderSimple<EntityWolf> {
 

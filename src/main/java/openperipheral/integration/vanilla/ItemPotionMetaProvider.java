@@ -1,16 +1,14 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
-
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class ItemPotionMetaProvider extends ItemStackMetaProviderSimple<ItemPotion> {
 

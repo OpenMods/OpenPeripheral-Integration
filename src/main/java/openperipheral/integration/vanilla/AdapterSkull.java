@@ -1,12 +1,11 @@
 package openperipheral.integration.vanilla;
 
+import com.mojang.authlib.GameProfile;
 import net.minecraft.tileentity.TileEntitySkull;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.MultipleReturn;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
-
-import com.mojang.authlib.GameProfile;
 
 public class AdapterSkull implements IPeripheralAdapter {
 

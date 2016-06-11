@@ -1,13 +1,12 @@
 package openperipheral.integration;
 
+import com.google.common.base.Preconditions;
 import openperipheral.api.ApiHolder;
 import openperipheral.api.adapter.IPeripheralAdapterRegistry;
 import openperipheral.api.adapter.ITypeClassifier;
 import openperipheral.api.converter.IConverterManager;
 import openperipheral.api.meta.IEntityPartialMetaBuilder;
 import openperipheral.api.meta.IItemStackPartialMetaBuilder;
-
-import com.google.common.base.Preconditions;
 
 public class OpcAccess {
 

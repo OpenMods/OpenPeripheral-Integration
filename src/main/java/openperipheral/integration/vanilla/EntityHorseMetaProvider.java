@@ -1,14 +1,12 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.Vec3;
 import openmods.reflection.FieldAccess;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class EntityHorseMetaProvider extends EntityMetaProviderSimple<EntityHorse> {
 

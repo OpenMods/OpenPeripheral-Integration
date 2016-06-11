@@ -1,12 +1,10 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.util.Vec3;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class BossMetaProvider extends EntityMetaProviderSimple<IBossDisplayData> {
 

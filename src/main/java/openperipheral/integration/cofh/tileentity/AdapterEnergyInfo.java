@@ -1,9 +1,9 @@
 package openperipheral.integration.cofh.tileentity;
 
+import cofh.api.tileentity.IEnergyInfo;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
-import cofh.api.tileentity.IEnergyInfo;
 
 public class AdapterEnergyInfo implements IPeripheralAdapter {
 

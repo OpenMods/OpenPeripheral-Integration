@@ -1,9 +1,5 @@
 package openperipheral.integration.appeng;
 
-import net.minecraftforge.common.util.ForgeDirection;
-import openmods.utils.ItemUtils;
-import openperipheral.api.adapter.IPeripheralAdapter;
-import openperipheral.integration.vanilla.ItemFingerprint;
 import appeng.api.networking.IGrid;
 import appeng.api.networking.IGridCache;
 import appeng.api.networking.IGridHost;
@@ -15,6 +11,10 @@ import appeng.api.storage.data.IAETagCompound;
 import appeng.api.storage.data.IItemList;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier;
+import net.minecraftforge.common.util.ForgeDirection;
+import openmods.utils.ItemUtils;
+import openperipheral.api.adapter.IPeripheralAdapter;
+import openperipheral.integration.vanilla.ItemFingerprint;
 
 public abstract class AdapterGridBase implements IPeripheralAdapter {
 

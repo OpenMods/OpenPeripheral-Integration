@@ -1,8 +1,8 @@
 package openperipheral.integration.railcraft;
 
+import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraft.item.Item;
 import openmods.Mods;
-import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ObjectHolder(Mods.RAILCRAFT)
 public class TicketItemHolder {

@@ -1,12 +1,10 @@
 package openperipheral.integration.railcraft;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import mods.railcraft.api.carts.IEnergyTransfer;
 import net.minecraft.util.Vec3;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
-
-import com.google.common.collect.Maps;
 
 public class EnergyCartMetaProvider extends EntityMetaProviderSimple<IEnergyTransfer> {
 

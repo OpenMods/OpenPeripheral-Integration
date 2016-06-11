@@ -1,15 +1,13 @@
 package openperipheral.integration.computercraft;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.ItemStack;
 import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.ReflectionHelper;
 import openperipheral.api.meta.IItemStackMetaProvider;
-
-import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
 
 public class ComputerMetaProvider implements IItemStackMetaProvider<Object> {
 

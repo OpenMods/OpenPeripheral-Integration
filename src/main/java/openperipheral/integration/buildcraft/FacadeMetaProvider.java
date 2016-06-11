@@ -1,15 +1,13 @@
 package openperipheral.integration.buildcraft;
 
+import buildcraft.api.facades.IFacadeItem;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import openperipheral.api.helpers.ItemStackMetaProviderSimple;
-import buildcraft.api.facades.IFacadeItem;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class FacadeMetaProvider extends ItemStackMetaProviderSimple<IFacadeItem> {
 

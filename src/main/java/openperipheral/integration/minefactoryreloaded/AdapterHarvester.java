@@ -1,7 +1,6 @@
 package openperipheral.integration.minefactoryreloaded;
 
 import java.util.Map;
-
 import openmods.reflection.MethodAccess;
 import openmods.reflection.MethodAccess.Function0;
 import openmods.reflection.ReflectionHelper;

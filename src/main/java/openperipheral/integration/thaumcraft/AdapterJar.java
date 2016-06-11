@@ -2,7 +2,6 @@ package openperipheral.integration.thaumcraft;
 
 import java.util.List;
 import java.util.Map;
-
 import openmods.reflection.FieldAccess;
 import openmods.reflection.ReflectionHelper;
 import openperipheral.api.adapter.Asynchronous;

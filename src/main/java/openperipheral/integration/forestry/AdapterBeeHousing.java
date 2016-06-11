@@ -1,21 +1,23 @@
 package openperipheral.integration.forestry;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import forestry.api.apiculture.IBeeHousing;
+import forestry.api.genetics.AlleleManager;
+import forestry.api.genetics.IAllele;
+import forestry.api.genetics.IAlleleSpecies;
+import forestry.api.genetics.IIndividual;
+import forestry.api.genetics.IMutation;
+import forestry.api.genetics.ISpeciesRoot;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import net.minecraft.item.ItemStack;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.Arg;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
-import forestry.api.apiculture.IBeeHousing;
-import forestry.api.genetics.*;
 
 public class AdapterBeeHousing implements IPeripheralAdapter {
 

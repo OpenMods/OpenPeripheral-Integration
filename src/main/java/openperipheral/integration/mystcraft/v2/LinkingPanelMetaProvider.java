@@ -1,14 +1,12 @@
 package openperipheral.integration.mystcraft.v2;
 
+import com.google.common.collect.Sets;
+import com.xcompwiz.mystcraft.api.hook.PageAPI;
 import java.util.Collection;
 import java.util.Set;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openperipheral.api.meta.IItemStackCustomMetaProvider;
-
-import com.google.common.collect.Sets;
-import com.xcompwiz.mystcraft.api.hook.PageAPI;
 
 public class LinkingPanelMetaProvider implements IItemStackCustomMetaProvider<Item> {
 

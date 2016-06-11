@@ -1,12 +1,10 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import openperipheral.api.meta.IItemStackCustomMetaProvider;
-
-import com.google.common.collect.Maps;
 
 public class ItemToolClassMetaProvider implements IItemStackCustomMetaProvider<Item> {
 

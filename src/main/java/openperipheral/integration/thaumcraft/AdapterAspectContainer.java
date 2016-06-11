@@ -1,8 +1,10 @@
 package openperipheral.integration.thaumcraft;
 
+import com.google.common.base.Objects;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Maps;
 import java.util.Locale;
 import java.util.Map;
-
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.Arg;
@@ -11,10 +13,6 @@ import openperipheral.api.adapter.method.ScriptCallable;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.IAspectContainer;
-
-import com.google.common.base.Objects;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
 
 @Asynchronous
 public class AdapterAspectContainer implements IPeripheralAdapter {

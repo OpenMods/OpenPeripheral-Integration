@@ -1,13 +1,11 @@
 package openperipheral.integration.railcraft;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import openperipheral.api.meta.IItemStackCustomMetaProvider;
-
-import com.google.common.collect.Maps;
 
 public class TicketMetaProvider implements IItemStackCustomMetaProvider<Item> {
 

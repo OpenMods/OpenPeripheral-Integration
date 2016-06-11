@@ -1,7 +1,5 @@
 package openperipheral.integration.appeng;
 
-import net.minecraftforge.common.util.ForgeDirection;
-import openperipheral.api.architecture.IArchitectureAccess;
 import appeng.api.config.Actionable;
 import appeng.api.networking.IGridNode;
 import appeng.api.networking.crafting.ICraftingLink;
@@ -9,8 +7,9 @@ import appeng.api.networking.crafting.ICraftingRequester;
 import appeng.api.networking.security.IActionHost;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.api.util.AECableType;
-
 import com.google.common.collect.ImmutableSet;
+import net.minecraftforge.common.util.ForgeDirection;
+import openperipheral.api.architecture.IArchitectureAccess;
 
 public class CraftingRequester implements ICraftingRequester {
 	private final IActionHost original;

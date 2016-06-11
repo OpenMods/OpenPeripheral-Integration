@@ -1,18 +1,39 @@
 package openperipheral.integration.forestry;
 
-import java.util.Map;
-
-import openperipheral.api.converter.IConverter;
-import openperipheral.api.helpers.SimpleOutboundConverter;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-
-import forestry.api.apiculture.*;
-import forestry.api.arboriculture.*;
-import forestry.api.genetics.*;
-import forestry.api.lepidopterology.*;
+import forestry.api.apiculture.EnumBeeChromosome;
+import forestry.api.apiculture.IAlleleBeeEffect;
+import forestry.api.apiculture.IBee;
+import forestry.api.apiculture.IBeeGenome;
+import forestry.api.arboriculture.EnumTreeChromosome;
+import forestry.api.arboriculture.IAlleleFruit;
+import forestry.api.arboriculture.IAlleleGrowth;
+import forestry.api.arboriculture.IAlleleLeafEffect;
+import forestry.api.arboriculture.ITree;
+import forestry.api.arboriculture.ITreeGenome;
+import forestry.api.genetics.IAllele;
+import forestry.api.genetics.IAlleleArea;
+import forestry.api.genetics.IAlleleBoolean;
+import forestry.api.genetics.IAlleleFloat;
+import forestry.api.genetics.IAlleleFlowers;
+import forestry.api.genetics.IAlleleInteger;
+import forestry.api.genetics.IAllelePlantType;
+import forestry.api.genetics.IAlleleSpecies;
+import forestry.api.genetics.IAlleleTolerance;
+import forestry.api.genetics.IChromosome;
+import forestry.api.genetics.IChromosomeType;
+import forestry.api.genetics.IGenome;
+import forestry.api.genetics.IIndividual;
+import forestry.api.genetics.IIndividualLiving;
+import forestry.api.lepidopterology.EnumButterflyChromosome;
+import forestry.api.lepidopterology.IAlleleButterflyEffect;
+import forestry.api.lepidopterology.IButterfly;
+import forestry.api.lepidopterology.IButterflyGenome;
+import java.util.Map;
+import openperipheral.api.converter.IConverter;
+import openperipheral.api.helpers.SimpleOutboundConverter;
 
 public class ConverterIIndividual extends SimpleOutboundConverter<IIndividual> {
 

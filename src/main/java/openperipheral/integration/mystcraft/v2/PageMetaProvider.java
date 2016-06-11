@@ -1,14 +1,12 @@
 package openperipheral.integration.mystcraft.v2;
 
-import java.util.Map;
-
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import openperipheral.api.meta.IItemStackCustomMetaProvider;
-
 import com.google.common.collect.Maps;
 import com.xcompwiz.mystcraft.api.hook.PageAPI;
 import com.xcompwiz.mystcraft.api.symbol.IAgeSymbol;
+import java.util.Map;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import openperipheral.api.meta.IItemStackCustomMetaProvider;
 
 public class PageMetaProvider implements IItemStackCustomMetaProvider<Item> {
 

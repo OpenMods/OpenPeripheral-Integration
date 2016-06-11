@@ -1,9 +1,10 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -11,9 +12,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class EntityLivingMetaProvider extends EntityMetaProviderSimple<EntityLivingBase> {
 

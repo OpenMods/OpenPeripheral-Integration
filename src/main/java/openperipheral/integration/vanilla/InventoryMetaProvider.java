@@ -1,7 +1,7 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.collect.Maps;
 import java.util.Map;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Vec3;
@@ -9,8 +9,6 @@ import openmods.utils.InventoryUtils;
 import openperipheral.api.helpers.EntityMetaProviderSimple;
 import openperipheral.api.meta.IMetaProviderProxy;
 import openperipheral.integration.OpcAccess;
-
-import com.google.common.collect.Maps;
 
 public class InventoryMetaProvider extends EntityMetaProviderSimple<IInventory> {
 

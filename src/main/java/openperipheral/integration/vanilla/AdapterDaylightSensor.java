@@ -1,13 +1,12 @@
 package openperipheral.integration.vanilla;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.tileentity.TileEntityDaylightDetector;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import openperipheral.api.adapter.IPeripheralAdapter;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
-
-import com.google.common.base.Preconditions;
 
 public class AdapterDaylightSensor implements IPeripheralAdapter {
 

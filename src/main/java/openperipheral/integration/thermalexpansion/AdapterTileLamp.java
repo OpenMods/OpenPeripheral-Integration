@@ -6,7 +6,10 @@ import openmods.reflection.MethodAccess.Function1;
 import openmods.reflection.ReflectionHelper;
 import openperipheral.api.adapter.Asynchronous;
 import openperipheral.api.adapter.IPeripheralAdapter;
-import openperipheral.api.adapter.method.*;
+import openperipheral.api.adapter.method.Alias;
+import openperipheral.api.adapter.method.Arg;
+import openperipheral.api.adapter.method.ReturnType;
+import openperipheral.api.adapter.method.ScriptCallable;
 
 public class AdapterTileLamp implements IPeripheralAdapter {
 
