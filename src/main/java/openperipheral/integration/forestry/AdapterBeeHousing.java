@@ -61,13 +61,15 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 
 	@Asynchronous
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the full breeding list thingy. Experimental!")
-	public List<Map<String, Object>> getBeeBreedingData(IBeeHousing housing) {
+	public List<Map<String, Object>> getBeeBreedingData(IBeeHousing housing, @Optionals @Arg(name = "showSecrets", type = ArgType.BOOLEAN) Boolean showSecrets) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
 		if (beeRoot == null) return null;
+		if (showSecrets == null) showSecrets = false;
 
 		List<Map<String, Object>> result = Lists.newArrayList();
 
 		for (IMutation mutation : beeRoot.getMutations(false)) {
+			if (mutation.isSecret() && !showSecrets) continue;
 			final Map<String, Object> mutationMap = Maps.newHashMap();
 			try {
 				IAlleleSpecies allele1 = mutation.getAllele0();
@@ -75,10 +77,10 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 				IAlleleSpecies allele2 = mutation.getAllele1();
 				if (allele2 != null) mutationMap.put(ALLELE_2, allele2.getName());
 
-				final IAllele[] template = mutation.getTemplate();
-				// first allele is usually species
-				if (template != null && template.length > 0) {
-					mutationMap.put(MUTATION_RESULT, template[0].getName());
+				for (IAllele allele : mutation.getTemplate()) {
+					if (allele instanceof IAlleleSpecies) {
+						mutationMap.put(MUTATION_RESULT, allele.getName());
+					}
 				}
 
 				mutationMap.put(MUTATION_CHANCE, mutation.getBaseChance());
@@ -92,17 +94,21 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		return result;
 	}
 
-	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get all known bees mutations")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get all known bee species")
 	public List<Map<String, String>> listAllSpecies(IBeeHousing housing) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
 		if (beeRoot == null) return null;
 		List<Map<String, String>> result = Lists.newArrayList();
+		Map<String, String> speciesSerialized;
 
 		for (IMutation mutation : beeRoot.getMutations(false)) {
-			IAllele[] template = mutation.getTemplate();
-			if (template != null && template.length > 0) {
-				IAllele allele = template[0];
-				if (allele instanceof IAlleleSpecies) result.add(serializeSpecies((IAlleleSpecies)allele));
+			speciesSerialized = serializeSpecies(mutation.getAllele0());
+			if (!result.contains(speciesSerialized)) {
+				result.add(speciesSerialized);
+			}
+			speciesSerialized = serializeSpecies(mutation.getAllele1());
+			if (!result.contains(speciesSerialized)) {
+				result.add(speciesSerialized);
 			}
 		}
 
