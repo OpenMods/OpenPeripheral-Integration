@@ -1,6 +1,5 @@
 package openperipheral.integration;
 
-import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -10,7 +9,6 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.common.config.ConfigCategory;
@@ -18,6 +16,8 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import openmods.Log;
 import openmods.Mods;
+import openmods.config.ConfigChangeListener;
+import openmods.config.properties.ConfigProcessing;
 import openmods.integration.Integration;
 import openperipheral.integration.appeng.ModuleAppEng;
 import openperipheral.integration.buildcraft.ModuleBuildCraftFacades;
@@ -56,13 +56,6 @@ import openperipheral.integration.vanilla.ModuleVanillaInventoryManipulation;
 		dependencies = "required-after:OpenMods@[$LIB-VERSION$,$NEXT-LIB-VERSION$);required-after:OpenPeripheralApi@$OP-API-VERSION$;after:ComputerCraft@[1.70,];after:appliedEnergistics-2;after:IC2;after:EnderStorage;after:BuildCraft|Core;after:Forestry;after:Mystcraft;after:Railcraft;after:Thaumcraft;after:ThermalExpansion;")
 public class OpenPeripheralIntegration {
 
-	public class ConfigChangeListener {
-		@SubscribeEvent
-		public void onConfigChange(OnConfigChangedEvent evt) {
-			if (MOD_ID.equals(evt.modID)) config.save();
-		}
-	}
-
 	public static final String MOD_ID = "OpenPeripheralIntegration";
 
 	public static final String CATEGORY_MODULES = "modules";
@@ -85,9 +78,9 @@ public class OpenPeripheralIntegration {
 	@Instance(MOD_ID)
 	public static OpenPeripheralIntegration instance;
 
-	Configuration config;
+	private Configuration config;
 
-	public Configuration config() {
+	Configuration config() {
 		return config;
 	}
 
@@ -148,7 +141,9 @@ public class OpenPeripheralIntegration {
 		if (checkConfig(config, "thermalexpansion-mod")) Integration.addModule(new ModuleThermalExpansion());
 		if (checkConfig(config, "ae2-mod")) Integration.addModule(new ModuleAppEng());
 
-		FMLCommonHandler.instance().bus().register(new ConfigChangeListener());
+		ConfigProcessing.processAnnotations(MOD_ID, config, Config.class);
+
+		FMLCommonHandler.instance().bus().register(new ConfigChangeListener(MOD_ID, config));
 
 		if (config.hasChanged()) config.save();
 	}

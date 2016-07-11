@@ -22,7 +22,6 @@ import forestry.api.genetics.IAlleleInteger;
 import forestry.api.genetics.IAllelePlantType;
 import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IAlleleTolerance;
-import forestry.api.genetics.IChromosome;
 import forestry.api.genetics.IChromosomeType;
 import forestry.api.genetics.IGenome;
 import forestry.api.genetics.IIndividual;
@@ -37,30 +36,22 @@ import openperipheral.api.helpers.SimpleOutboundConverter;
 
 public class ConverterIIndividual extends SimpleOutboundConverter<IIndividual> {
 
-	private abstract static class GenomeAccess {
-		public IAllele getAllele(IGenome genome, int chromosome) {
-			IChromosome[] genotype = genome.getChromosomes();
-			IChromosome ch = genotype[chromosome];
-			if (ch == null) return null;
-			return getAllele(ch);
-		}
+	private enum GenomeAccess {
+		ACTIVE {
+			@Override
+			public IAllele getAllele(IGenome genome, IChromosomeType chromosomeType) {
+				return genome.getActiveAllele(chromosomeType);
+			}
+		},
+		INACTIVE {
+			@Override
+			public IAllele getAllele(IGenome genome, IChromosomeType chromosomeType) {
+				return genome.getInactiveAllele(chromosomeType);
+			}
+		};
 
-		protected abstract IAllele getAllele(IChromosome chromosome);
+		public abstract IAllele getAllele(IGenome genome, IChromosomeType chromosomeType);
 	}
-
-	private static final GenomeAccess ACTIVE = new GenomeAccess() {
-		@Override
-		protected IAllele getAllele(IChromosome chromosome) {
-			return chromosome.getActiveAllele();
-		}
-	};
-
-	private static final GenomeAccess INACTIVE = new GenomeAccess() {
-		@Override
-		protected IAllele getAllele(IChromosome chromosome) {
-			return chromosome.getInactiveAllele();
-		}
-	};
 
 	private interface IAlleleConverter<A extends IAllele> {
 		public Object convert(A allele);
@@ -121,7 +112,7 @@ public class ConverterIIndividual extends SimpleOutboundConverter<IIndividual> {
 					})
 					.build();
 
-	private abstract static class GenomeReader<G extends IGenome, E extends Enum<E> & IChromosomeType> {
+	private abstract static class GenomeReader<G extends IGenome, E extends IChromosomeType> {
 		private final G genome;
 
 		public GenomeReader(G genome) {
@@ -131,7 +122,7 @@ public class ConverterIIndividual extends SimpleOutboundConverter<IIndividual> {
 		@SuppressWarnings("unchecked")
 		protected <A extends IAllele> A getAllele(GenomeAccess access, Class<A> cls, E chromosome) {
 			Preconditions.checkArgument(cls.isAssignableFrom(chromosome.getAlleleClass()));
-			IAllele allele = access.getAllele(genome, chromosome.ordinal());
+			IAllele allele = access.getAllele(genome, chromosome);
 			return (A)allele;
 		}
 
@@ -147,13 +138,13 @@ public class ConverterIIndividual extends SimpleOutboundConverter<IIndividual> {
 
 		public Map<String, Object> getActiveInfo() {
 			Map<String, Object> result = Maps.newHashMap();
-			addAlleleInfo(ACTIVE, result);
+			addAlleleInfo(GenomeAccess.ACTIVE, result);
 			return result;
 		}
 
 		public Map<String, Object> getInactiveInfo() {
 			Map<String, Object> result = Maps.newHashMap();
-			addAlleleInfo(INACTIVE, result);
+			addAlleleInfo(GenomeAccess.INACTIVE, result);
 			return result;
 		}
 	}
