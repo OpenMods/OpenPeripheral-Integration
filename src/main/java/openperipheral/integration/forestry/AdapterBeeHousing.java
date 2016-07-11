@@ -61,13 +61,15 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 
 	@Asynchronous
 	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get the full breeding list thingy. Experimental!")
-	public List<Map<String, Object>> getBeeBreedingData(IBeeHousing housing) {
+	public List<Map<String, Object>> getBeeBreedingData(IBeeHousing housing, @Optionals @Arg(name = "showSecrets", type = ArgType.BOOLEAN) Boolean showSecrets) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
 		if (beeRoot == null) return null;
+		if (showSecrets == null) showSecrets = false;
 
 		List<Map<String, Object>> result = Lists.newArrayList();
 
 		for (IMutation mutation : beeRoot.getMutations(false)) {
+			if (mutation.isSecret() && !showSecrets) continue;
 			final Map<String, Object> mutationMap = Maps.newHashMap();
 			try {
 				IAlleleSpecies allele1 = mutation.getAllele0();
