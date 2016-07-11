@@ -77,10 +77,10 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 				IAlleleSpecies allele2 = mutation.getAllele1();
 				if (allele2 != null) mutationMap.put(ALLELE_2, allele2.getName());
 
-				final IAllele[] template = mutation.getTemplate();
-				// first allele is usually species
-				if (template != null && template.length > 0) {
-					mutationMap.put(MUTATION_RESULT, template[0].getName());
+				for (IAllele allele : mutation.getTemplate()) {
+					if (allele instanceof IAlleleSpecies) {
+						mutationMap.put(MUTATION_RESULT, allele.getName());
+					}
 				}
 
 				mutationMap.put(MUTATION_CHANCE, mutation.getBaseChance());
