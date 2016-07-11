@@ -92,17 +92,21 @@ public class AdapterBeeHousing implements IPeripheralAdapter {
 		return result;
 	}
 
-	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get all known bees mutations")
+	@ScriptCallable(returnTypes = ReturnType.TABLE, description = "Get all known bee species")
 	public List<Map<String, String>> listAllSpecies(IBeeHousing housing) {
 		ISpeciesRoot beeRoot = AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
 		if (beeRoot == null) return null;
 		List<Map<String, String>> result = Lists.newArrayList();
+		Map<String, String> speciesSerialized;
 
 		for (IMutation mutation : beeRoot.getMutations(false)) {
-			IAllele[] template = mutation.getTemplate();
-			if (template != null && template.length > 0) {
-				IAllele allele = template[0];
-				if (allele instanceof IAlleleSpecies) result.add(serializeSpecies((IAlleleSpecies)allele));
+			speciesSerialized = serializeSpecies(mutation.getAllele0());
+			if (!result.contains(speciesSerialized)) {
+				result.add(speciesSerialized);
+			}
+			speciesSerialized = serializeSpecies(mutation.getAllele1());
+			if (!result.contains(speciesSerialized)) {
+				result.add(speciesSerialized);
 			}
 		}
 
