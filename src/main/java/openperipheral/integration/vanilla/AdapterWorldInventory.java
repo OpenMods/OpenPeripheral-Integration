@@ -24,7 +24,7 @@ import openperipheral.api.helpers.Index;
 public class AdapterWorldInventory implements IPeripheralAdapter, IAdapterWithConstraints {
 
 	private static final int ANY_SLOT = -1;
-	private static final Index ANY_SLOT_INDEX = new Index(ANY_SLOT, 0);
+	private static final Index ANY_SLOT_INDEX = Index.fromJava(ANY_SLOT, 0);
 
 	@Override
 	public boolean canApply(Class<?> target) {

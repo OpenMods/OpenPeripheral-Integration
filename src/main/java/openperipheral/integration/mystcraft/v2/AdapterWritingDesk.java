@@ -75,7 +75,7 @@ public class AdapterWritingDesk implements IPeripheralAdapter {
 
 		final IInventory target = getTargetTile(desk, direction);
 
-		if (intoSlot == null) intoSlot = new Index(-1, 0);
+		if (intoSlot == null) intoSlot = Index.fromJava(-1, 0);
 
 		int result = ItemDistribution.moveItemInto(tmp, 0, target, intoSlot.value, removedPage.stackSize, direction, true);
 

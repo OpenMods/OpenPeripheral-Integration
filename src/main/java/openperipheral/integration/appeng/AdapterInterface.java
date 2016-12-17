@@ -93,7 +93,7 @@ public class AdapterInterface extends AdapterGridBase {
 		final IInventory neighbor = getNeighborInventory(tileEntityInterface, direction);
 		Preconditions.checkArgument(neighbor != null, "No neighbour attached");
 
-		if (intoSlot == null) intoSlot = new Index(-1, 0);
+		if (intoSlot == null) intoSlot = Index.fromJava(-1, 0);
 
 		IStorageGrid storageGrid = getStorageGrid(host);
 		IMEMonitor<IAEItemStack> monitor = storageGrid.getItemInventory();
