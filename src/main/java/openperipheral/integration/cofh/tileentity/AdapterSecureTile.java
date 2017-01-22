@@ -2,8 +2,8 @@ package openperipheral.integration.cofh.tileentity;
 
 import cofh.api.tileentity.ISecurable;
 import cofh.api.tileentity.ISecurable.AccessMode;
+import com.mojang.authlib.GameProfile;
 import openperipheral.api.adapter.IPeripheralAdapter;
-import openperipheral.api.adapter.method.Arg;
 import openperipheral.api.adapter.method.ReturnType;
 import openperipheral.api.adapter.method.ScriptCallable;
 
@@ -24,10 +24,9 @@ public class AdapterSecureTile implements IPeripheralAdapter {
 		return tile.getOwnerName();
 	}
 
-	@ScriptCallable(description = "Is this username allowed to access the machine.", returnTypes = ReturnType.BOOLEAN)
-	public boolean canPlayerAccess(ISecurable tile,
-			@Arg(name = "username", description = "The username to check for") String name) {
-		return tile.canPlayerAccess(name);
+	@ScriptCallable(description = "Gets the owner of the machine.", returnTypes = ReturnType.STRING)
+	public GameProfile getOwner(ISecurable tile) {
+		return tile.getOwner();
 	}
 
 	@ScriptCallable(description = "Gets the AccessMode of this machine.", returnTypes = ReturnType.STRING)
